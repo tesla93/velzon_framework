@@ -1,0 +1,2 @@
+D:\Proyectos\Tfs\Framework Velzon\Croem.Velzon.Angular\obj\Debug\Croem.Velzon.Angular.esproj.CoreCompileInputs.cache
+D:\Proyectos\Tfs\Framework\Croem.Velzon.Angular\obj\Debug\Croem.Velzon.Angular.esproj.CoreCompileInputs.cache
