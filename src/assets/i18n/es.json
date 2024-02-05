@@ -8,6 +8,9 @@
     "MENU": {
       "TEXT": "MENÚ"
     },
+    "REPORTS": {
+      "TEXT": "Reportes de Agol"
+    },
     "DASHBOARD": {
       "TEXT": "Tableros",
       "BADGE": "Nuevo",

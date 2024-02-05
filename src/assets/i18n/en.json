@@ -8,6 +8,9 @@
     "MENU": {
       "TEXT": "MENU"
     },
+    "REPORTS": {
+      "TEXT": "Agol Report"
+    },
     "DASHBOARD": {
       "TEXT": "Dashboards",
       "BADGE": "New",

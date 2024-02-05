@@ -7,6 +7,11 @@ export const MENU: MenuItem[] = [
     isTitle: true
   },
   {
+    id: 30,
+    label: 'MENUITEMS.REPORTS.TEXT',
+    link: '/agol/report',
+  },
+  {
     id: 2,
     label: 'MENUITEMS.DASHBOARD.TEXT',
     icon: 'home',
