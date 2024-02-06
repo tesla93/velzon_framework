@@ -40,6 +40,7 @@ import { JobFooterComponent } from './landing/job/job-footer/job-footer.componen
 import { JobcategoriesComponent } from './landing/job/jobcategories/jobcategories.component';
 import { ProgressComponent } from './landing/job/progress/progress.component';
 import { LandingScrollspyDirective } from './landingscrollspy.directive';
+import { GeneratePdf } from './pdf-reports/generate-pdf';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,7 @@ import { LandingScrollspyDirective } from './landingscrollspy.directive';
     FindjobsComponent,
     JobFooterComponent,
     JobcategoriesComponent,
-    ProgressComponent
+    ProgressComponent,
   ],
   imports: [
     CommonModule,

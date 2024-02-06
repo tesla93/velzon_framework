@@ -1,1 +1,26 @@
-<p>report works!</p>
+<app-breadcrumbs title="GENERATE QUOTE" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<form [formGroup]="quoteForm" (ngSubmit)="generateReport()">
+    <div class="row mb-3 text-black">
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating">
+            <ng-select class="form-control" formControlName="value1" [items]="items" bindValue="value" bindLabel="text">
+            </ng-select>
+            <label class="text-muted">Text 1</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating">
+            <input type="text" class="form-control" placeholder="Value 2" formControlName="value2">
+            <label class="text-muted">Value 2</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating">
+            <input type="text" class="form-control" placeholder="Value 3" formControlName="value3">
+            <label class="text-muted">Value 3</label>
+        </div>
+
+
+        <div class="hstack gap-2 mt-1 justify-content-end">
+            <button type="submit" class="btn btn-primary">
+                Generate report
+            </button>
+        </div>
+    </div>
+</form>
