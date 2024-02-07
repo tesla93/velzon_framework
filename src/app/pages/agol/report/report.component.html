@@ -1,1 +1,65 @@
-<p>report works!</p>
+<app-breadcrumbs title="GENERATE QUOTE" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<form [formGroup]="quoteForm" (ngSubmit)="generateReport()">
+    <div class="row mb-3 text-black">
+        <!-- <div class="col-lg-4 col-md-6 col-sm-12 form-floating">
+            <ng-select class="form-control" formControlName="value1" [items]="items" bindValue="value" bindLabel="text">
+            </ng-select>
+            <label class="text-muted">Text 1</label>
+        </div> -->
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" altFormat="d M, Y H:i"
+                [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Pickup Date" formControlName="pickupDate">
+            <label class="text-muted">Pickup Date</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" altFormat="d M, Y H:i"
+                [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Delivery Date" formControlName="deliveryDate">
+            <label class="text-muted">Delivery Date</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <input class="form-control" placeholder="Flight Number" formControlName="flightNumber">
+            <label class="text-muted">Flight Number</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" altFormat="d M, Y H:i"
+                [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Departure Time" formControlName="departureTime">
+            <label class="text-muted">Departure Time</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <ng-select class="form-control" formControlName="originAirport" [items]="items" bindValue="value" bindLabel="text" placeholder="Origin Airport">
+            </ng-select>
+            <label class="text-muted">Origin Airport</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" altFormat="d M, Y H:i"
+                [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Departure Time" formControlName="arrivalTime">
+            <label class="text-muted">Arrival Time</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <ng-select class="form-control" formControlName="destinationAirport" [items]="items" bindValue="value" bindLabel="text" placeholder="Destination Airport">
+            </ng-select>
+            <label class="text-muted">Destination Airport</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <input class="form-control" placeholder="Total Price" type="number" formControlName="totalPrice">
+            <label class="text-muted">Total Price</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <input class="form-control" placeholder="Dimensions" type="text" formControlName="dimensions">
+            <label class="text-muted">Dimensions</label>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+            <input class="form-control" placeholder="0.00 kg" type="text" formControlName="weight">
+            <label class="text-muted">Weight</label>
+        </div>
+
+
+
+        <div class="hstack gap-2 mt-1 justify-content-end">
+            <button type="submit" class="btn btn-primary">
+                Generate report
+            </button>
+        </div>
+    </div>
+</form>

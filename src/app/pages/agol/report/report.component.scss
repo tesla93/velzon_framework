@@ -1,0 +1,142 @@
+.form-floating {
+    position: relative;
+    padding-top: 4px;
+    padding-bottom: 10px;
+}
+
+.form-control {
+    min-height: fit-content;
+    padding-bottom: 14px;
+    padding-top: 0.2rem;
+    height: auto;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-floating>.form-control {
+    font-size: 14px;
+    padding-bottom: 0.5rem !important;
+    padding-top: 0.5rem !important
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.form-floating>label {
+    padding-top: 0.7rem !important;
+}
+
+.form-floating label {
+    position: absolute;
+    // top: -7px;
+    left: 0;
+    pointer-events: none;
+    transition: transform 0.2s ease-out, font-size 0.2s ease-out, color 0.2s ease-out;
+}
+
+.form-floating>.form-control:not(:placeholder-shown) {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.form-control:focus~label,
+.form-control:not(:placeholder-shown)~label {
+    font-size: 0.65rem;
+    transform: translateY(-1.2rem);
+    color: #495057;
+}
+
+.form-floating>.form-control:focus {
+    padding-top: 0.5rem !important;
+}
+
+::ng-deep {
+
+    input.is-invalid {
+        // box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px #fde6e8;
+    }
+
+    input.is-valids {
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px #e4faef;
+    }
+}
+
+.form-floating {
+    position: relative;
+    // padding-top: 4px;
+    padding-bottom: 10px;
+}
+
+.form-control {
+    min-height: fit-content;
+    padding-bottom: 14px;
+    // padding-top: 0.2rem;
+    height: auto;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-floating>.form-control {
+    font-size: 14px;
+    padding-bottom: 0.5rem !important;
+    // padding-top: 0.5rem !important
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.form-floating>label {
+    padding-top: 0.7rem !important;
+}
+
+.form-floating label {
+    position: absolute;
+    // top: -7px;
+    left: 0;
+    pointer-events: none;
+    transition: transform 0.2s ease-out, font-size 0.2s ease-out, color 0.2s ease-out;
+}
+
+.form-floating>.form-control:not(:placeholder-shown) {
+    padding-top: 0.2rem !important;
+    // padding-bottom: 0.5rem !important;
+}
+
+.form-control:focus~label,
+.form-control:not(:placeholder-shown)~label {
+    font-size: 0.65rem;
+    transform: translateY(-1.2rem);
+    z-index: 1001;
+    color: #495057;
+}
+
+.form-floating>.form-control:focus {
+    padding-top: 0.5rem !important;
+}
+
+.form-control.ng-select {
+    border: none !important;
+    padding: 0 !important;
+}
+
+
+::ng-deep {
+    ng-select .ng-select-container {
+        border-color: #ccc;
+        box-shadow: none;
+    }
+
+    ng-select.is-invalid .ng-select-container {
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px #fde6e8;
+    }
+
+    ng-select.is-valid .ng-select-container {
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px #e4faef;
+    }
+
+    .form-floating > .form-control {
+        height: 35px !important;
+        min-height: 35px !important;
+        line-height: 1.25;
+    }
+}
