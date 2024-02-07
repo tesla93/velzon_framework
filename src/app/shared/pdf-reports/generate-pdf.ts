@@ -1,44 +1,50 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { textData } from "./data";
+import * as moment from "moment";
+import { OBCModel } from "src/app/pages/agol/report/obc.model";
 
 export class GeneratePdf {
 
-    public columnWidths = {
-        0: { cellWidth: 30, halign: "center" },
-        1: { cellWidth: 75, halign: "center" },
-        2: { cellWidth: "auto", halign: "left" },
-        3: { cellWidth: "auto", halign: "left" },
-        4: { cellWidth: 50, halign: "center" }
-    };
-
-
     private cols = [
-        { header: "Flight", dataKey: "flight" },
+        { header: "Flight", dataKey: "flightNumber" },
         { header: "Departure Time", dataKey: "departureTime" },
         { header: "Origin Airport", dataKey: "originAirport" },
+        { header: "Arrival Time", dataKey: "arrivalTime" },
         { header: "Destination Airport", dataKey: "destinationAirport" },
         { header: "Travel Time", dataKey: "travelTime" },
     ];
 
-    data = [
-        {
-            flight: "AA 1731", departureTime: 'Sat 27 Jan 06:45', originAirport: 'Charleston International Airport (CHS)',
-            destinationAirport: 'Charlotte Douglas International Airport (CLT)', travelTime: '1 hr 8 min'
-        },
-        {
-            flight: "AA 1995", departureTime: 'Sat 27 Jan 09:05', originAirport: 'Charlotte Douglas International Airport (CLT)',
-            destinationAirport: 'Los Angeles International Airport (LAX)', travelTime: '5 hr 28 min'
-        },
+    private packageCols = [
+        { header: "Quantity", dataKey: "quantity" },
+        { header: "Dimensions", dataKey: "dimensions" },
+        { header: "Piece Weight", dataKey: "pieceWeight" },
     ];
 
-    pdfName!: string;
+    travelData: any[] = [];
+
+    packageData: any[] = [
+        { quantity: 1, dimensions: '20 x 15 x 15 cm', pieceWeight: '1 kg' }
+    ];
+
+    pdfName: string = 'OBC';
+    obcModel!: OBCModel
     doc!: any
     pickupDate: string = '2350 Jan 26 2023';
     deliveryDate: string = '1500 Jan 27 2023';
-    actualYPos: number = 110
-    constructor(pdfName: string) {
-        this.pdfName = pdfName;
+    actualYPos: number = 110;
+
+    constructor(obcModel: OBCModel) {
+        this.obcModel = obcModel;
+        this.travelData.push(
+            {
+                flightNumber: this.obcModel.flightNumber,
+                departureTime: this.obcModel.departureTime,
+                originAirport: this.obcModel.originAirport,
+                arrivalTime: this.obcModel.arrivalTime,
+                destinationAirport: this.obcModel.destinationAirport,
+                travelTime: this.obcModel.travelTime,
+            })
     }
 
 
@@ -47,10 +53,9 @@ export class GeneratePdf {
     buildReport() {
         this.doc = new jsPDF('p', 'px', 'a4');
         this.setHeader();
-        this.setGrayRectangle();
+        this.setRouteGrayRectangle();
         this.setTravelData();
         this.insertParagraph();
-
         this.doc.save(this.pdfName + ".pdf");
     }
 
@@ -73,7 +78,7 @@ export class GeneratePdf {
 
     }
 
-    setGrayRectangle() {
+    setRouteGrayRectangle() {
         // Set the fill color
         this.doc.setFillColor(70, 70, 70);
 
@@ -105,24 +110,24 @@ export class GeneratePdf {
         this.doc.setFont(undefined, 'normal');
         this.doc.text('Pickup:', 26, 250);
         this.doc.setFont(undefined, 'bold');
-        this.doc.text(this.pickupDate, 60, 250);
+        this.doc.text(this.obcModel.pickupDate, 60, 250);
 
         this.doc.setFont(undefined, 'normal');
         this.doc.text('Delivery:', 200, 250);
         this.doc.setFont(undefined, 'bold');
-        this.doc.text(this.deliveryDate, 237, 250);
+        this.doc.text(this.obcModel.deliveryDate, 237, 250);
 
-        this.directInsertExt(this.data);
+        this.insertTravelTable(this.travelData);
 
         this.doc.setFont(undefined, 'normal');
         this.doc.setFontSize(10);
-        this.doc.text('Price: 4388 USD, included baggage fees', 423, this.actualYPos, {
+        this.doc.text(`Price: ${this.obcModel.totalPrice} USD, included baggage fees`, 423, this.actualYPos, {
             align: "right"
         });
-        this.actualYPos += 30;
+        this.actualYPos += 15;
     }
 
-    directInsertExt(bodyData: any): void {
+    insertTravelTable(bodyData: any): void {
         if (bodyData.length > 0) {
             autoTable(this.doc, {
                 startY: 270,
@@ -139,10 +144,11 @@ export class GeneratePdf {
                 columnStyles:
                 {
                     0: { cellWidth: 38, halign: "center" },
-                    1: { cellWidth: 70, halign: "center" },
+                    1: { cellWidth: 80, halign: "center" },
                     2: { cellWidth: "auto", halign: "left" },
-                    3: { cellWidth: "auto", halign: "left" },
-                    4: { cellWidth: 50, halign: "center" }
+                    3: { cellWidth: 80, halign: "center" },
+                    4: { cellWidth: "auto", halign: "left" },
+                    5: { cellWidth: 40, halign: "center" }
                 },
 
             });
@@ -169,7 +175,7 @@ export class GeneratePdf {
         this.doc.setFontSize(11);
         this.doc.text('Customs Clearance:', 25, this.actualYPos)
         this.actualYPos += 12;
-        
+
         this.doc.setFont(undefined, 'normal');
         this.doc.setFontSize(10);
         this.doc.text(textData[2], 25, this.actualYPos, {
@@ -177,9 +183,61 @@ export class GeneratePdf {
         });
         this.actualYPos += 32;
 
+        this.insertPackageTable(this.packageData);
+
+        this.setWarningGrayRectangle();
+
+        this.doc.setTextColor(0, 0, 0);
+        this.doc.setFont(undefined, 'bold');
+        this.doc.setFontSize(11);
+        this.doc.text('Important Statements:', 25, this.actualYPos)
+        this.actualYPos += 12;
+
+        this.doc.setFont(undefined, 'normal');
+        this.doc.setFontSize(10);
         this.doc.text(textData[3], 25, this.actualYPos, {
             align: "justify", maxWidth: 395
         });
-        this.actualYPos += 40;
+        this.actualYPos += 35;
+    }
+
+    insertPackageTable(bodyData: any[]) {
+        if (bodyData.length > 0) {
+            autoTable(this.doc, {
+                startY: this.actualYPos,
+                margin: {
+                    top: 30,
+                    right: 20,
+                    left: 20,
+                    bottom: 30,
+                },
+                theme: "striped",
+                styles: { fontSize: 10, halign: "center", lineWidth: 0.4 },
+                body: bodyData,
+                columns: this.packageCols,
+            });
+        } else {
+            this.doc.setFontSize(10);
+            this.doc.text("No data available for this project", 5, 270);
+        }
+
+        this.actualYPos = this.doc.lastAutoTable.finalY + 20;
+    }
+
+    setWarningGrayRectangle() {
+        // Set the fill color
+        this.doc.setFillColor(70, 70, 70);
+
+        // Parameters: x-coordinate, y-coordinate, width, height
+        this.doc.rect(65, this.actualYPos, 305, 30, 'F');
+
+
+        this.doc.setFont(undefined, 'bold')
+        this.doc.setFontSize(12)
+        this.doc.setTextColor(255, 255, 255);
+        this.doc.text('This Quotation is valid for next 30 minutes', this.doc.internal.pageSize.width / 2, this.actualYPos + 18, {
+            align: "center"
+        });
+        this.actualYPos += 45;
     }
 }
