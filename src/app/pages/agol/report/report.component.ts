@@ -3,6 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { GeneratePdf } from 'src/app/shared/pdf-reports/generate-pdf';
 import { OBCModel } from './obc.model';
 import * as moment from "moment";
+import { ReportService } from './report.service';
+import { AirportModel } from './airport.model';
+import { finalize, pipe } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -11,6 +14,7 @@ import * as moment from "moment";
 })
 export class ReportComponent implements OnInit {
 
+  showForm = false;
   formatDates = 'MMM DD, YYYY HH:mm'
   breadCrumbItems = [
     { label: 'Agol' },
@@ -18,15 +22,18 @@ export class ReportComponent implements OnInit {
   ];
 
   obcModel: OBCModel = {} as OBCModel;
+  airportItems: any = {};
+  airportSelectItems: any = {};
 
   quoteForm!: FormGroup;
   items = [{ text: "text1", value: 'value1' }, { text: "text2", value: 'value2' }, { text: "text3", value: 'value3' }, { text: "text4", value: 'value4' }];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private reportService: ReportService) {
   }
 
 
   ngOnInit(): void {
+    this.getAirportList();
     this.initForm();
   }
 
@@ -82,6 +89,20 @@ export class ReportComponent implements OnInit {
 
     return `${hours} hrs, ${minutes} min`; // Output will be the number of hours and minutes between the two dates
 
+  }
+
+
+  getAirportList() {
+    this.reportService.readJsonFromAsset()
+    .pipe(
+      finalize(() => {
+        this.showForm=true;
+      })
+    )
+    .subscribe(obj => {
+      this.airportItems = Object.values(obj);
+      this.airportSelectItems = this.airportItems[0].map((airportItem: any) => ({ text: `${airportItem._IATACode} - ${airportItem._Name}`, value: airportItem._IATACode }))
+    });
   }
 
 }

@@ -1,12 +1,7 @@
 <app-breadcrumbs title="GENERATE QUOTE" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
-<form [formGroup]="quoteForm" (ngSubmit)="generateReport()">
+<form *ngIf="showForm" [formGroup]="quoteForm" (ngSubmit)="generateReport()">
     <div class="row mb-3 text-black">
-        <!-- <div class="col-lg-4 col-md-6 col-sm-12 form-floating">
-            <ng-select class="form-control" formControlName="value1" [items]="items" bindValue="value" bindLabel="text">
-            </ng-select>
-            <label class="text-muted">Text 1</label>
-        </div> -->
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
             <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" altFormat="d M, Y H:i"
                 [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Pickup Date" formControlName="pickupDate">
@@ -27,7 +22,7 @@
             <label class="text-muted">Departure Time</label>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
-            <ng-select class="form-control" formControlName="originAirport" [items]="items" bindValue="value" bindLabel="text" placeholder="Origin Airport">
+            <ng-select class="form-control" formControlName="originAirport" [items]="airportSelectItems"  bindValue="value" bindLabel="text" placeholder="Origin Airport">
             </ng-select>
             <label class="text-muted">Origin Airport</label>
         </div>
@@ -37,7 +32,7 @@
             <label class="text-muted">Arrival Time</label>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
-            <ng-select class="form-control" formControlName="destinationAirport" [items]="items" bindValue="value" bindLabel="text" placeholder="Destination Airport">
+            <ng-select class="form-control" formControlName="destinationAirport" [items]="airportSelectItems"  bindValue="value" bindLabel="text" placeholder="Destination Airport">
             </ng-select>
             <label class="text-muted">Destination Airport</label>
         </div>
