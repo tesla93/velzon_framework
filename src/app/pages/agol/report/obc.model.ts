@@ -7,10 +7,11 @@ export class OBCModel {
     arrivalTime!: string;
     destinationAirport!: string;
     totalPrice!: string;
-    numberOfPackages!: number;
-    dimensions!: string;
-    weight!: number;
+    // numberOfPackages!: number;
+    // dimensions!: string;
+    // weight!: number;
     travelTime!: string
+    packageData!: any[];
 
     constructor(data?: OBCModel) {
         if (data) {

@@ -3,12 +3,12 @@
 <form *ngIf="showForm" [formGroup]="quoteForm" (ngSubmit)="generateReport()">
     <div class="row mb-3 text-black">
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
-            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" altFormat="d M, Y H:i"
+            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [minDate]="minPickupDate" [convertModelValue]="true" altFormat="d M, Y H:i" (change)="onChangePickupDate()"
                 [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Pickup Date" formControlName="pickupDate">
             <label class="text-muted">Pickup Date</label>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
-            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" altFormat="d M, Y H:i"
+            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [minDate]="minDeliveryDate" [convertModelValue]="true"  altFormat="d M, Y H:i" (change)="onChangeDeliveryDate()"
                 [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Delivery Date" formControlName="deliveryDate">
             <label class="text-muted">Delivery Date</label>
         </div>
@@ -17,7 +17,7 @@
             <label class="text-muted">Flight Number</label>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
-            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" altFormat="d M, Y H:i"
+            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [minDate]="minDepartureTime" [maxDate]="maxTime" [convertModelValue]="true" altFormat="d M, Y H:i" (change)="onChangeDepartureTime()"
                 [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Departure Time" formControlName="departureTime">
             <label class="text-muted">Departure Time</label>
         </div>
@@ -27,7 +27,7 @@
             <label class="text-muted">Origin Airport</label>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
-            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" altFormat="d M, Y H:i"
+            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" [minDate]="minArrivalTime" [maxDate]="maxTime" altFormat="d M, Y H:i"
                 [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Departure Time" formControlName="arrivalTime">
             <label class="text-muted">Arrival Time</label>
         </div>
@@ -40,9 +40,20 @@
             <input class="form-control" placeholder="Total Price" type="number" formControlName="totalPrice">
             <label class="text-muted">Total Price</label>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
-            <input class="form-control" placeholder="Dimensions" type="text" formControlName="dimensions">
-            <label class="text-muted">Dimensions</label>
+        <div class="col-lg-4 col-md-6 col-sm-12 my-2 row">
+            <!-- <label class="text-muted">Dimensions</label> -->
+            <div class="col-4 form-floating">
+                <input class="form-control" placeholder="Large" type="text" formControlName="large">
+                <label class="text-muted">Large</label>
+            </div>
+            <div class="col-4 form-floating">
+                <input class="form-control" placeholder="Width" type="text" formControlName="width">
+                <label class="text-muted">Width</label>
+            </div>
+            <div class="col-4 form-floating">
+                <input class="form-control" placeholder="Width" type="text" formControlName="height">
+                <label class="text-muted">Height</label>
+            </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
             <input class="form-control" placeholder="0.00 kg" type="text" formControlName="weight">
@@ -58,3 +69,50 @@
         </div>
     </div>
 </form>
+
+<ng-template #editFlightsScale let-modal>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalgridLabel">Fliight Scales</h5>
+                <span class="ms-1">
+                    <a><i class="bx bx-edit text-dark fs-20 ms-2 mt-1"></i></a>
+                </span>
+                <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="" [formGroup]="flightScaleForm">
+                    <div class="row mb-3">
+                        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+                            <input class="form-control" placeholder="Flight Number" formControlName="flightNumber">
+                            <label class="text-muted">Flight Number</label>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+                            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [minDate]="minDepartureTime" [maxDate]="maxTime" [convertModelValue]="true" altFormat="d M, Y H:i" (change)="onChangeDepartureTime()"
+                                [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Departure Time" formControlName="departureTime">
+                            <label class="text-muted">Departure Time</label>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+                            <ng-select class="form-control" formControlName="originAirport" [items]="airportSelectItems"  bindValue="value" bindLabel="text" placeholder="Origin Airport">
+                            </ng-select>
+                            <label class="text-muted">Origin Airport</label>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+                            <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true" [minDate]="minArrivalTime" [maxDate]="maxTime" altFormat="d M, Y H:i"
+                                [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Departure Time" formControlName="arrivalTime">
+                            <label class="text-muted">Arrival Time</label>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
+                            <ng-select class="form-control" formControlName="destinationAirport" [items]="airportSelectItems"  bindValue="value" bindLabel="text" placeholder="Destination Airport">
+                            </ng-select>
+                            <label class="text-muted">Destination Airport</label>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</ng-template>

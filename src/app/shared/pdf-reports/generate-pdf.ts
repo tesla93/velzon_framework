@@ -183,7 +183,7 @@ export class GeneratePdf {
         });
         this.actualYPos += 32;
 
-        this.insertPackageTable(this.packageData);
+        this.insertPackageTable(this.obcModel.packageData);
 
         this.setWarningGrayRectangle();
 

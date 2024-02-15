@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import * as moment from "moment";
+import { finalize } from 'rxjs';
 import { GeneratePdf } from 'src/app/shared/pdf-reports/generate-pdf';
 import { OBCModel } from './obc.model';
-import * as moment from "moment";
 import { ReportService } from './report.service';
-import { AirportModel } from './airport.model';
-import { finalize, pipe } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -16,6 +15,14 @@ export class ReportComponent implements OnInit {
 
   showForm = false;
   formatDates = 'MMM DD, YYYY HH:mm'
+  minPickupDate = new Date();
+  minDeliveryDate = new Date();
+
+  minDepartureTime = new Date();
+
+  minArrivalTime = new Date();
+  maxTime!: Date;
+
   breadCrumbItems = [
     { label: 'Agol' },
     { label: 'Reports', active: true }
@@ -26,7 +33,6 @@ export class ReportComponent implements OnInit {
   airportSelectItems: any = {};
 
   quoteForm!: FormGroup;
-  items = [{ text: "text1", value: 'value1' }, { text: "text2", value: 'value2' }, { text: "text3", value: 'value3' }, { text: "text4", value: 'value4' }];
 
   constructor(private fb: FormBuilder, private reportService: ReportService) {
   }
@@ -37,21 +43,21 @@ export class ReportComponent implements OnInit {
     this.initForm();
   }
 
-
-
   initForm() {
     this.quoteForm = this.fb.group({
-      pickupDate: new FormControl(null, [Validators.required]),
-      deliveryDate: new FormControl(null, [Validators.required]),
-      flightNumber: new FormControl(null, [Validators.required]),
-      departureTime: new FormControl(null, [Validators.required]),
-      originAirport: new FormControl(null, [Validators.required]),
-      arrivalTime: new FormControl(null, [Validators.required]),
-      destinationAirport: new FormControl(null, [Validators.required]),
-      totalPrice: new FormControl(null, [Validators.required]),
-      numberOfPackages: new FormControl(null, [Validators.required]),
-      dimensions: new FormControl(null, [Validators.required]),
-      weight: new FormControl(null, [Validators.required]),
+      pickupDate: new FormControl(new Date(2014, 1, 3, 4, 32), [Validators.required]),
+      deliveryDate: new FormControl(new Date(2014, 1, 4, 5, 51), [Validators.required]),
+      flightNumber: new FormControl('AA1314', [Validators.required]),
+      departureTime: new FormControl(new Date(2014, 1, 3, 7, 39), [Validators.required]),
+      originAirport: new FormControl('LAX', [Validators.required]),
+      arrivalTime: new FormControl(new Date(2014, 1, 4, 1, 17), [Validators.required]),
+      destinationAirport: new FormControl('JFK', [Validators.required]),
+      totalPrice: new FormControl(234.32, [Validators.required]),
+      numberOfPackages: new FormControl(1, [Validators.required]),
+      large: new FormControl(20),
+      width: new FormControl(15),
+      height: new FormControl(35),
+      weight: new FormControl(18, [Validators.required]),
     });
   }
 
@@ -66,10 +72,8 @@ export class ReportComponent implements OnInit {
       originAirport: formValue.originAirport,
       arrivalTime: moment(formValue.arrivalTime).format(this.formatDates),
       destinationAirport: formValue.destinationAirport,
-      totalPrice: formValue.totalPrice.toFixed(2),
-      numberOfPackages: formValue.numberOfPackages,
-      dimensions: formValue.dimensions,
-      weight: formValue.weight,
+      totalPrice: formValue.totalPrice?.toFixed(2),
+      packageData: [{ quantity: formValue.numberOfPackages, dimensions: `${formValue.large} x ${formValue.large} x ${formValue.height} `, pieceWeight: `${formValue.weight} kg` }],
       travelTime: this.convertToHoursNMinutes(formValue.arrivalTime, formValue.departureTime)
 
     });
@@ -94,15 +98,30 @@ export class ReportComponent implements OnInit {
 
   getAirportList() {
     this.reportService.readJsonFromAsset()
-    .pipe(
-      finalize(() => {
-        this.showForm=true;
-      })
-    )
-    .subscribe(obj => {
-      this.airportItems = Object.values(obj);
-      this.airportSelectItems = this.airportItems[0].map((airportItem: any) => ({ text: `${airportItem._IATACode} - ${airportItem._Name}`, value: airportItem._IATACode }))
-    });
+      .pipe(
+        finalize(() => {
+          this.showForm = true;
+        })
+      )
+      .subscribe(obj => {
+        this.airportItems = Object.values(obj);
+        this.airportSelectItems = this.airportItems[0].map((airportItem: any) => ({ text: `${airportItem._IATACode} - ${airportItem._Name}`, value: airportItem._IATACode }))
+      });
   }
 
+  onChangePickupDate() {
+    console.log(this.quoteForm.value.pickupDate)
+    this.minDeliveryDate = this.quoteForm.value.pickupDate;
+    this.minDepartureTime = this.quoteForm.value.pickupDate;
+    this.minArrivalTime = this.quoteForm.value.pickupDate;
+    console.log(this.minDeliveryDate)
+  }
+
+  onChangeDeliveryDate(){
+    this.maxTime=this.quoteForm.value.deliveryDate;
+  }
+
+  onChangeDepartureTime(){
+    this.minArrivalTime = this.quoteForm.value.departureTime;
+  }
 }
