@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from "moment";
 import { finalize } from 'rxjs';
 import { GeneratePdf } from 'src/app/shared/pdf-reports/generate-pdf';
 import { OBCModel } from './obc.model';
 import { ReportService } from './report.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-report',
@@ -13,10 +14,10 @@ import { ReportService } from './report.service';
 })
 export class ReportComponent implements OnInit {
 
-  showForm = false;
   formatDates = 'MMM DD, YYYY HH:mm'
   minPickupDate = new Date();
   minDeliveryDate = new Date();
+  @ViewChild("editFlightsScale", { static: false }) editFlightsScale!: NgbModal;
 
   minDepartureTime = new Date();
 
@@ -29,17 +30,19 @@ export class ReportComponent implements OnInit {
   ];
 
   obcModel: OBCModel = {} as OBCModel;
-  airportItems: any = {};
-  airportSelectItems: any = {};
+ 
 
   quoteForm!: FormGroup;
+  flightScaleForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private reportService: ReportService) {
+  constructor(
+    private fb: FormBuilder, 
+    private modalService: NgbModal) {
   }
 
 
   ngOnInit(): void {
-    this.getAirportList();
+    
     this.initForm();
   }
 
@@ -47,11 +50,12 @@ export class ReportComponent implements OnInit {
     this.quoteForm = this.fb.group({
       pickupDate: new FormControl(new Date(2014, 1, 3, 4, 32), [Validators.required]),
       deliveryDate: new FormControl(new Date(2014, 1, 4, 5, 51), [Validators.required]),
-      flightNumber: new FormControl('AA1314', [Validators.required]),
-      departureTime: new FormControl(new Date(2014, 1, 3, 7, 39), [Validators.required]),
-      originAirport: new FormControl('LAX', [Validators.required]),
-      arrivalTime: new FormControl(new Date(2014, 1, 4, 1, 17), [Validators.required]),
-      destinationAirport: new FormControl('JFK', [Validators.required]),
+      flightsInfo: new FormControl(null),
+      // flightNumber: new FormControl('AA1314', [Validators.required]),
+      // departureTime: new FormControl(new Date(2014, 1, 3, 7, 39), [Validators.required]),
+      // originAirport: new FormControl('LAX', [Validators.required]),
+      // arrivalTime: new FormControl(new Date(2014, 1, 4, 1, 17), [Validators.required]),
+      // destinationAirport: new FormControl('JFK', [Validators.required]),
       totalPrice: new FormControl(234.32, [Validators.required]),
       numberOfPackages: new FormControl(1, [Validators.required]),
       large: new FormControl(20),
@@ -93,35 +97,25 @@ export class ReportComponent implements OnInit {
 
     return `${hours} hrs, ${minutes} min`; // Output will be the number of hours and minutes between the two dates
 
-  }
-
-
-  getAirportList() {
-    this.reportService.readJsonFromAsset()
-      .pipe(
-        finalize(() => {
-          this.showForm = true;
-        })
-      )
-      .subscribe(obj => {
-        this.airportItems = Object.values(obj);
-        this.airportSelectItems = this.airportItems[0].map((airportItem: any) => ({ text: `${airportItem._IATACode} - ${airportItem._Name}`, value: airportItem._IATACode }))
-      });
-  }
+  }  
 
   onChangePickupDate() {
-    console.log(this.quoteForm.value.pickupDate)
     this.minDeliveryDate = this.quoteForm.value.pickupDate;
     this.minDepartureTime = this.quoteForm.value.pickupDate;
-    this.minArrivalTime = this.quoteForm.value.pickupDate;
-    console.log(this.minDeliveryDate)
   }
 
   onChangeDeliveryDate(){
     this.maxTime=this.quoteForm.value.deliveryDate;
   }
 
-  onChangeDepartureTime(){
-    this.minArrivalTime = this.quoteForm.value.departureTime;
+ 
+
+  openModal() {
+    this.modalService.open(this.editFlightsScale, { windowClass : "myCustomModalClass"});
   }
+
+  closeModal(){
+    this.modalService.dismissAll();
+  }
+  
 }

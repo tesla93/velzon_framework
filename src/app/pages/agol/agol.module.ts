@@ -16,12 +16,16 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AgolRoutingModule } from './agol-routing.module';
 import { ReportComponent } from './report/report.component';
+import { FeatherModule } from 'angular-feather';
+import { allIcons } from 'angular-feather/icons';
+import { FlightFormComponent } from './report/flight-form/flight-form.component';
 
 
 
 @NgModule({
   declarations: [
-    ReportComponent
+    ReportComponent,
+    FlightFormComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +46,7 @@ import { ReportComponent } from './report/report.component';
     DropzoneModule,
     AutocompleteLibModule,
     AgolRoutingModule,
+    FeatherModule.pick(allIcons),
     SharedModule
   ]
 })
