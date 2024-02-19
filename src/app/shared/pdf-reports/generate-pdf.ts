@@ -36,15 +36,8 @@ export class GeneratePdf {
 
     constructor(obcModel: OBCModel) {
         this.obcModel = obcModel;
-        this.travelData.push(
-            {
-                flightNumber: this.obcModel.flightNumber,
-                departureTime: this.obcModel.departureTime,
-                originAirport: this.obcModel.originAirport,
-                arrivalTime: this.obcModel.arrivalTime,
-                destinationAirport: this.obcModel.destinationAirport,
-                travelTime: this.obcModel.travelTime,
-            })
+        this.travelData=obcModel.flights;
+          
     }
 
 
@@ -97,7 +90,7 @@ export class GeneratePdf {
             align: "center"
         });
 
-        this.doc.text('CHS-CLT-LAX', this.doc.internal.pageSize.width / 2, 210, {
+        this.doc.text(this.obcModel.flightsInfo, this.doc.internal.pageSize.width / 2, 210, {
             align: "center"
         });
 
@@ -183,7 +176,7 @@ export class GeneratePdf {
         });
         this.actualYPos += 32;
 
-        this.insertPackageTable(this.packageData);
+        this.insertPackageTable(this.obcModel.packageData);
 
         this.setWarningGrayRectangle();
 
