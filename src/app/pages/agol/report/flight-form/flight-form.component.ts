@@ -25,6 +25,7 @@ export class FlightFormComponent implements OnInit {
   airportItems: any = {};
   showForm = false;
   airportSelectItems: any = {};
+  defaultDepartureTime!: Date
 
 
   constructor(
@@ -36,6 +37,7 @@ export class FlightFormComponent implements OnInit {
   ngOnInit(): void {
     this.initScaleForm();
     this.getAirportList();
+    this.defaultDepartureTime = this.minDepartureTime;
   }
 
 
@@ -49,7 +51,7 @@ export class FlightFormComponent implements OnInit {
   getFlightField(): FormGroup {
     return new FormGroup({
       flightNumber: new FormControl('AA1314', [Validators.required]),
-      departureTime: new FormControl(null, [Validators.required]),
+      departureTime: new FormControl(this.defaultDepartureTime, [Validators.required]),
       originAirport: new FormControl(this.defaultOriginAirport, [Validators.required]),
       arrivalTime: new FormControl(null, [Validators.required]),
       destinationAirport: new FormControl('JFK', [Validators.required]),
@@ -102,7 +104,12 @@ export class FlightFormComponent implements OnInit {
   }
 
 
-  onChangeDepartureTime() {
+  onChangeDepartureTime(event: any) {
+    // this.minDepartureTime = new Date(event.target.defaultValue);
+  }
+
+  onChangeArrivalTime(event: any) {
+    this.defaultDepartureTime = new Date(event.target.defaultValue)
   }
 
 
@@ -119,7 +126,7 @@ export class FlightFormComponent implements OnInit {
 
     return `${hours} hrs, ${minutes} min`; // Output will be the number of hours and minutes between the two dates
 
-  }  
+  }
 
 
 

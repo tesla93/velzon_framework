@@ -47,7 +47,7 @@ export class ReportComponent implements OnInit {
 
   initForm() {
     this.quoteForm = this.fb.group({
-      pickupDate: new FormControl(null, [Validators.required]),
+      pickupDate: new FormControl(new Date(), [Validators.required]),
       deliveryDate: new FormControl(null, [Validators.required]),
       flightsInfo: new FormControl(null),
       totalPrice: new FormControl(234.32, [Validators.required]),
@@ -77,13 +77,13 @@ export class ReportComponent implements OnInit {
 
 
 
-  onChangePickupDate() {
-    this.minDeliveryDate = this.quoteForm.value.pickupDate;
-    this.minDepartureTime = this.quoteForm.value.pickupDate;
+  onChangePickupDate(event: any) {
+    this.minDeliveryDate = new Date(event.target.defaultValue);
+    this.minDepartureTime = new Date(event.target.defaultValue);
   }
 
-  onChangeDeliveryDate() {
-    this.maxTime = this.quoteForm.value.deliveryDate;
+  onChangeDeliveryDate(event: any) {
+    this.maxTime = new Date(event.target.defaultValue);
   }
 
   processFlights(data: FlightModel[]) {

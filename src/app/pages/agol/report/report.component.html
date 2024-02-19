@@ -4,13 +4,13 @@
     <div class="row mb-3 text-black">
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
             <input mwlFlatpickr [altInput]="true" [enableTime]="true" [minDate]="minPickupDate"
-                [convertModelValue]="true" altFormat="d M, Y H:i" (change)="onChangePickupDate()"
+                [convertModelValue]="true" altFormat="d M, Y H:i" (change)="onChangePickupDate($event)"
                 [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Pickup Date" formControlName="pickupDate">
             <label class="text-muted">Pickup Date</label>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
             <input mwlFlatpickr [altInput]="true" [enableTime]="true" [minDate]="minDeliveryDate"
-                [convertModelValue]="true" altFormat="d M, Y H:i" (change)="onChangeDeliveryDate()"
+                [convertModelValue]="true" altFormat="d M, Y H:i" (change)="onChangeDeliveryDate($event)"
                 [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Delivery Date"
                 formControlName="deliveryDate">
             <label class="text-muted">Delivery Date</label>
@@ -24,20 +24,20 @@
             <label class="text-muted">Total Price</label>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 form-floating my-2">
-            <input class="form-control" placeholder="0.00 kg" type="text" formControlName="weight">
+            <input class="form-control" placeholder="0.00 kg" type="number" formControlName="weight">
             <label class="text-muted">Weight</label>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2 row">
             <div class="col-4 form-floating">
-                <input class="form-control" placeholder="Large" type="text" formControlName="large">
+                <input class="form-control" placeholder="Large" type="number" formControlName="large">
                 <label class="text-muted">Large</label>
             </div>
             <div class="col-4 form-floating">
-                <input class="form-control" placeholder="Width" type="text" formControlName="width">
+                <input class="form-control" placeholder="Width" type="number" formControlName="width">
                 <label class="text-muted">Width</label>
             </div>
             <div class="col-4 form-floating">
-                <input class="form-control" placeholder="Width" type="text" formControlName="height">
+                <input class="form-control" placeholder="Width" type="number" formControlName="height">
                 <label class="text-muted">Height</label>
             </div>
         </div>

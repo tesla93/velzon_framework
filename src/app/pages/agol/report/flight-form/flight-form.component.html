@@ -1,6 +1,6 @@
 <form *ngIf="showForm" action="" [formGroup]="flightScaleForm">
     <div  formArrayName="flightList">
-        <div *ngFor="let flight of flightListArray().controls; let i = index">
+        <div *ngFor="let flight of flightListArray().controls; let i = index; let last = last;">
             <div [formGroupName]="i" class="row mb-3">
                 <div class="col-lg-2 col-md-6 col-sm-12 form-floating my-2">
                     <input class="form-control" placeholder="Flight Number"
@@ -10,7 +10,7 @@
                 <div class="col-lg-2 col-md-6 col-sm-12 form-floating my-2">
                     <input mwlFlatpickr [altInput]="true" [enableTime]="true"
                         [minDate]="minDepartureTime" [maxDate]="maxTime" [convertModelValue]="true"
-                        altFormat="d M, Y H:i" (change)="onChangeDepartureTime()"
+                        altFormat="d M, Y H:i" (change)="onChangeDepartureTime($event)"
                         [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Departure Time"
                         formControlName="departureTime">
                     <label class="text-muted">Departure Time</label>
@@ -24,8 +24,8 @@
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-12 form-floating my-2">
                     <input mwlFlatpickr [altInput]="true" [enableTime]="true" [convertModelValue]="true"
-                        [minDate]="minDepartureTime" [maxDate]="maxTime" altFormat="d M, Y H:i"
-                        [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Departure Time"
+                        [minDate]="minDepartureTime" [maxDate]="maxTime" altFormat="d M, Y H:i" (change)="onChangeArrivalTime($event)"
+                        [dateFormat]="'d M, Y H:i'" class="form-control" placeholder="Departure Time" 
                         formControlName="arrivalTime">
                     <label class="text-muted">Arrival Time</label>
                 </div>
@@ -36,11 +36,18 @@
                     </ng-select>
                     <label class="text-muted">Destination Airport</label>
                 </div>
-                <div class="col-1 mt-3">
+                <div *ngIf="last; else minusButton" class="col-1 mt-3">
                     <span class="rounded-circle fs-2" style="cursor: pointer" (click)="addFlight()">
                         <i class="bx bx-plus-circle text-info"></i>
                     </span>
                 </div>
+                <ng-template #minusButton class="col-1 mt-3">
+                    <div class="col-1 mt-3">
+                        <span class="rounded-circle fs-2" style="cursor: pointer" (click)="removeFlight(i)">
+                            <i class="bx bx-minus-circle text-danger"></i>
+                        </span>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
