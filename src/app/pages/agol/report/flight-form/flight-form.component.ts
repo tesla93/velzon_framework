@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { ReportService } from '../report.service';
+import { FlightModel } from '../obc.model';
+import * as moment from "moment";
 
 @Component({
   selector: 'flight-form',
@@ -12,6 +14,11 @@ export class FlightFormComponent implements OnInit {
 
   @Input() maxTime!: Date;
   @Input() minDepartureTime!: Date;
+  @Output() processFlights = new EventEmitter<FlightModel[]>();
+  formatDates = 'MMM DD, YYYY HH:mm'
+
+  defaultOriginAirport: string = 'LAX';
+  flightArr!: FlightModel[];
 
 
   flightScaleForm!: FormGroup;
@@ -36,16 +43,15 @@ export class FlightFormComponent implements OnInit {
     this.flightScaleForm = this.fb.group({
       flightList: new FormArray([this.getFlightField()]),
     });
-    console.log(this.flightScaleForm)
   }
 
 
   getFlightField(): FormGroup {
     return new FormGroup({
       flightNumber: new FormControl('AA1314', [Validators.required]),
-      departureTime: new FormControl(new Date(2014, 1, 3, 7, 39), [Validators.required]),
-      originAirport: new FormControl('LAX', [Validators.required]),
-      arrivalTime: new FormControl(new Date(2014, 1, 4, 1, 17), [Validators.required]),
+      departureTime: new FormControl(null, [Validators.required]),
+      originAirport: new FormControl(this.defaultOriginAirport, [Validators.required]),
+      arrivalTime: new FormControl(null, [Validators.required]),
       destinationAirport: new FormControl('JFK', [Validators.required]),
     });
   }
@@ -55,6 +61,8 @@ export class FlightFormComponent implements OnInit {
   }
 
   addFlight() {
+    const tempForm = JSON.parse(JSON.stringify(this.flightScaleForm.value));
+    this.defaultOriginAirport = tempForm.flightList.at(-1).destinationAirport
     this.flightListArray().push(this.getFlightField());
   }
 
@@ -76,9 +84,42 @@ export class FlightFormComponent implements OnInit {
       });
   }
 
+  processData() {
+    this.flightArr = [];
+    const tempForm = JSON.parse(JSON.stringify(this.flightScaleForm.value));
+    tempForm.flightList.forEach((element: FlightModel) => {
+      let value: FlightModel = {
+        flightNumber: element.flightNumber,
+        departureTime: moment(element.departureTime).format(this.formatDates),
+        originAirport: element.originAirport,
+        arrivalTime: moment(element.arrivalTime).format(this.formatDates),
+        destinationAirport: element.destinationAirport,
+        travelTime: this.convertToHoursNMinutes(element.arrivalTime, element.departureTime)
+      }
+      this.flightArr.push(value);
+    });
+    this.processFlights.emit(this.flightArr)
+  }
+
 
   onChangeDepartureTime() {
   }
+
+
+  convertToHoursNMinutes(arrivalTime: Date, departureTime: Date) {
+    console.log(arrivalTime);
+
+    // Calculate the difference in milliseconds
+    const differenceInMilliseconds: number = new Date(arrivalTime).getTime() - new Date(departureTime).getTime();
+
+    // Convert milliseconds to hours and minutes
+    const hours: number = Math.floor(differenceInMilliseconds / (1000 * 60 * 60));
+    const remainingMilliseconds: number = differenceInMilliseconds % (1000 * 60 * 60);
+    const minutes: number = Math.round(remainingMilliseconds / (1000 * 60));
+
+    return `${hours} hrs, ${minutes} min`; // Output will be the number of hours and minutes between the two dates
+
+  }  
 
 
 

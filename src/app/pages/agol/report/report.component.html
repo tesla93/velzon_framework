@@ -61,7 +61,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <flight-form [maxTime]="maxTime" [minDepartureTime]="minDepartureTime"></flight-form>
+                <flight-form [maxTime]="maxTime" [minDepartureTime]="minDepartureTime" (processFlights)="processFlights($event)"></flight-form>
             </div>
         </div>
     </div>
