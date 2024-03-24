@@ -1,9 +1,9 @@
-import { ChartType } from "src/app/pages/charts/chartjs/chartjs.model";
+// import { ChartType } from "src/app/pages/charts/chartjs/chartjs.model";
 
 /**
  * Line Area Chart
  */
- const lineAreaChart: ChartType = {
+ const lineAreaChart: any = {
   labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
   datasets: [
     {
@@ -81,7 +81,7 @@ import { ChartType } from "src/app/pages/charts/chartjs/chartjs.model";
 /**
  * Line Bar Chart
  */
- const lineBarChart: ChartType = {
+ const lineBarChart: any = {
   labels: ["January", "February", "March", "April", "May", "June", "July"],
   datasets: [
       {
@@ -118,7 +118,7 @@ import { ChartType } from "src/app/pages/charts/chartjs/chartjs.model";
 /**
  * Pie Chart
  */
- const pieChart: ChartType = {
+ const pieChart: any = {
   labels: [
     "Desktops",
     "Tablets"
@@ -141,7 +141,7 @@ import { ChartType } from "src/app/pages/charts/chartjs/chartjs.model";
 /**
  * Donut Chart
  */
- const donutChart: ChartType = {
+ const donutChart: any = {
   labels: [
     "Desktops",
     "Tablets"
@@ -164,7 +164,7 @@ import { ChartType } from "src/app/pages/charts/chartjs/chartjs.model";
 /**
  * Polar Chart
  */
- const polarChart: ChartType = {
+ const polarChart: any = {
   labels: [
     "Series 1",
     "Series 2",
@@ -193,7 +193,7 @@ import { ChartType } from "src/app/pages/charts/chartjs/chartjs.model";
 /**
  * Redar Chart
  */
- const radarChart: ChartType = {
+ const radarChart: any = {
   labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
   datasets: [
       {
