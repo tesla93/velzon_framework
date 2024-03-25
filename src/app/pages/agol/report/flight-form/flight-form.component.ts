@@ -114,7 +114,6 @@ export class FlightFormComponent implements OnInit {
 
 
   convertToHoursNMinutes(arrivalTime: Date, departureTime: Date) {
-    console.log(arrivalTime);
 
     // Calculate the difference in milliseconds
     const differenceInMilliseconds: number = new Date(arrivalTime).getTime() - new Date(departureTime).getTime();

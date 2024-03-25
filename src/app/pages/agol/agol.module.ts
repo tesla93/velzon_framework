@@ -19,17 +19,22 @@ import { ReportComponent } from './report/report.component';
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 import { FlightFormComponent } from './report/flight-form/flight-form.component';
+import { AgolDashboardComponent } from './dashboard/agol-dashboard.component';
+import { GridComponent } from 'generic-table-form/src/shared/grid/grid.component';	
 
 
 
 @NgModule({
   declarations: [
     ReportComponent,
+    AgolDashboardComponent,
     FlightFormComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    GridComponent,
+    // GenericTableForm,
     ReactiveFormsModule,
     NgbDropdownModule,
     NgbNavModule,

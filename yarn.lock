@@ -162,7 +162,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@*", "@angular/common@^14.0.0", "@angular/common@^16.0.0", "@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.0-rc.0", "@angular/common@^17.0.3", "@angular/common@^17.0.4", "@angular/common@^8.2.0", "@angular/common@>=10.0.0", "@angular/common@>=12.0.0", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=16.0.0", "@angular/common@>=6.0.0", "@angular/common@>=9.0.0", "@angular/common@>8.0.0", "@angular/common@12 - 17", "@angular/common@17", "@angular/common@17.0.4":
+"@angular/common@*", "@angular/common@^14.0.0", "@angular/common@^16.0.0", "@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.0-rc.0", "@angular/common@^17.0.3", "@angular/common@^17.0.4", "@angular/common@^17.3.0", "@angular/common@^8.2.0", "@angular/common@>=10.0.0", "@angular/common@>=12.0.0", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=16.0.0", "@angular/common@>=6.0.0", "@angular/common@>=9.0.0", "@angular/common@>8.0.0", "@angular/common@12 - 17", "@angular/common@17", "@angular/common@17.0.4":
   version "17.0.4"
   resolved "https://registry.npmjs.org/@angular/common/-/common-17.0.4.tgz"
   integrity sha512-/y38PbuiaWOuOmP5ZELTlJSjZGijc6Nq2XQloT5pKsaH935prxPjyWazwlY6cUnJMQgSRU644/ULosDJec7Zxw==
@@ -190,7 +190,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@*", "@angular/core@^14.0.0", "@angular/core@^16.0.0", "@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.0-rc.0", "@angular/core@^17.0.3", "@angular/core@^17.0.4", "@angular/core@^8.2.0", "@angular/core@>=10.0.0", "@angular/core@>=12", "@angular/core@>=12.0.0", "@angular/core@>=13.0.0", "@angular/core@>=14", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0-0", "@angular/core@>=16.0.0", "@angular/core@>=5.0.0", "@angular/core@>=6.0.0", "@angular/core@>=9.0.0", "@angular/core@>8.0.0", "@angular/core@12 - 17", "@angular/core@17", "@angular/core@17.0.4":
+"@angular/core@*", "@angular/core@^14.0.0", "@angular/core@^16.0.0", "@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.0-rc.0", "@angular/core@^17.0.3", "@angular/core@^17.0.4", "@angular/core@^17.3.0", "@angular/core@^8.2.0", "@angular/core@>=10.0.0", "@angular/core@>=12", "@angular/core@>=12.0.0", "@angular/core@>=13.0.0", "@angular/core@>=14", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0-0", "@angular/core@>=16.0.0", "@angular/core@>=5.0.0", "@angular/core@>=6.0.0", "@angular/core@>=9.0.0", "@angular/core@>8.0.0", "@angular/core@12 - 17", "@angular/core@17", "@angular/core@17.0.4":
   version "17.0.4"
   resolved "https://registry.npmjs.org/@angular/core/-/core-17.0.4.tgz"
   integrity sha512-zk+z5sYPZd87pLxECx27quB5FvSmoi9PjJlcSlaBwwqaGnh/tPJI14u3q1dRY/CoZgP9egEiwc428+DzvOzJew==
@@ -4826,6 +4826,11 @@ entities@^4.2.0, entities@^4.3.0, entities@^4.4.0:
   resolved "https://registry.npmjs.org/entities/-/entities-4.5.0.tgz"
   integrity sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==
 
+enum-values@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/enum-values/-/enum-values-1.2.1.tgz"
+  integrity sha512-Qxe+bcN4g9tnmUitlkQnCpMXTUliW7WntCZ0giei/J4SbSeCiLJzhnFOUZKwnIOT4LiNo2iVfrrjDTZW+JAJhA==
+
 env-paths@^2.2.0:
   version "2.2.1"
   resolved "https://registry.npmjs.org/env-paths/-/env-paths-2.2.1.tgz"
@@ -5337,6 +5342,13 @@ fuzzy-search@^3.2.1:
   version "3.2.1"
   resolved "https://registry.npmjs.org/fuzzy-search/-/fuzzy-search-3.2.1.tgz"
   integrity sha512-vAcPiyomt1ioKAsAL2uxSABHJ4Ju/e4UeDM+g1OlR0vV4YhLGMNsdLNvZTpEDY4JCSt0E4hASCNM5t2ETtsbyg==
+
+generic-table-form@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.npmjs.org/generic-table-form/-/generic-table-form-0.0.12.tgz"
+  integrity sha512-K8p68LVtOviV3kjma50sMW1srE9nOYV/M3GHTVvuuO8/y6Xb+lBbwKBswX5pETl/ngJGSNP2ILTH5D9swCmfFg==
+  dependencies:
+    tslib "^2.3.0"
 
 gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
