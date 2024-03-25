@@ -26,19 +26,64 @@
         "AGENT": "Agent",
         "COMMENTS": "Comments"
       }
+    }    
+  },
+  "GENERAL": {
+    "LIST": {
+      "ACTION": "Action",
+      "NODATA": "No data available",
+      "PAGINATION": "Showing {{startIndex}} to {{endIndex}} of {{totalRecords}} entries",
+      "SHOW": "Show",
+      "ENTRIES": "Entries",
+      "LOADING": "Loading...",
+      "DELETETITLE": "You are about to delete a {{item}} ?",
+      "DELETEDESC": "Deleting that {{item}} will remove all of your information from our database.",
+      "DELETECONFIRM": "Yes, Delete It"
     },
-    "DASHBOARD": {
-      "TEXT": "Dashboards",
-      "BADGE": "New",
-      "LIST": {
-        "ANALYTICS": "Analytics",
-        "CRM": "CRM",
-        "ECOMMERCE": "Ecommerce",
-        "CRYPTO": "Crypto",
-        "PROJECTS": "Projects",
-        "NFT": "NFT",
-        "JOB": "Job"
-      }
+    "EDIT": {
+      "REQUIREDMSG": "{{field}} is required",
+      "PATTERNMSG": "Value does not match the pattern",
+      "MINMSG": "Number less than acceptable",
+      "MAXMSG": "Number greater than acceptable",
+      "EMAILMSG": "Value does not match email address",
+      "LEAVEPAGEMSG": "This page is asking you to confirm that you want to leave, information you’ve entered may not be saved.",
+      "LEAVE": "Leave",
+      "STAY": "Stay",
+      "SELECT": "Select"
+    },
+    "SWAL": {
+      "SUCCESSTITLE": "Success!",
+      "SUCCESSMSG": "The {{entity}} was saved successfully",
+      "SUCCESSDELETEMSG": "The {{entity}} was deleted successfully",
+      "ERRORTITLE": "Error!!",
+      "ERRORMSG": "An error occurred while saving",
+      "ERRORDELETEMSG": "An error occurred while removing the {{entity}}",
+      "ERRORDELETEROLEMSG": "Cannot delete role when assigned to an user"
+    },
+    "FILTER": {
+      "CLEARFILTER": "Clear",
+      "SEARCHFILTER": "Search Filters",
+      "SEARCH": "Search",
+      "SELECTDATE": "Select Date"
+    },
+    "COMMONBUTTONS": {
+      "SAVE": "Save",
+      "CREATE": "Create",
+      "IMPORT": "Import",
+      "EXPORT": "Export",
+      "VIEW": "View",
+      "CANCEL": "Cancel",
+      "SEARCHRESULTS": "Search Results",
+      "EDIT": "Edit",
+      "SUBMIT": "Submit",
+      "DELETE": "Delete",
+      "ACTION": "Action",
+      "DOWNLOAD": "Download"
+    },
+    "ATTACH": {
+      "ERRORMSG": "Error attaching file!",
+      "SUCCESSMSG": "File attached succesfully!",
+      "PLACEHLDR": "Click or drag files to upload"
     }
   }
 }

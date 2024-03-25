@@ -40,5 +40,63 @@
         "JOB": "TRABAJO"
       }
     }
+  },
+  "GENERAL": {
+    "LIST": {
+      "ACTION": "Acciones",
+      "NODATA": "No existen datos para mostrar",
+      "PAGINATION": "Mostrando {{startIndex}} a {{endIndex}} de {{totalRecords}} elementos",
+      "SHOW": "Mostrar",
+      "ENTRIES": "Entradas",
+      "LOADING": "Cargando...",
+      "DELETETITLE": "¿Desea eliminar este {{item}}?",
+      "DELETEDESC": "Al borrar este {{item}} se elimina completamente de nuestra base de datos",
+      "DELETECONFIRM": "Borrar"
+    },
+    "EDIT": {
+      "REQUIREDMSG": "{{field}} es requerido",
+      "PATTERNMSG": "El valor no cumple con el patrón correcto",
+      "MINMSG": "Número menor que los aceptados",
+      "MAXMSG": "Número mayor que los aceptados",
+      "EMAILMSG": "Correo Electrónico inválido",
+      "LEAVEPAGEMSG": "Esta página le pide que confirme que desea salir; es posible que la información que ingresó no se guarde.",
+      "LEAVE": "Abandonar",
+      "STAY": "Permanecer",
+      "SELECT": "Seleccionar"
+    },
+    "SWAL": {
+      "SUCCESSTITLE": "Guardado exitosamente!!",
+      "SUCCESSMSG": "La {{entity}} se guardó exitosamente",
+      "ERRORTITLE": "Error!!",
+      "ERRORMSG": "Se produjo un error al guardar",
+      "SUCCESSDELETEMSG": "Se borró la {{entity}} exitosamente",
+      "ERRORDELETEMSG": "Ocurrió un error mientras se intentaba borrar la {{entity}}",
+      "ERRORDELETEROLEMSG": "No se puede remover un rol que está asignado"
+    },
+    "FILTER": {
+      "CLEARFILTER": "Limpiar",
+      "SEARCHFILTER": "Filtros",
+      "SEARCH": "Buscar",
+      "SELECTDATE": "Selecionar Rango de Fechas"
+    },
+    "COMMONBUTTONS": {
+      "SAVE": "Guardar",
+      "CREATE": "Agregar",
+      "IMPORT": "Importar",
+      "EXPORT": "Exportar",
+      "CANCEL": "Cancelar",
+      "SEARCHRESULTS": "Resultados de la búsqueda",
+      "EDIT": "Editar",
+      "SUBMIT": "Enviar",
+      "DELETE": "Borrar",
+      "VIEW": "Ver",
+      "ACTION": "Acción",
+      "DOWNLOAD": "Descargar"
+    },
+    "ATTACH": {
+      "ERRORMSG": "Error al adjuntar archivo!",
+      "SUCCESSMSG": "Archivo adjunatdo exitosamente!",
+      "PLACEHLDR": "Cargar archivo"
+    }
   }
 }

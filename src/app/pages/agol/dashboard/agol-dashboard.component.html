@@ -1,4 +1,4 @@
-<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [isLite]="true"
-    (reloadData)="getDataItems($event)">
+<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="dataList?.length" [itemsPerPage]="itemsPerPage"
+    (reloadData)="getDataItems($event)" [statusClass]="getBadgeClass">
 </grid>
 

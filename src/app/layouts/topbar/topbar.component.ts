@@ -152,7 +152,7 @@ export class TopbarComponent implements OnInit {
    */
   listLang = [
     { text: 'English', flag: 'assets/images/flags/us.svg', lang: 'en' },
-    { text: 'Española', flag: 'assets/images/flags/spain.svg', lang: 'es' },
+    { text: 'Español', flag: 'assets/images/flags/spain.svg', lang: 'es' },
   ];
 
   /***

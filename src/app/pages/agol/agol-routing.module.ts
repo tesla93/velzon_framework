@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ReportComponent } from './report/report.component';
 import { AgolDashboardComponent } from './dashboard/agol-dashboard.component';
+import { DetailFormComponent } from './dashboard/detail-form/detail-form.component';
 
 // Component Pages
 
@@ -14,7 +15,11 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: AgolDashboardComponent
-  }, 
+  },
+  {
+    path: "detail/:id",
+    component: DetailFormComponent
+  },
 ];
 
 @NgModule({

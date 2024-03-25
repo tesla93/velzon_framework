@@ -1,4 +1,4 @@
-import { GridColumn } from "generic-table-form/src/shared/grid/classes/grid-column";
+import { GridColumn } from "../grid/classes/grid-column";
 import { BaseComponent } from "./base.component";
 
 export class ListBaseComponent<TItem> extends BaseComponent {

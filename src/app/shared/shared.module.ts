@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NgbNavModule, NgbAccordionModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { NgbNavModule, NgbAccordionModule, NgbDropdownModule, NgbTooltip, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Swiper Slider
 import { SlickCarouselModule } from 'ngx-slick-carousel';
@@ -41,6 +41,23 @@ import { JobcategoriesComponent } from './landing/job/jobcategories/jobcategorie
 import { ProgressComponent } from './landing/job/progress/progress.component';
 import { LandingScrollspyDirective } from './landingscrollspy.directive';
 import { GeneratePdf } from './pdf-reports/generate-pdf';
+import { GridComponent } from './grid/grid.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
+import { NgbdListViewSortableHeaderDirective } from './directives/list-view-sortable.directive';
+import { NullWithDefaultPipe } from './pipes/null-with-default.pipe';
+import { StripHtmlPipe } from './pipes/strip-html.pipe';
+import { FormatFileSizePipe } from './pipes/format-files-size.pipe';
+import { HideCardNumberPipe } from './pipes/hide-card-number.pipe';
+import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  url: `${''}`,
+  maxFilesize: 500,
+  uploadMultiple: false,
+  acceptedFiles: '.csv'
+};
 
 @NgModule({
   declarations: [
@@ -50,14 +67,20 @@ import { GeneratePdf } from './pdf-reports/generate-pdf';
     CollectionComponent,
     CtaComponent,
     DesignedComponent,
+    HideCardNumberPipe,
+    NullWithDefaultPipe,
+    StripHtmlPipe,
+    FormatFileSizePipe,
     PlanComponent,
     FaqsComponent,
     ReviewComponent,
     CounterComponent,
+    NgbdListViewSortableHeaderDirective,
     WorkProcessComponent,
     TeamComponent,
     ContactComponent,
     FooterComponent,
+    GridComponent,
     ScrollspyDirective,
     LandingScrollspyDirective,
     MarketPlaceComponent,
@@ -76,8 +99,14 @@ import { GeneratePdf } from './pdf-reports/generate-pdf';
   imports: [
     CommonModule,
     NgbNavModule,
+    NgbTooltip,
     NgbAccordionModule,
+    NgbPaginationModule,
     NgbDropdownModule,
+    TranslateModule,
+    NgSelectModule,
+    DropzoneModule,
+    FormsModule,
     SlickCarouselModule,
     CountUpModule,
     RouterModule
@@ -86,6 +115,7 @@ import { GeneratePdf } from './pdf-reports/generate-pdf';
     ClientLogoComponent,
     ServicesComponent,
     CollectionComponent,
+    GridComponent,
     CtaComponent,
     DesignedComponent,
     PlanComponent,
@@ -109,6 +139,18 @@ import { GeneratePdf } from './pdf-reports/generate-pdf';
     CandidateComponent,
     BlogComponent,
     JobcategoriesComponent,
-    JobFooterComponent]
+    JobFooterComponent],
+    providers: [
+      DatePipe,
+      NullWithDefaultPipe,
+      StripHtmlPipe,
+      FormatFileSizePipe,
+      HideCardNumberPipe,
+      {
+        provide: DROPZONE_CONFIG,
+        useValue: DEFAULT_DROPZONE_CONFIG
+      }
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }
