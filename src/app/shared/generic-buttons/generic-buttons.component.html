@@ -1,0 +1,11 @@
+<div class="hstack gap-2 mt-1" [ngClass]="positionClass">
+    <ng-container *ngFor="let button of buttons; index as i">
+        <button *ngIf="!button.hide" [type]="button.type" [ngStyle]="button.style" [ngClass]="button.ngClass" [disabled]="button.disabled" (click)="button.clickHandler && button.clickHandler()">
+            <span *ngIf="button.type==='submit' && submitting" class="spinner-grow flex-shrink-0" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </span>
+            <i *ngIf="button.iconClass" [ngClass]="button.iconClass"></i>
+            {{button.text | translate}}
+        </button>
+    </ng-container>
+</div>

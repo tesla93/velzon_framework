@@ -162,7 +162,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@*", "@angular/common@^14.0.0", "@angular/common@^16.0.0", "@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.0-rc.0", "@angular/common@^17.0.3", "@angular/common@^17.0.4", "@angular/common@^17.3.0", "@angular/common@^8.2.0", "@angular/common@>= 4.1.0", "@angular/common@>=10.0.0", "@angular/common@>=12.0.0", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=16.0.0", "@angular/common@>=6.0.0", "@angular/common@>=9.0.0", "@angular/common@>8.0.0", "@angular/common@12 - 17", "@angular/common@17", "@angular/common@17.0.4":
+"@angular/common@*", "@angular/common@^14.0.0", "@angular/common@^16.0.0", "@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.0-rc.0", "@angular/common@^17.0.3", "@angular/common@^17.0.4", "@angular/common@^17.3.0", "@angular/common@^8.2.0", "@angular/common@>=10.0.0", "@angular/common@>=12.0.0", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=16.0.0", "@angular/common@>=6.0.0", "@angular/common@>=9.0.0", "@angular/common@>8.0.0", "@angular/common@12 - 17", "@angular/common@17", "@angular/common@17.0.4":
   version "17.0.4"
   resolved "https://registry.npmjs.org/@angular/common/-/common-17.0.4.tgz"
   integrity sha512-/y38PbuiaWOuOmP5ZELTlJSjZGijc6Nq2XQloT5pKsaH935prxPjyWazwlY6cUnJMQgSRU644/ULosDJec7Zxw==
@@ -190,7 +190,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@*", "@angular/core@^14.0.0", "@angular/core@^16.0.0", "@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.0-rc.0", "@angular/core@^17.0.3", "@angular/core@^17.0.4", "@angular/core@^17.3.0", "@angular/core@^2.4.0 || ^4.0.0 || ^5.0.0", "@angular/core@^8.2.0", "@angular/core@>= 4.1.0", "@angular/core@>=10.0.0", "@angular/core@>=12", "@angular/core@>=12.0.0", "@angular/core@>=13.0.0", "@angular/core@>=14", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0-0", "@angular/core@>=16.0.0", "@angular/core@>=5.0.0", "@angular/core@>=6.0.0", "@angular/core@>=9.0.0", "@angular/core@>8.0.0", "@angular/core@12 - 17", "@angular/core@17", "@angular/core@17.0.4":
+"@angular/core@*", "@angular/core@^14.0.0", "@angular/core@^16.0.0", "@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.0-rc.0", "@angular/core@^17.0.3", "@angular/core@^17.0.4", "@angular/core@^17.3.0", "@angular/core@^8.2.0", "@angular/core@>=10.0.0", "@angular/core@>=12", "@angular/core@>=12.0.0", "@angular/core@>=13.0.0", "@angular/core@>=14", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0-0", "@angular/core@>=16.0.0", "@angular/core@>=5.0.0", "@angular/core@>=6.0.0", "@angular/core@>=9.0.0", "@angular/core@>8.0.0", "@angular/core@12 - 17", "@angular/core@17", "@angular/core@17.0.4":
   version "17.0.4"
   resolved "https://registry.npmjs.org/@angular/core/-/core-17.0.4.tgz"
   integrity sha512-zk+z5sYPZd87pLxECx27quB5FvSmoi9PjJlcSlaBwwqaGnh/tPJI14u3q1dRY/CoZgP9egEiwc428+DzvOzJew==
@@ -3587,11 +3587,6 @@ ajv@^8.0.0, ajv@^8.8.0, ajv@^8.8.2, ajv@8.12.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-angular-count-to@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.npmjs.org/angular-count-to/-/angular-count-to-0.0.3.tgz"
-  integrity sha512-iEDLNpw21FyYfm3kvDkn8Bq3w86XXT0I7jgOUKYZNz3jsak8IDgF1p2/VCG6biEedC2X5+ZwYZTg6kAExYuRUA==
-
 angular-feather@^6.5.0:
   version "6.5.0"
   resolved "https://registry.npmjs.org/angular-feather/-/angular-feather-6.5.0.tgz"
@@ -3620,11 +3615,6 @@ angular-shepherd@^16.0.0:
   dependencies:
     shepherd.js "^11.0.0"
     tslib "^2.3.0"
-
-angularx-count-to@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/angularx-count-to/-/angularx-count-to-1.0.4.tgz"
-  integrity sha512-A206Q1fzyJXYjxrWOG1b2v0Ku74eEJtI0Ux/5eND82Aj9tkk1rKuUS1e/uKT2+t83wxL1qbrWST5+RvFPQ/MMA==
 
 angularx-flatpickr@^7.3.0:
   version "7.3.0"
@@ -6753,6 +6743,13 @@ ngx-dropzone-wrapper@^15.0.0:
     dropzone "^5.9.0"
     tslib "^2.3.0"
 
+ngx-dropzone@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/ngx-dropzone/-/ngx-dropzone-3.1.0.tgz"
+  integrity sha512-5RBaEl07QUcY6sv/BBPyIxN6nbWY/KqTGheEKgbuGS0N1QPFY7NJUo8+X3fYUwQgLS+wjJeqPiR37dd0YNDtWA==
+  dependencies:
+    tslib "^2.0.0"
+
 ngx-echarts@^17.1.0:
   version "17.1.0"
   resolved "https://registry.npmjs.org/ngx-echarts/-/ngx-echarts-17.1.0.tgz"
@@ -7703,7 +7700,7 @@ rx@4.1.0:
   resolved "https://registry.npmjs.org/rx/-/rx-4.1.0.tgz"
   integrity sha512-CiaiuN6gapkdl+cZUr67W6I8jquN4lkak3vtIsIWCl4XIPP8ffsoyN6/+PuGXnQy8Cu8W2y9Xxh31Rq4M6wUug==
 
-rxjs@^5.0.1, "rxjs@^6.5.3 || ^7.4.0", "rxjs@^6.5.3 || ^7.5.0", "rxjs@^6.5.5 || ^7.4.0", rxjs@^7.0.0, rxjs@^7.8.1, rxjs@>=6.0.0, rxjs@7.8.1:
+"rxjs@^6.5.3 || ^7.4.0", "rxjs@^6.5.3 || ^7.5.0", "rxjs@^6.5.5 || ^7.4.0", rxjs@^7.0.0, rxjs@^7.8.1, rxjs@>=6.0.0, rxjs@7.8.1:
   version "7.8.1"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.1.tgz"
   integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==

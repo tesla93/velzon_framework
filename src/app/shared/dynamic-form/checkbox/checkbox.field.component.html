@@ -1,0 +1,5 @@
+<div *ngIf="!field.hidden">
+    <input class="form-check-input" [ngClass]="field.class" [name]="field.name" type="checkbox"
+        [formControl]="$any(control)" />
+    <label class="form-check-label ms-1" [for]="field.name">{{ field.label ?? '' | translate }}</label>
+</div>

@@ -1,0 +1,12 @@
+<div class="form-floating">
+    <textarea class="form-control"
+        [ngClass]="{'is-invalid': hasErrors && isSubmitted, 'is-valid': !hasErrors && isSubmitted}"
+        [name]="field.name"
+        [formControl]="$any(control)"
+        [required]="field.required ?? false"
+        [placeholder]="field.placeHolder ?? ''| translate"
+        [rows]="field.rows"
+        [readonly]="field.readonly">
+    </textarea>
+    <label [for]="field.name" class="text-muted">{{ field.label ?? '' | translate }}</label>
+</div>

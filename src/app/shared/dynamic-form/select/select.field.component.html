@@ -1,0 +1,19 @@
+<div class="form-floating">
+    <ng-select class="form-control"  [searchable]="field.searchable" [clearable]="field.clearable" [loading]="field.selectSpinner"
+         [bindLabel]="field.bindLabel" [bindValue]="field.bindValue" [formControl]="$any(control)" [multiple]="field.multiple"
+         [ngClass]="{'is-invalid': hasErrors && isSubmitted, 'is-valid': !hasErrors && isSubmitted}"
+         [placeholder]="field.placeHolder ?? ''| translate" (change)="field.onChangeHandler($event)">
+        <ng-option *ngFor="let item of field.selectListItem" [value]="item.value">
+            <a class="dropdown-item d-flex align-items-center">
+                <div *ngIf="item.icon" class="flex-shrink-0 me-2">
+                    <i class="fs-20 align-middle text-info me-1" [ngClass]="item.icon"></i>
+                </div>
+                <div *ngIf="item.iconUrl" class="avatar-xxs flex-shrink-0 me-2">
+                    <img src="{{item.iconUrl}}" alt="" class="img-fluid rounded-circle" />
+                </div>
+                <div class="flex-grow-1">{{item.text | dynamicPipe : field.pipe : [] }}</div>
+            </a>
+        </ng-option>
+    </ng-select>
+    <label *ngIf="$any(control)?.value" [for]="field.name" class="text-muted">{{ field.label ?? '' | translate}}</label>
+</div>

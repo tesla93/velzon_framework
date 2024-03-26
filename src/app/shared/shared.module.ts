@@ -52,6 +52,7 @@ import { FormatFileSizePipe } from './pipes/format-files-size.pipe';
 import { HideCardNumberPipe } from './pipes/hide-card-number.pipe';
 import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
 
+
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: `${''}`,
   maxFilesize: 500,
