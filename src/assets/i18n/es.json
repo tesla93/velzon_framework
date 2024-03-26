@@ -8,7 +8,7 @@
     "MENU": {
       "TEXT": "MENÚ"
     },
-    "AGOL":{
+    "AGOL": {
       "REPORTS": {
         "TEXT": "Reportes de Agol"
       },
@@ -25,19 +25,12 @@
         "STATUS": "Estado",
         "AGENT": "Agente",
         "COMMENTS": "Comentarios"
-      }
-    },
-    "DASHBOARD": {
-      "TEXT": "Tableros",
-      "BADGE": "Nuevo",
-      "LIST": {
-        "ANALYTICS": "Analítica",
-        "CRM": "CRM",
-        "ECOMMERCE": "Comercio electrónico",
-        "CRYPTO": "Cripto",
-        "PROJECTS": "Proyectos",
-        "NFT": "NFT",
-        "JOB": "TRABAJO"
+      },
+      "ANALYTICS": {
+        "TOTALORDERS": "Órdenes Totales",
+        "PENDINGORDERS": "Órdenes Pendientes",
+        "COMPLETEDORDERS": "Órdenes Completadas",
+        "OPENORDERS": "Órdenes Abiertas"
       }
     }
   },

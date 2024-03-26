@@ -21,6 +21,8 @@ import { allIcons } from 'angular-feather/icons';
 import { FlightFormComponent } from './report/flight-form/flight-form.component';
 import { AgolDashboardComponent } from './dashboard/agol-dashboard.component';
 import { DetailFormComponent } from './dashboard/detail-form/detail-form.component';
+import { CountUpModule } from 'ngx-countup';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -36,12 +38,14 @@ import { DetailFormComponent } from './dashboard/detail-form/detail-form.compone
     FormsModule,
     ReactiveFormsModule,
     NgbDropdownModule,
+    CountUpModule,
     NgbNavModule,
     NgSelectModule,
     UiSwitchModule,
     FlatpickrModule,
     ColorPickerModule,
     NgxMaskDirective,
+    TranslateModule,
     NgxMaskPipe,
     NgxSliderModule,
     CdkStepperModule,

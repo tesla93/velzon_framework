@@ -25,6 +25,12 @@
         "STATUS": "Status",
         "AGENT": "Agent",
         "COMMENTS": "Comments"
+      },
+      "ANALYTICS": {
+        "TOTALORDERS": "Total Orders",
+        "PENDINGORDERS": "Pending Orders",
+        "COMPLETEDORDERS": "Completed Orders",
+        "OPENORDERS": "Open Orders"
       }
     }    
   },

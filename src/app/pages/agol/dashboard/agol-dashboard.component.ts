@@ -6,6 +6,7 @@ import { GridColumn } from 'src/app/shared/grid/classes/grid-column';
 import { DisplayingMode } from 'src/app/shared/grid/enums/displaying-mode';
 import { GridComponent } from 'src/app/shared/grid/grid.component';
 import { Router } from '@angular/router';
+import { AnalyticData } from '../models/analytic-data';
 
 @Component({
   selector: 'agol-dashboard',
@@ -73,17 +74,33 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
     },
   ]
 
+  option = {
+    startVal: 0,
+    useEasing: true,
+    duration: 2,
+    decimalPlaces: 0,
+  };
+
+  analyticData!: AnalyticData;
+  loadingAnalytics = true;
+
   constructor(injector: Injector, private router: Router) {
     super(injector);
 
   }
   ngOnInit() {
     this.getDataItems();
+    this.getAnalyticData();
   }
 
 
   getDataItems(pagination?: PaginationModel) {
     this.dataList = cargoModelData
+  }
+
+  getAnalyticData() {
+    this.analyticData = { pendingOrders: 456, totalOrders: 15685, completedOrders: 988, openOrders: 5 }
+    this.loadingAnalytics=false;
   }
 
   getBadgeClass(status: string) {
