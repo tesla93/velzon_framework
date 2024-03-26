@@ -32,6 +32,8 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
     this.selectedData = cargoModelData[0];
     this.initForm();
     this.initFields();
+    this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT', 'Order Detail');	
+    // this.setBreadCrumbItems('MENUITEMS.AGOL.CATALOGS.TEXT', 'MENUITEMS.AGOL.CATALOGS.STATUS');	
   }
 
   initForm(): void {
@@ -48,6 +50,8 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
       agentAssigned: new FormControl(this.selectedData.agentAssigned),
       comments: new FormControl(this.selectedData.comments),
     });
+
+    console.log(this.ordersForm);
   }
 
   initFields() {
@@ -60,6 +64,14 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         disabled: false,
         readonly: true,
         maxlength: 100,
+        order: 0,
+      }),
+      new SelectField({
+        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.STATUS',
+        label: 'MENUITEMS.AGOL.DASHBOARD.STATUS',
+        name: 'currentStatusId',
+        parentClass: 'col-4 my-2',
+        selectListItem: this.statusDropdown,
         order: 0,
       }),
       new InputField({
@@ -125,14 +137,7 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         maxlength: 100,
         order: 7,
       }),
-      new SelectField({
-        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.STATUS',
-        label: 'MENUITEMS.AGOL.DASHBOARD.STATUS',
-        name: 'statusiD',
-        parentClass: 'col-4 my-2',
-        selectListItem: this.statusDropdown,
-        order: 8,
-      }),
+     
       new InputField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.AGENTASSIGNED',
         label: 'MENUITEMS.AGOL.DASHBOARD.AGENTASSIGNED',

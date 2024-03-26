@@ -93,6 +93,7 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
   ngOnInit() {
     this.getDataItems();
     this.getAnalyticData();
+    this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT');
   }
 
 
