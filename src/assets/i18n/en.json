@@ -21,18 +21,23 @@
         "CONSIGNEE": "Consignee",
         "DESTINATIONAIRPORT": "Destination Airport",
         "ORIGININLANDCARRIER": "Origin Carrier",
-        "DESTINATIONINLANDCARRIER": "Destination Carrier",
         "STATUS": "Status",
         "AGENT": "Agent",
-        "COMMENTS": "Comments"
+        "COMMENTS": "Comments",
+        "AGENTASSIGNED": "Agent Assigned",
+        "DESTINATIONINLANDCARRIER": "Destination Inland Carrier"
       },
       "ANALYTICS": {
         "TOTALORDERS": "Total Orders",
         "PENDINGORDERS": "Pending Orders",
         "COMPLETEDORDERS": "Completed Orders",
         "OPENORDERS": "Open Orders"
+      },
+      "CATALOGS": {
+        "TEXT": "Catalogs",
+        "STATUS":"Order Status"
       }
-    }    
+    }
   },
   "GENERAL": {
     "LIST": {

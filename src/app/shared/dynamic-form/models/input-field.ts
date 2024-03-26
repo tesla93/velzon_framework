@@ -1,4 +1,4 @@
-import { InputValidationType } from '@shared/enums/input-validation-type';
+import { InputValidationType } from '../../enums/input-validation-type';
 import { Field } from './field';
 
 export class InputField extends Field<string> {

@@ -20,17 +20,22 @@
         "ORIGINAIRPORT": "Aeropuerto de Origen",
         "CONSIGNEE": "Consignatario",
         "DESTINATIONAIRPORT": "Aeropuerto de Destino",
+        "DESTINATIONINLANDCARRIER": "Carrier en el destino",
         "ORIGININLANDCARRIER": "Carrier de Origen",
-        "DESTINATIONINLANDCARRIER": "Carrier de Destino",
         "STATUS": "Estado",
         "AGENT": "Agente",
-        "COMMENTS": "Comentarios"
+        "COMMENTS": "Comentarios",
+        "AGENTASSIGNED": "Agente Asignado"
       },
       "ANALYTICS": {
         "TOTALORDERS": "Órdenes Totales",
         "PENDINGORDERS": "Órdenes Pendientes",
         "COMPLETEDORDERS": "Órdenes Completadas",
         "OPENORDERS": "Órdenes Abiertas"
+      },
+      "CATALOGS": {
+        "TEXT": "Catalogos",
+        "STATUS":"Estados"
       }
     }
   },

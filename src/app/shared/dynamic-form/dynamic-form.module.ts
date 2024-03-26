@@ -17,6 +17,7 @@ import { GenericButtonsComponent } from '../generic-buttons/generic-buttons.comp
 import { NoNumbersDirective } from '../directives/no-numbers.directive';
 import { NoLettersDirective } from '../directives/no-letters.directive';
 import { PasswordToggleDirective } from '../directives/hide-card.directive';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   url: `${''}`,
@@ -46,6 +47,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     FormsModule,
     ReactiveFormsModule, 
     TranslateModule,
+    NgxDropzoneModule,
     DropzoneModule,
     NgSelectModule,
     NgxMaskDirective,

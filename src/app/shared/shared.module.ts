@@ -51,6 +51,7 @@ import { StripHtmlPipe } from './pipes/strip-html.pipe';
 import { FormatFileSizePipe } from './pipes/format-files-size.pipe';
 import { HideCardNumberPipe } from './pipes/hide-card-number.pipe';
 import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
 
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
@@ -104,6 +105,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     NgbAccordionModule,
     NgbPaginationModule,
     NgbDropdownModule,
+    DynamicFormModule,
     TranslateModule,
     NgSelectModule,
     DropzoneModule,
@@ -124,6 +126,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     ReviewComponent,
     CounterComponent,
     WorkProcessComponent,
+    DynamicFormModule,
     TeamComponent,
     ContactComponent,
     FooterComponent,

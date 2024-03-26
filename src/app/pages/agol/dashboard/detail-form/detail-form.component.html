@@ -1,1 +1,7 @@
-<p>detail-form works!</p>
+<app-breadcrumbs title="EDIT ORDER" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row">
+    <dynamic-form [fields]="fields" [customForm]="ordersForm" (submitEvent)="onSubmit()" [showSpinner]="showSpinner" 
+                                    [buttons]="buttons" [submitted]="submitted">
+                                </dynamic-form> 
+</div>

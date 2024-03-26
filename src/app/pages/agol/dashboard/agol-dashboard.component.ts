@@ -27,6 +27,7 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
     },
     <GridColumn>{
       field: "shipper",
+      // displayingMode: DisplayingMode.Avatar,
       header: "MENUITEMS.AGOL.DASHBOARD.SHIPPER",
     },
     <GridColumn>{
@@ -35,6 +36,7 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
     },
     <GridColumn>{
       field: "consignee",
+      // displayingMode: DisplayingMode.Avatar,
       header: "MENUITEMS.AGOL.DASHBOARD.CONSIGNEE",
     },
     <GridColumn>{
