@@ -1,0 +1,109 @@
+<app-breadcrumbs title="{{'MENUITEMS.AGOL.DASHBOARD.TEXT' | translate}}" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<div class="row" *ngIf="analyticData">
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">{{ "MENUITEMS.AGOL.ANALYTICS.TOTALORDERS" | translate}}</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold">
+                            <div *ngIf="!loadingAnalytics; else loadingData">
+                                <span [countUp]="analyticData.totalOrders" class="counter-value" [options]="option"></span>
+                            </div>
+                        </h2>
+                    </div>
+                    <div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-info-subtle text-info rounded-circle fs-4">
+                                <i class="ri-ticket-2-line"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">{{ "MENUITEMS.AGOL.ANALYTICS.OPENORDERS" | translate}}</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold">
+                            <div *ngIf="!loadingAnalytics; else loadingData">
+                                <span [countUp]="analyticData.openOrders" class="counter-value" [options]="option"></span>
+                            </div>
+                        </h2>
+                    </div>
+                    <div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-danger-subtle text-danger rounded-circle fs-4">
+                                <i class="ri-bug-line"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div>
+    </div>
+
+    <!-- end col -->
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">{{ "MENUITEMS.AGOL.ANALYTICS.PENDINGORDERS" | translate}}</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold">
+                            <div *ngIf="!loadingAnalytics; else loadingData">
+                                <span [countUp]="analyticData.pendingOrders" class="counter-value" [options]="option"></span>
+                            </div>
+                        </h2>
+                    </div>
+                    <div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-warning-subtle text-warning rounded-circle fs-4">
+                                <i class="mdi mdi-timer-sand"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div>
+    </div>
+    <!--end col-->
+    <div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">{{ "MENUITEMS.AGOL.ANALYTICS.COMPLETEDORDERS" | translate}}</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold">
+                            <div *ngIf="!loadingAnalytics; else loadingData">
+                                <span [countUp]="analyticData.completedOrders" class="counter-value" [options]="option"></span>
+                            </div>
+                        </h2>
+                    </div>
+                    <div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-success-subtle text-success rounded-circle fs-4">
+                                <i class="ri-calendar-check-line"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="dataList?.length" [importEnabled]="true" [itemsPerPage]="itemsPerPage" [creationLink]="'/agol/dashboard/create'"
+    (reloadData)="getDataItems($event)" [statusClass]="getBadgeClass">
+</grid>
+
+<ng-template #loadingData>
+    <div class="loading"> <small>Loading</small></div>
+</ng-template>
+

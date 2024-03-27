@@ -1,0 +1,23 @@
+<div class="form-floating" >
+    <input class="form-control"
+        [ngClass]="{'is-invalid': hasErrors && isSubmitted, 'is-valids': !hasErrors && isSubmitted}"
+        [name]="field.name"
+        [formControl]="$any(control)"
+        [required]="field.required ?? false" 
+        [disabled]="field.disabled"
+        [readonly]="field.readonly"
+        [maxlength]="field.maxlength"
+        (change)="field.onChangeHandler()"
+        [type]="field.type"
+        [placeholder]="field.placeHolder ?? ''| translate"
+        />
+        <button *ngIf="field.hasShowButton"
+            class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
+            type="button" id="password-addon">
+                <i class="mdi align-middle" [ngClass]="{'mdi-eye-off-outline': field.type==='password', 'mdi-eye-outline': field.type==='text' }"
+                    (click)="toggleFieldTextType()">
+                </i>
+        </button>
+    
+    <label [for]="field.name" class="text-muted">{{ field.label ?? '' | translate }}</label>
+</div>

@@ -37,11 +37,7 @@ export class RightsidebarComponent implements OnInit {
   constructor(private eventService: EventService, private offcanvasService: NgbOffcanvas, private store: Store<RootReducerState>) { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      if (this.offcanvasService.hasOpenOffcanvas() == false) {
-        this.openEnd(this.filtetcontent);
-      };
-    }, 1000);
+
 
     this.store.select('layout').subscribe((data) => {
       this.layout = data.LAYOUT;

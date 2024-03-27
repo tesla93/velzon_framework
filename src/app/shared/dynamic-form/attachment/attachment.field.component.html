@@ -1,0 +1,9 @@
+<div id="attachment-form" [ngClass]="field.class">
+    <ngx-dropzone #dropzone (change)="field.onChangeHandler($event)" [expandable]="field.expandable">
+        <ngx-dropzone-label>{{field.placeHolder ?? '' | translate}}</ngx-dropzone-label>
+        <ngx-dropzone-preview *ngFor="let f of field.files" [removable]="field.removable">
+            (removed)="field.onRemoveHandler(f)">
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+        </ngx-dropzone-preview>
+    </ngx-dropzone>
+</div>

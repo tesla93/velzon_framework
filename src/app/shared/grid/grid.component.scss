@@ -1,0 +1,58 @@
+:host ::ng-deep {
+    .ng-dropdown-panel {
+        background-color: white !important;
+    }
+
+    .ng-select {
+        width: 20% !important;
+        min-width: 50px;
+    }
+
+    .actions-cell {
+        cursor: pointer;
+    }
+
+    .table-borderless>tbody>tr>td {
+        border-left: 0px solid;
+        border-right: 0px solid;
+    }
+
+    .table-bordered> :not(caption)>*>* {
+        border-width: 0 1px;
+    }
+
+    .w-8 {
+        width: 8%;
+    }
+
+    .no-data-cls {
+        min-width: 200px;
+    }
+
+    .table>thead {
+        border-top-width: 1px !important;
+    }
+
+    td {
+        vertical-align: middle !important;
+    }
+
+
+    .dropzone .dz-message {
+        min-height: 70px !important;
+    }
+
+    .min-height-80 {
+        min-height: 80px !important;
+    }
+
+    .symbol {
+        cursor: pointer;
+    }
+
+    .header-text {
+        margin-right: 12px;
+    }
+
+
+}

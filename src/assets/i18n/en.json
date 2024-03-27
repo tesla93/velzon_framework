@@ -8,284 +8,95 @@
     "MENU": {
       "TEXT": "MENU"
     },
-    "DASHBOARD": {
-      "TEXT": "Dashboards",
-      "BADGE": "New",
-      "LIST": {
-        "ANALYTICS": "Analytics",
-        "CRM": "CRM",
-        "ECOMMERCE": "Ecommerce",
-        "CRYPTO": "Crypto",
-        "PROJECTS": "Projects",
-        "NFT": "NFT",
-        "JOB": "Job"
+    "AGOL": {
+      "REPORTS": {
+        "TEXT": "Agol Report"
+      },
+      "DASHBOARD": {
+        "TEXT": "Dashboards",
+        "REFERENCEID": "Reference ID",
+        "CUSTOMERNAME": "Customer Name",
+        "SHIPPER": "Shipper",
+        "ORIGINAIRPORT": "Origin Airport",
+        "CONSIGNEE": "Consignee",
+        "DESTINATIONAIRPORT": "Destination Airport",
+        "ORIGININLANDCARRIER": "Origin Carrier",
+        "STATUS": "Status",
+        "AGENT": "Agent",
+        "COMMENTS": "Comments",
+        "AGENTASSIGNED": "Agent Assigned",
+        "DESTINATIONINLANDCARRIER": "Destination Inland Carrier"
+      },
+      "ANALYTICS": {
+        "TOTALORDERS": "Total Orders",
+        "PENDINGORDERS": "Pending Orders",
+        "COMPLETEDORDERS": "Completed Orders",
+        "OPENORDERS": "Open Orders"
+      },
+      "CATALOGS": {
+        "TEXT": "Catalogs",
+        "STATUS": "Order Status",
+        "ORDER": "Sequence",
+          "STATUSNAME": "Status Name"
       }
+    }
+  },
+  "GENERAL": {
+    "LIST": {
+      "ACTION": "Action",
+      "NODATA": "No data available",
+      "PAGINATION": "Showing {{startIndex}} to {{endIndex}} of {{totalRecords}} entries",
+      "SHOW": "Show",
+      "ENTRIES": "Entries",
+      "LOADING": "Loading...",
+      "DELETETITLE": "You are about to delete a {{item}} ?",
+      "DELETEDESC": "Deleting that {{item}} will remove all of your information from our database.",
+      "DELETECONFIRM": "Yes, Delete It"
     },
-    "APPS": {
-      "TEXT": "Apps",
-      "LIST": {
-        "CALENDAR": "Calendar",
-        "MAINCALENDAR": "Main Calendar",
-        "MONTHGRID": "Month Grid",
-        "CHAT": "Chat",
-        "EMAIL": "Email",
-        "MAILBOX": "Mailbox",
-        "MAILTEMPLATES": "Email Templates",
-        "BASICACTION": "Basic Action",
-        "ECOMMERCEACTION": "Ecommerce Action",
-        "ECOMMERCE": "Ecommerce",
-        "PRODUCTS": "Products",
-        "PRODUCTDETAILS": "Product Details",
-        "CREATEPRODUCT": "Create Product",
-        "ORDERS": "Orders",
-        "ORDERDETAILS": "Order Details",
-        "CUSTOMERS": "Customers",
-        "SHOPPINGCART": "Shopping Cart",
-        "CHECKOUT": "Checkout",
-        "SELLERS": "Sellers",
-        "SELLERDETAILS": "Seller Details",
-        "PROJECTS": "Projects",
-        "LIST": "List",
-        "OVERVIEW": "Overview",
-        "CREATEPROJECT": "Create Project",
-        "TASK": "Tasks",
-        "KANBANBOARD": "Kanban Board",
-        "LISTVIEW": "List View",
-        "TASKDETAILS": "Task Details",
-        "CRM": "CRM",
-        "CONTACTS": "Contacts",
-        "COMPANIES": "Companies",
-        "DEALS": "Deals",
-        "LEADS": "Leads",
-        "CRYPTO": "Crypto",
-        "TRANSACTIONS": "Transactions",
-        "BUY&SELL": "Buy & Sell",
-        "MYWALLET": "My Wallet",
-        "ICOLIST": "ICO List",
-        "KYCAPPLICATION": "KYC Application",
-        "INVOICES": "Invoices",
-        "DETAILS": "Details",
-        "CREATEINVOICE": "Create Invoice",
-        "SUPPORTTICKETS": "Support Tickets",
-        "TICKETDETAILS": "Ticket Details",
-        "NFTMARKETPLACE": "NFT Marketplace",
-        "MARKETPLACE": "Marketplace",
-        "EXPLORENOW": "Explore Now",
-        "LIVEAUCTION": "Live Auction",
-        "ITEMDETAILS": "Item Details",
-        "COLLECTIONS": "Collections",
-        "CREATORS": "Creators",
-        "RANKING": "Ranking",
-        "WALLETCONNECT": "Wallet Connect",
-        "CREATENFT": "Create NFT",
-        "FILEMANAGER": "File Manager",
-        "TODO": "To Do",
-        "JOBS": "Jobs",
-        "STATISTICS": "Statistics",
-        "JOBLISTS": "Job Lists",
-        "GRID": "Grid",
-        "CANDIDATELISTS": "Candidate Lists",
-        "GRIDVIEW": "Grid View",
-        "APPLICATION": "Application",
-        "NEWJOB": "New Job",
-        "COMPANIESLIST": "Companies List",
-        "JOBCATEGORIES": "Job Categories",
-        "APIKEY": "API Key"
-      }
+    "EDIT": {
+      "REQUIREDMSG": "{{field}} is required",
+      "PATTERNMSG": "Value does not match the pattern",
+      "MINMSG": "Number less than acceptable",
+      "MAXMSG": "Number greater than acceptable",
+      "EMAILMSG": "Value does not match email address",
+      "LEAVEPAGEMSG": "This page is asking you to confirm that you want to leave, information you’ve entered may not be saved.",
+      "LEAVE": "Leave",
+      "STAY": "Stay",
+      "SELECT": "Select"
     },
-    "LAYOUTS": {
-      "TEXT": "Layouts",
-      "LIST": {
-        "HORIZONTAL": "Horizontal",
-        "DETACHED": "Detached",
-        "TWOCOLUMN": "Two Column",
-        "HOVERED": "Hovered"
-      }
+    "SWAL": {
+      "SUCCESSTITLE": "Success!",
+      "SUCCESSMSG": "The {{entity}} was saved successfully",
+      "SUCCESSDELETEMSG": "The {{entity}} was deleted successfully",
+      "ERRORTITLE": "Error!!",
+      "ERRORMSG": "An error occurred while saving",
+      "ERRORDELETEMSG": "An error occurred while removing the {{entity}}",
+      "ERRORDELETEROLEMSG": "Cannot delete role when assigned to an user"
     },
-    "PAGES": {
-      "TEXT": "Pages"
+    "FILTER": {
+      "CLEARFILTER": "Clear",
+      "SEARCHFILTER": "Search Filters",
+      "SEARCH": "Search",
+      "SELECTDATE": "Select Date"
     },
-    "AUTHENTICATION": {
-      "TEXT": "Authentication",
-      "LIST": {
-        "BASIC": "Basic",
-        "COVER": "Cover",
-        "SIGNIN": "Sign In",
-        "SIGNUP": "Sign Up",
-        "PASSWORDRESET": "Password Reset",
-        "PASSWORDCREATE": "Password Create",
-        "LOCKSCREEN": "Lock Screen",
-        "LOGOUT": "Logout",
-        "SUCCESSMESSAGE": "Success Message",
-        "TWOSTEPVERIFICATION": "Two Step Verification",
-        "ERRORS": "Errors",
-        "404BASIC": "404 Basic",
-        "404COVER": "404 Cover",
-        "404ALT": "404 Alt",
-        "500": "500",
-        "OFFLINE": "Offline Page"
-      }
+    "COMMONBUTTONS": {
+      "SAVE": "Save",
+      "CREATE": "Create",
+      "IMPORT": "Import",
+      "EXPORT": "Export",
+      "VIEW": "View",
+      "CANCEL": "Cancel",
+      "SEARCHRESULTS": "Search Results",
+      "EDIT": "Edit",
+      "SUBMIT": "Submit",
+      "DELETE": "Delete",
+      "ACTION": "Action",
+      "DOWNLOAD": "Download"
     },
-    "PAGES": {
-      "TEXT": "Pages",
-      "LIST": {
-        "STARTER": "Starter",
-        "PROFILE": "Profile",
-        "SIMPLEPAGE": "Simple Page",
-        "SETTINGS": "Settings",
-        "TEAM": "Team",
-        "TIMELINE": "Timeline",
-        "FAQS": "FAQs",
-        "PRICING": "Pricing",
-        "GALLERY": "Gallery",
-        "MAINTENANCE": "Maintenance",
-        "COMINGSOON": "Coming Soon",
-        "SITEMAP": "Sitemap",
-        "SEARCHRESULTS": "Search Results",
-        "PRIVACYPOLICY": "Privacy Policy",
-        "TERMS&CONDITIONS": "Term & Conditions"
-      }
-    },
-    "LANDING": {
-      "TEXT": "Landing",
-      "LIST": {
-        "ONEPAGE": "One Page",
-        "NFTLANDING": "NFT Landing",
-        "JOB": "Job"
-      }
-    },
-    "COMPONENTS": {
-      "TEXT": "Components"
-    },
-    "BASEUI": {
-      "TEXT": "Base UI",
-      "LIST": {
-        "ALERTS": "Alerts",
-        "BADGES": "Badges",
-        "BUTTONS": "Buttons",
-        "COLORS": "Colors",
-        "CARDS": "Cards",
-        "CAROUSEL": "Carousel",
-        "DROPDOWNS": "Dropdowns",
-        "GRID": "Grid",
-        "IMAGES": "Images",
-        "TABS": "Tabs",
-        "ACCORDION&COLLAPSE": "Accordion & Collapse",
-        "MODALS": "Modals",
-        "OFFCANVAS": "Offcanvas",
-        "PLACEHOLDERS": "Placeholders",
-        "PROGRESS": "Progress",
-        "NOTIFICATIONS": "Notifications",
-        "MEDIAOBJECT": "Media object",
-        "EMBEDVIDEO": "Embed Video",
-        "TYPOGRAPHY": "Typography",
-        "LISTS": "Lists",
-        "LINKS": "Links",
-        "GENERAL": "General",
-        "RIBBONS": "Ribbons",
-        "UTILITIES": "Utilities"
-      }
-    },
-    "ADVANCEUI": {
-      "TEXT": "Advance UI",
-      "LIST": {
-        "SWEETALERTS": "Sweet Alerts",
-        "NESTABLELIST": "Nestable List",
-        "SCROLLBAR": "Scrollbar",
-        "ANIMATION": "Animation",
-        "TOUR": "Tour",
-        "SWIPERSLIDER": "Swiper Slider",
-        "RATTINGS": "Ratings",
-        "HIGHLIGHT": "Highlight",
-        "SCROLLSPY": "ScrollSpy"
-      }
-    },
-    "WIDGETS": {
-      "TEXT": "Widgets"
-    },
-    "FORMS": {
-      "TEXT": "Forms",
-      "LIST": {
-        "BASICELEMENTS": "Basic Elements",
-        "FORMSELECT": "Form Select",
-        "CHECKBOXS&RADIOS": "Checkboxs & Radios",
-        "PICKERS": "Pickers",
-        "INPUTMASKS": "Input Masks",
-        "ADVANCED": "Advanced",
-        "RANGESLIDER": "Range Slider",
-        "VALIDATION": "Validation",
-        "WIZARD": "Wizard",
-        "EDITORS": "Editors",
-        "FILEUPLOADS": "File Uploads",
-        "FORMLAYOUTS": "Form Layouts"
-      }
-    },
-    "TABLES": {
-      "TEXT": "Tables",
-      "LIST": {
-        "BASICTABLES": "Basic Tables",
-        "GRIDJS": "Grid Js",
-        "LISTJS": "List Js",
-        "DATATABLES": "Datatables"
-      }
-    },
-    "CHARTS": {
-      "TEXT": "Charts",
-      "LIST": {
-        "APEXCHARTS": "Apexcharts",
-        "LINE": "Line",
-        "AREA": "Area",
-        "COLUMN": "Column",
-        "BAR": "Bar",
-        "MIXED": "Mixed",
-        "TIMELINE": "Timeline",
-        "RANGEAREA": "Range Area",
-        "FUNNEL": "Funnel",
-        "CANDLSTICK": "Candlstick",
-        "BOXPLOT": "Boxplot",
-        "BUBBLE": "Bubble",
-        "SCATTER": "Scatter",
-        "HEATMAP": "Heatmap",
-        "TREEMAP": "Treemap",
-        "PIE": "Pie",
-        "RADIALBAR": "Radialbar",
-        "RADAR": "Radar",
-        "POLARAREA": "Polar Area",
-        "CHARTJS": "Chartjs",
-        "ECHARTS": "Echarts"
-      }
-    },
-    "ICONS": {
-      "TEXT": "Icons",
-      "LIST": {
-        "REMIX": "Remix",
-        "BOXICONS": "Boxicons",
-        "MATERIALDESIGN": "Material Design",
-        "LINEAWESOME": "Line Awesome",
-        "FEATHER": "Feather",
-        "CRYPTOSVG": "Crypto SVG"
-      }
-    },
-    "MAPS": {
-      "TEXT": "Maps",
-      "LIST": {
-        "GOOGLE": "Google",
-        "VECTOR": "Vector",
-        "LEAFLET": "Leaflet"
-      }
-    },
-    "MULTILEVEL": {
-      "TEXT": "Multi Level",
-      "LIST": {
-        "LEVEL1": {
-          "1": "Level 1.1",
-          "2": "Level 1.2",
-          "LEVEL2": {
-            "1": "Level 2.1",
-            "2": "Level 2.2"
-          }
-        }
-      }
+    "ATTACH": {
+      "ERRORMSG": "Error attaching file!",
+      "SUCCESSMSG": "File attached succesfully!",
+      "PLACEHLDR": "Click or drag files to upload"
     }
   }
 }
