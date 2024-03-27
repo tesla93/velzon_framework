@@ -8,6 +8,7 @@ import { InputField } from 'src/app/shared/dynamic-form/models/input-field';
 import { SelectField } from 'src/app/shared/dynamic-form/models/select-field';
 import { TextAreaField } from 'src/app/shared/dynamic-form/models/textarea-field';
 import { orderTrackingHistory, statusData } from '../../models/status.data';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'detail-form',
@@ -17,6 +18,7 @@ import { orderTrackingHistory, statusData } from '../../models/status.data';
 export class DetailFormComponent extends FormBaseComponent implements OnInit {
 
 
+  public Editor = ClassicEditor;
   fields!: Field<any>[];
   statusDropdown: SelectListItem[] = statusData;
   ordersForm!: UntypedFormGroup;
@@ -146,14 +148,14 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         maxlength: 100,
         order: 9,
       }),
-      new TextAreaField({
-        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.COMMENTS',
-        label: 'MENUITEMS.AGOL.DASHBOARD.COMMENTS',
-        name: 'comments',
-        rows: 5,
-        parentClass: 'col-12 my-2',
-        order: 10,
-      }),
+      // new TextAreaField({
+      //   placeHolder: 'MENUITEMS.AGOL.DASHBOARD.COMMENTS',
+      //   label: 'MENUITEMS.AGOL.DASHBOARD.COMMENTS',
+      //   name: 'comments',
+      //   rows: 5,
+      //   parentClass: 'col-12 my-2',
+      //   order: 10,
+      // }),
 
     ]
   }

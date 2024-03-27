@@ -26,7 +26,7 @@ export const MENU: MenuItem[] = [
       {
         id: 33,
         label: 'MENUITEMS.AGOL.CATALOGS.STATUS',
-        link: '/catalogs/status',
+        link: 'agol/catalogs/order-status',
         parentId: 32
       }
     ]

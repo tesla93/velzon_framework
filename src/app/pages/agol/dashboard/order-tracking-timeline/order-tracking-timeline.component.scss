@@ -49,6 +49,7 @@ $time-line-line-color: #999999;
         border: 1px solid #DFDFDF50;
         background-color: #DFDFDF30;
         position: relative;
+        box-shadow: 3px 3px 3px lightgray;
 
         .tick {
             display: flex;
@@ -83,6 +84,7 @@ $time-line-line-color: #999999;
             width: 80px;
             font-weight: bold;
             color: #058179;
+            font-size: 12px;
         }
     }
 

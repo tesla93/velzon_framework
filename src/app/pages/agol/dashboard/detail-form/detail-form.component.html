@@ -28,4 +28,10 @@
     <dynamic-form [fields]="fields" [customForm]="ordersForm" (submitEvent)="onSubmit()" [showSpinner]="showSpinner"
         [buttons]="buttons" [submitted]="submitted">
     </dynamic-form>
+
+    <div class="col-12 m-2">
+        <label for="username" class="form-label">Comments</label>
+        <ckeditor [editor]="Editor" >
+        </ckeditor>
+    </div>
 </div>

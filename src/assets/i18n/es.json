@@ -35,7 +35,9 @@
       },
       "CATALOGS": {
         "TEXT": "Catalogos",
-        "STATUS":"Estados"
+        "STATUS": "Estados",
+        "ORDER": "Secuencia",
+        "STATUSNAME": "Nombre"
       }
     }
   },

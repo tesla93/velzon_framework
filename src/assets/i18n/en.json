@@ -35,7 +35,9 @@
       },
       "CATALOGS": {
         "TEXT": "Catalogs",
-        "STATUS":"Order Status"
+        "STATUS": "Order Status",
+        "ORDER": "Sequence",
+          "STATUSNAME": "Status Name"
       }
     }
   },

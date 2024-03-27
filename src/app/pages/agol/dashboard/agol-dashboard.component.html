@@ -99,7 +99,7 @@
 
 </div>
 
-<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="dataList?.length" [itemsPerPage]="itemsPerPage"
+<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="dataList?.length" [importEnabled]="true" [itemsPerPage]="itemsPerPage" [creationLink]="'/agol/dashboard/create'"
     (reloadData)="getDataItems($event)" [statusClass]="getBadgeClass">
 </grid>
 

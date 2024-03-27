@@ -24,6 +24,7 @@ import { DetailFormComponent } from './dashboard/detail-form/detail-form.compone
 import { CountUpModule } from 'ngx-countup';
 import { TranslateModule } from '@ngx-translate/core';
 import { OrderTrackingTimelineComponent } from './dashboard/order-tracking-timeline/order-tracking-timeline.component';
+import { OrderStatusCatComponent } from './catalogs/order-status-cat/order-status-cat.component';
 
 
 
@@ -32,6 +33,7 @@ import { OrderTrackingTimelineComponent } from './dashboard/order-tracking-timel
     ReportComponent,
     AgolDashboardComponent,
     DetailFormComponent,
+    OrderStatusCatComponent,
     OrderTrackingTimelineComponent,
     FlightFormComponent
   ],
@@ -42,6 +44,7 @@ import { OrderTrackingTimelineComponent } from './dashboard/order-tracking-timel
     NgbDropdownModule,
     CountUpModule,
     NgbNavModule,
+    CKEditorModule,
     NgSelectModule,
     UiSwitchModule,
     FlatpickrModule,
