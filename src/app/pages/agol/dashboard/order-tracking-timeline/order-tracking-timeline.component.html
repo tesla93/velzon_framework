@@ -6,9 +6,9 @@
                     [ngClass]="
                     {'green-status' : orderTracking.orderTrackingTimelineStatus === timelineStatus.Complete, 
                     'amber-status': orderTracking.orderTrackingTimelineStatus === timelineStatus.Current}">
-                    <div *ngIf="orderTracking.orderTrackingTimelineStatus !== timelineStatus.Future"
+                    <div 
                         class="tick">
-                        <i class="ri-check-line"></i>
+                        <i [ngClass]="orderTracking.icon"></i>
                     </div>
                     <div class="label">
                         {{orderTracking.timelineLabel}}

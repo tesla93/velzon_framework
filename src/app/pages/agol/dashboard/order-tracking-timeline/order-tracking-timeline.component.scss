@@ -46,33 +46,18 @@ $time-line-line-color: #999999;
         height: 75px;
         width: 75px;
         border-radius: 50%;
-        border: 1px solid #DFDFDF50;
-        background-color: #DFDFDF30;
+        border: 1px solid #DFDFDF90;
+        background-color: #f6f6f6;
         position: relative;
         box-shadow: 3px 3px 3px lightgray;
 
         .tick {
+            font-size: 25px;
+                width: 15px;
+                color: rgba(0, 0, 0, 0.615) !important;
             display: flex;
             margin: auto;
-            margin-right: 47%;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-            height: 26px;
-            width: 26px;
-            border-radius: 50%;
-
-            .material-icons {
-                font-weight: bolder;
-
-                margin: auto;
-                top: 0;
-                bottom: 0;
-                left: -50%;
-                right: 0;
-                font-size: 3.5em;
-            }
+            margin-right: 47%;          
         }
 
         .label {
@@ -100,7 +85,7 @@ $time-line-line-color: #999999;
     .blank-space {
         display: flex;
         border: none;
-        border-top: 0px !important;
+        border-top: 3px dotted #DFDFDF90 !important;
         height: 2px;
         width: 8%;
     }
