@@ -2,7 +2,7 @@
     [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <div class="position-relative m-4">
-    <div class="progress" style="height: 1px;">
+    <!-- <div class="progress" style="height: 1px;">
         <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="10" aria-valuemin="0"
             aria-valuemax="100"></div>
     </div>
@@ -17,7 +17,11 @@
     <button type="button" class="position-absolute top-0 start-80 translate-middle btn btn-sm btn-light rounded-pill"
         style="width: 2rem; height:2rem;">4</button>
     <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-light rounded-pill"
-        style="width: 2rem; height:2rem;">5</button>
+        style="width: 2rem; height:2rem;">5</button> -->
+
+    <order-tracking-timeline *ngIf="true" [orderTrackingTimelineHistories]="orderTrackingHistoryDatas || []"
+        [remainingDaysToEta]="15">
+    </order-tracking-timeline>
 </div>
 
 <div class="row mt-5">

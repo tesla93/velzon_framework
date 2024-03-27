@@ -53,7 +53,7 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
       header: "GENERAL.COMMONBUTTONS.ACTION",
       actionButtons: [
         {
-          iconClass: 'ri-eye-fill text-warning',
+          iconClass: 'ri-eye-fill text-secondary',
           clickHandler: (id: any) => {
             // this.getFee(id)
           }
@@ -108,11 +108,11 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
 
   getBadgeClass(status: string) {
     switch (status.toUpperCase()) {
-      case "ABIERTA":
+      case "DISPATCHED FOR PICKUPS":
       case "EN CURSO":
         return "badge bg-warning-subtle text-warning";
       case "RESUELTA":
-      case "FINALIZADA":
+      case "CARGO IN AIR TRANSIT":
       case "COMPLETED":
         return "badge bg-success-subtle text-success";
       default:

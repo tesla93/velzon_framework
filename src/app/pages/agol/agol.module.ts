@@ -23,6 +23,7 @@ import { AgolDashboardComponent } from './dashboard/agol-dashboard.component';
 import { DetailFormComponent } from './dashboard/detail-form/detail-form.component';
 import { CountUpModule } from 'ngx-countup';
 import { TranslateModule } from '@ngx-translate/core';
+import { OrderTrackingTimelineComponent } from './dashboard/order-tracking-timeline/order-tracking-timeline.component';
 
 
 
@@ -31,6 +32,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ReportComponent,
     AgolDashboardComponent,
     DetailFormComponent,
+    OrderTrackingTimelineComponent,
     FlightFormComponent
   ],
   imports: [

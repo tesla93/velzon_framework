@@ -1,0 +1,105 @@
+$time-line-green-color: #009E0F;
+$time-line-amber-color: #FF9900;
+$time-line-line-color: #999999;
+
+
+
+.time-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 3em;
+
+    .green-status {
+        &.circle {
+            border-color: #058179 !important;
+            background-color: #05817918;
+            border-width: 1px;
+            box-shadow: 3px 3px 3px lightgray;
+
+            .tick {
+                font-size: 25px;
+                width: 15px;
+                color: #058179 !important;
+
+            }
+        }
+    }
+
+    .amber-status {
+        &.circle {
+            border-color: #FF9900 !important;
+            background-color: #FF990040;
+            border-width: 1px;
+            box-shadow: 3px 3px 3px lightgray;
+
+            .tick {
+                font-size: 25px;
+                width: 15px;
+                color: #FF9900 !important;
+            }
+        }
+    }
+
+    .circle {
+        display: flex;
+        height: 75px;
+        width: 75px;
+        border-radius: 50%;
+        border: 1px solid #DFDFDF50;
+        background-color: #DFDFDF30;
+        position: relative;
+
+        .tick {
+            display: flex;
+            margin: auto;
+            margin-right: 47%;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            height: 26px;
+            width: 26px;
+            border-radius: 50%;
+
+            .material-icons {
+                font-weight: bolder;
+
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                left: -50%;
+                right: 0;
+                font-size: 3.5em;
+            }
+        }
+
+        .label {
+            position: absolute;
+            top: 130%;
+            margin: auto;
+            right: -10%;
+            text-align: center;
+            width: 80px;
+            font-weight: bold;
+            color: #058179;
+        }
+    }
+
+    .line {
+        display: flex;
+        border: none;
+        border-top: 3px dotted #058179 !important;
+        height: 2px;
+        width: 8%;
+        //background-color: var(--gray-messiah) !important;
+    }
+
+    .blank-space {
+        display: flex;
+        border: none;
+        border-top: 0px !important;
+        height: 2px;
+        width: 8%;
+    }
+}

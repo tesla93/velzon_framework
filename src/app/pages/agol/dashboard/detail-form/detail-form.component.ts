@@ -7,7 +7,7 @@ import { cargoModelData } from '../../models/cargo-model.data';
 import { InputField } from 'src/app/shared/dynamic-form/models/input-field';
 import { SelectField } from 'src/app/shared/dynamic-form/models/select-field';
 import { TextAreaField } from 'src/app/shared/dynamic-form/models/textarea-field';
-import { statusData } from '../../models/status.data';
+import { orderTrackingHistory, statusData } from '../../models/status.data';
 
 @Component({
   selector: 'detail-form',
@@ -22,6 +22,7 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
   ordersForm!: UntypedFormGroup;
   selectedData: any
   showSpinner = false;
+  orderTrackingHistoryDatas = orderTrackingHistory;
 
   submitted: boolean = false
 
@@ -32,7 +33,7 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
     this.selectedData = cargoModelData[0];
     this.initForm();
     this.initFields();
-    this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT', 'Order Detail');	
+    this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT', 'Order Detail');
     // this.setBreadCrumbItems('MENUITEMS.AGOL.CATALOGS.TEXT', 'MENUITEMS.AGOL.CATALOGS.STATUS');	
   }
 
@@ -50,8 +51,6 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
       agentAssigned: new FormControl(this.selectedData.agentAssigned),
       comments: new FormControl(this.selectedData.comments),
     });
-
-    console.log(this.ordersForm);
   }
 
   initFields() {
@@ -137,7 +136,7 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         maxlength: 100,
         order: 7,
       }),
-     
+
       new InputField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.AGENTASSIGNED',
         label: 'MENUITEMS.AGOL.DASHBOARD.AGENTASSIGNED',
