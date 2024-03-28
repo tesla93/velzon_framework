@@ -31,6 +31,16 @@
                         (valueChange)="valueChange(field, $event)">
                     </textarea-field>
                 </ng-container>
+                <ng-container *ngSwitchCase="'ckeditor'">
+                    <ckeditor-field
+                        [field]="field"
+                        [hasErrors]="!!(customForm).get(field.name)?.errors"
+                        [isSubmitted]="submitted"
+                        [control]="$any(customForm).get(field.name)"
+                        (clear)="clear(field)"
+                        (valueChange)="valueChange(field, $event)">
+                    </ckeditor-field>
+                </ng-container>
                 <ng-container *ngSwitchCase="'select'">
                     <select-field
                         [field]="field"

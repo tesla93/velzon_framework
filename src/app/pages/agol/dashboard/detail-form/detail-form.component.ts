@@ -9,6 +9,7 @@ import { SelectField } from 'src/app/shared/dynamic-form/models/select-field';
 import { TextAreaField } from 'src/app/shared/dynamic-form/models/textarea-field';
 import { orderTrackingHistory, statusData } from '../../models/status.data';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CkEditorField } from 'src/app/shared/dynamic-form/models/ckeditor-field';
 
 @Component({
   selector: 'detail-form',
@@ -96,7 +97,7 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
       new InputField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT',
         label: 'MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT',
-        name: 'shipper',
+        name: 'originAirport',
         parentClass: 'col-4 my-2',
         disabled: true,
         maxlength: 100,
@@ -147,6 +148,13 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         disabled: true,
         maxlength: 100,
         order: 9,
+      }),
+      new CkEditorField({
+        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.COMMENTS',
+        label: 'MENUITEMS.AGOL.DASHBOARD.COMMENTS',
+        name: 'comments',
+        parentClass: 'col-12 my-2',
+        order: 10,
       }),
       // new TextAreaField({
       //   placeHolder: 'MENUITEMS.AGOL.DASHBOARD.COMMENTS',

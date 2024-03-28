@@ -1,0 +1,8 @@
+<div class="form">
+    <label [for]="field.name" class="text-muted">{{ field.label ?? '' | translate }}</label>
+
+    <ckeditor [editor]="Editor"
+        [ngClass]="{'is-invalid': hasErrors && isSubmitted, 'is-valid': !hasErrors && isSubmitted}"
+        [required]="field.required ?? false" [formControl]="$any(control)">
+    </ckeditor>
+</div>
