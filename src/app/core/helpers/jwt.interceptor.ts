@@ -10,8 +10,11 @@ import { AdminService } from "./admin.service";
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
     constructor(private adminService: AdminService) {}
+    private readonly apiUrlSegment = "api/"; // A segment within an URL that uniquely identifies an API request.
+
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (request.url.includes(this.apiUrlSegment)) {
         const token = this.adminService.token, audience = this.adminService.audience;
         if (token && audience) {
             request = request.clone({
@@ -21,6 +24,7 @@ export class JwtInterceptor implements HttpInterceptor {
                 url: `${audience}${request.url}`
             });
         }
+    }
 
         return next.handle(request);
     }

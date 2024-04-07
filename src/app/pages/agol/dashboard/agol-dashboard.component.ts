@@ -7,6 +7,8 @@ import { DisplayingMode } from 'src/app/shared/grid/enums/displaying-mode';
 import { GridComponent } from 'src/app/shared/grid/grid.component';
 import { Router } from '@angular/router';
 import { AnalyticData } from '../models/analytic-data';
+import { OrderService } from './order.service';
+import { Order } from '../models/order.model';
 
 @Component({
   selector: 'agol-dashboard',
@@ -86,11 +88,14 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
   analyticData!: AnalyticData;
   loadingAnalytics = true;
 
-  constructor(injector: Injector, private router: Router) {
+  constructor(injector: Injector, private router: Router, public orderService: OrderService) {
     super(injector);
 
   }
   ngOnInit() {
+    this.orderService.get(1).then((order: Order) => {
+      console.log(order)
+    })
     this.getDataItems();
     this.getAnalyticData();
     this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT');

@@ -87,6 +87,7 @@ export class ProjectHttpInterceptor implements HttpInterceptor {
 
 
             if (!req.url.includes('token')) {
+
                 modifiedRequest = this.normalizeRequestHeaders(req);
             } else {
                 modifiedRequest = req;
@@ -107,7 +108,8 @@ export class ProjectHttpInterceptor implements HttpInterceptor {
         let modifiedHeaders = new HttpHeaders();
         modifiedHeaders = request.headers.set('Pragma', 'no-cache')
             .set('Cache-Control', 'no-cache')
-            .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+            .set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT')
+            .set("Access-Control-Allow-Origin", "*");
 
         modifiedHeaders = this.addXRequestedWithHeader(modifiedHeaders);
         modifiedHeaders = this.addAuthorizationHeaders(modifiedHeaders);

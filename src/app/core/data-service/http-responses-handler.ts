@@ -160,7 +160,9 @@ export class OnDeleteResponseHandler extends BaseHttpResponsesHandler {
     }
 }
 
-@Injectable()
+@Injectable({
+    providedIn: "root"
+})
 export class HttpResponsesHandlersFactory {
     constructor(private injector: Injector) {
     }

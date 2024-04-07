@@ -20,6 +20,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppInitializer } from './app-initializer';
 import { ProjectHttpInterceptor } from './core/interceptors/project-httpInterceptor';
 import { SharedModule } from './shared/shared.module';
+import { JwtInterceptor } from './core/helpers/jwt.interceptor';
+import { ErrorInterceptor } from './core/helpers/error.interceptor';
+import { ApiInterceptor } from './core/data-service';
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -52,9 +55,8 @@ if (environment.defaultauth === 'firebase') {
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ProjectHttpInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {
       provide: APP_INITIALIZER,
       useFactory: (appInitializer: AppInitializer) => appInitializer.init(),

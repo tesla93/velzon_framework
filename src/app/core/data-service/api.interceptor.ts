@@ -19,7 +19,6 @@ import { AppConsts } from "../AppConsts";
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
     private readonly frontEndOrigin = "http://localhost:4200"; // Origin where the front-end server runs.
-    private readonly backEndOrigin = AppConsts.remoteServiceBaseUrl; // Origin where the back-end server runs.
     private readonly apiUrlSegment = "api/"; // A segment within an URL that uniquely identifies an API request.
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -30,11 +29,10 @@ export class ApiInterceptor implements HttpInterceptor {
             if (requestToken) {
                 headers = headers.set("X-XSRF-TOKEN", requestToken);
             }
-
             req = req.clone({
-                url: `${this.backEndOrigin}/${req.url}`,
+                url: `${AppConsts.appBaseUrl}/${req.url}`,
                 headers: headers,
-                withCredentials: true
+                withCredentials: false
             });
         }
 
