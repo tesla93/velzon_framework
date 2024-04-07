@@ -25,8 +25,5 @@ export class OrderTrackingTimelineComponent implements OnInit {
     ngOnInit() {
         this.eta = new Date();
         this.eta.setDate(this.eta.getDate() + this.remainingDaysToEta);
-        if (!this.isPreBooked) {
-             this.orderTrackingTimelineHistories.splice(5, 1);
-        }
     }
 }

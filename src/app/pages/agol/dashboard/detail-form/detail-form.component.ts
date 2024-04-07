@@ -10,6 +10,8 @@ import { TextAreaField } from 'src/app/shared/dynamic-form/models/textarea-field
 import { orderTrackingHistory, statusData } from '../../models/status.data';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CkEditorField } from 'src/app/shared/dynamic-form/models/ckeditor-field';
+import { ReportService } from '../../report/report.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'detail-form',
@@ -26,18 +28,20 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
   selectedData: any
   showSpinner = false;
   orderTrackingHistoryDatas = orderTrackingHistory;
+  airportItems: any = {};
+  showForm = false;
+  airportSelectItems: any = {};
 
   submitted: boolean = false
 
-  constructor(injector: Injector, private formBuilder: UntypedFormBuilder) {
+  constructor(injector: Injector, private formBuilder: UntypedFormBuilder, private reportService: ReportService) {
     super(injector);
   }
   ngOnInit(): void {
     this.selectedData = cargoModelData[0];
     this.initForm();
-    this.initFields();
+    this.getAirportList();
     this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT', 'Order Detail');
-    // this.setBreadCrumbItems('MENUITEMS.AGOL.CATALOGS.TEXT', 'MENUITEMS.AGOL.CATALOGS.STATUS');	
   }
 
   initForm(): void {
@@ -94,13 +98,13 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         maxlength: 100,
         order: 2,
       }),
-      new InputField({
+      new SelectField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT',
         label: 'MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT',
         name: 'originAirport',
         parentClass: 'col-4 my-2',
         disabled: true,
-        maxlength: 100,
+        selectListItem: this.airportSelectItems,
         order: 3,
       }),
       new InputField({
@@ -112,13 +116,13 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         maxlength: 100,
         order: 4,
       }),
-      new InputField({
+      new SelectField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.DESTINATIONAIRPORT',
         label: 'MENUITEMS.AGOL.DASHBOARD.DESTINATIONAIRPORT',
         name: 'destinationAirport',
         parentClass: 'col-4 my-2',
         disabled: true,
-        maxlength: 100,
+        selectListItem: this.airportSelectItems,
         order: 5,
       }),
       new InputField({
@@ -166,6 +170,19 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
       // }),
 
     ]
+  }
+
+  getAirportList() {
+    this.reportService.readJsonFromAsset()
+      .pipe(
+        finalize(() => {
+          this.initFields();
+        })
+      )
+      .subscribe(obj => {
+        this.airportItems = Object.values(obj);
+        this.airportSelectItems = this.airportItems[0].map((airportItem: any) => ({ text: `${airportItem._IATACode} - ${airportItem._Name}`, value: airportItem._IATACode }))
+      });
   }
 
   onSubmit() {
