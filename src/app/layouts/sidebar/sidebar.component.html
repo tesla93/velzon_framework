@@ -5,7 +5,7 @@
     <!-- Dark Logo-->
     <a routerLink="/" class="logo logo-dark">
       <span class="logo-sm">
-        <img src="assets/images/logo-sm.png" alt="" height="22">
+        <img src="https://agolworldwide.com/wp-content/uploads/2022/12/logo-3.svg" alt="" height="22">
       </span>
       <span class="logo-lg">
         <img src="https://agolworldwide.com/wp-content/uploads/2022/12/logo-3.svg" alt="" height="30">
@@ -14,116 +14,124 @@
     <!-- Light Logo-->
     <a routerLink="/" class="logo logo-light">
       <span class="logo-sm">
-        <img src="assets/images/logo-sm.png" alt="" height="22">
+        <img src="https://agolworldwide.com/wp-content/uploads/2022/12/logo-3.svg" alt="" height="21">
       </span>
       <span class="logo-lg">
-        <img src="assets/images/logo-light.png" alt="" height="17">
+        <img src="https://agolworldwide.com/wp-content/uploads/2022/12/logo-3.svg" alt="" height="20">
       </span>
     </a>
-    <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover" (click)="toggleMobileMenu($event)">
+    <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover"
+      (click)="toggleMobileMenu($event)">
       <i class="ri-record-circle-line"></i>
     </button>
   </div>
 
-  <div id="scrollbar">
-    <div class="container-fluid">
+  <div id="scrollbar" class="h-100">
+    <div class="container-fluid h-100">
 
       <div id="two-column-menu">
       </div>
-      <ngx-simplebar class="sidebar-menu-scroll" style="max-height: calc(100vh - 70px)">
+      <ngx-simplebar class="sidebar-menu-scroll h-100">
         <ul class="metismenu list-unstyled navbar-nav" id="navbar-nav">
-          @for(item of menuItems;track $index){
-          <ng-container>
-            @if(item.isTitle){
-            <li class="menu-title"><span data-key="t-menu">{{ item.label | translate }}</span></li>
-            }@else {
-            <li class="nav-item">
-              @if(hasItems(item)){
-              <a href="javascript:void(0);" class="nav-link menu-link" [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}" data-bs-toggle="collapse" [attr.aria-expanded]="!item.isCollapsed" aria-controls="sidebarDashboards" (click)="toggleItem(item)">
-                <i-feather name="{{ item.icon }}" class="icon-dual"></i-feather>
+
+          <ng-container *ngFor="let item of menuItems">
+            <li class="menu-title" *ngIf="item.isTitle"><span data-key="t-menu">{{ item.label | translate }}</span></li>
+
+            <li class="nav-item" *ngIf="!item.isTitle && !item.isLayout">
+              <a *ngIf="hasItems(item)" href="javascript:void(0);" class="is-parent nav-link menu-link"
+                [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}" data-bs-toggle="collapse"
+                aria-expanded="false" (click)="toggleItem($event)">
+                <i class="{{ item.icon }} icon nav-icon" class=""></i>
                 <span class=""> {{ item.label | translate }}</span>
-                @if(item.badge){
-                <span class="badge badge-pill {{item.badge.variant}}">{{item.badge.text
+                <span class="badge badge-pill {{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text
                   | translate}}</span>
-                }
               </a>
-              <div class="collapse menu-dropdown" #collapse="ngbCollapse" [(ngbCollapse)]="item.isCollapsed">
-                <ul class="nav nav-sm flex-column" aria-expanded="false">
-                  @for(subitem of item.subItems;track $index){
-                  <li class="nav-item">
-                    @if(hasItems(subitem)){
-                    <a class="nav-link" href="javascript:void(0);" [attr.data-parent]="subitem.parentId" [attr.aria-expanded]="!subitem.isCollapsed" data-bs-toggle="collapse" (click)="toggleItem(subitem)">
+
+              <a [routerLink]="item.link" *ngIf="!hasItems(item)" class="side-nav-link-ref nav-link menu-link"
+                (click)="toggleParentItem($event)">
+                <i class="bx {{ item.icon }} icon nav-icon" *ngIf="item.icon" class=""></i>
+                <span class=""> {{ item.label | translate }}</span>
+                <span class="badge badge-pill {{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text
+                  | translate}}</span>
+              </a>
+
+              <div class="collapse menu-dropdown" *ngIf="hasItems(item)">
+                <ul *ngIf="hasItems(item)" class="nav nav-sm flex-column" aria-expanded="false">
+                  <li *ngFor="let subitem of item.subItems" class="nav-item">
+                    <a [routerLink]="subitem.link" class="nav-link" *ngIf="subitem.link!=='https://wa.link/x7e4me' && subitem.id!==26 && subitem.id!==28 && !hasItems(subitem)"
+                      [attr.data-parent]="subitem.parentId" (click)="updateActive($event)">
                       {{ subitem.label | translate}}
-                      @if(subitem.badge){
-                      <span class="badge badge-pill {{subitem.badge.variant}}">{{subitem.badge.text
+                      <span class="badge badge-pill {{subitem.badge.variant}}"
+                        *ngIf="subitem.badge">{{subitem.badge.text
                         | translate}}</span>
-                      }
                     </a>
-                    <div class="collapse menu-dropdown sub-menu" #collapse="ngbCollapse" [(ngbCollapse)]="subitem.isCollapsed">
-                      <ul class=" nav nav-sm flex-column" aria-expanded="false">
-                        @for(subSubitem of subitem.subItems;track $index){
-                        <li class="nav-item">
-                          @if(hasItems(subSubitem)){
-                          <a class="nav-link" href="javascript:void(0);" [attr.data-parent]="subSubitem.parentId" data-bs-toggle="collapse" [attr.aria-expanded]="!subSubitem.isCollapsed" (click)="toggleItem(subSubitem)">
+                    <a href="{{subitem.link}}" target="_blank" class="nav-link" *ngIf="subitem.link==='https://wa.link/x7e4me' || subitem.id===26"
+                      [attr.data-parent]="subitem.parentId" (click)="updateActive($event)">
+                      {{ subitem.label | translate}}
+                      <span class="badge badge-pill {{subitem.badge.variant}}"
+                        *ngIf="subitem.badge">{{subitem.badge.text
+                        | translate}}</span>
+                    </a>
+                    <a *ngIf="subitem.id === 28" href="mailto:info.neogateway.net" class="nav-link" [attr.data-parent]="subitem.parentId">
+                      {{ subitem.label | translate}}
+                      <span class="badge badge-pill {{subitem.badge.variant}}"
+                        *ngIf="subitem.badge">{{subitem.badge.text
+                        | translate}}</span>
+                    </a>
+                    <a *ngIf="hasItems(subitem)" class="nav-link" href="javascript:void(0);"
+                      [attr.data-parent]="subitem.parentId" data-bs-toggle="collapse" aria-expanded="false"
+                      (click)="toggleSubItem($event)">
+                      {{ subitem.label | translate}}
+                      <span class="badge badge-pill {{subitem.badge.variant}}"
+                        *ngIf="subitem.badge">{{subitem.badge.text
+                        | translate}}</span>
+                    </a>
+
+                    <div class="collapse menu-dropdown sub-menu" *ngIf="hasItems(subitem)">
+                      <ul *ngIf="hasItems(subitem)" class="nav nav-sm flex-column" aria-expanded="false">
+                        <li *ngFor="let subSubitem of subitem.subItems" class="nav-item">
+                          <a [routerLink]="subSubitem.link" *ngIf="!hasItems(subSubitem)" class="nav-link"
+                            [attr.data-parent]="subSubitem.parentId" (click)="updateActive($event)">
                             {{ subSubitem.label | translate}}
-                            @if(subSubitem.badge){
-                            <span class="badge badge-pill {{subSubitem.badge.variant}}">{{subSubitem.badge.text
+                            <span class="badge badge-pill {{subSubitem.badge.variant}}"
+                              *ngIf="subSubitem.badge">{{subSubitem.badge.text
                               | translate}}</span>
-                            }
                           </a>
-                          <div class="collapse menu-dropdown extra-sub-menu" #collapse="ngbCollapse" [(ngbCollapse)]="subSubitem.isCollapsed">
-                            <ul class="nav nav-sm flex-column" aria-expanded="false">
-                              @for (subSubitem1 of subSubitem.subItems; track $index) {
-                              <li class="nav-item">
-                                <a [attr.data-parent]="subSubitem1.parentId" [routerLink]="subSubitem1.link" class="nav-link" (click)="updateActive($event)">
+
+                          <a *ngIf="hasItems(subSubitem)" class="nav-link" href="javascript:void(0);"
+                            [attr.data-parent]="subSubitem.parentId" data-bs-toggle="collapse" aria-expanded="false"
+                            (click)="toggleExtraSubItem($event)">
+                            {{ subSubitem.label | translate}}
+                            <span class="badge badge-pill {{subSubitem.badge.variant}}"
+                              *ngIf="subSubitem.badge">{{subSubitem.badge.text
+                              | translate}}</span>
+                          </a>
+
+                          <div class="collapse menu-dropdown extra-sub-menu" *ngIf="hasItems(subSubitem)">
+                            <ul *ngIf="hasItems(subSubitem)" class="nav nav-sm flex-column" aria-expanded="false">
+                              <li *ngFor="let subSubitem1 of subSubitem.subItems" class="nav-item">
+
+                                <a [attr.data-parent]="subSubitem1.parentId" [routerLink]="subSubitem1.link"
+                                  class="nav-link" (click)="updateActive($event)">
                                   {{ subSubitem1.label | translate }}
+                                  <span class="badge badge-pill {{item.badge.variant}}"
+                                    *ngIf="item.badge">{{item.badge.text
+                                    | translate}}</span>
                                 </a>
+
                               </li>
-                              }
                             </ul>
-                          </div>}
-                          @else {
-                          <a [attr.data-parent]="subSubitem.parentId" [routerLink]="subSubitem.link" class="nav-link" (click)="updateActive($event)">
-                            {{ subSubitem.label | translate }}
-                            @if(subSubitem.badge){
-                            <span class="badge badge-pill {{subSubitem.badge.variant}}">{{subSubitem.badge.text
-                              | translate}}</span>
-                            }
-                          </a>
-                          }
+                          </div>
+pm start
+
                         </li>
-                        }
                       </ul>
                     </div>
-                    }@else{
-                    <a [routerLink]="subitem.link" class="nav-link" [attr.data-parent]="subitem.parentId" (click)="updateActive($event)">
-                      {{ subitem.label | translate}}
-                      @if(subitem.badge){
-                      <span class="badge badge-pill {{subitem.badge.variant}}">{{subitem.badge.text
-                        | translate}}</span>
-                      }
-                    </a>
-                    }
                   </li>
-                  }
                 </ul>
               </div>
-              }@else{
-              <a [routerLink]="item.link" class="side-nav-link-ref nav-link menu-link">
-                @if(item.icon){
-                <i-feather name="{{ item.icon }}" class="icon-dual"></i-feather>
-                }
-                <span class=""> {{ item.label | translate }}</span>
-                @if(item.badge){
-                <span class="badge {{item.badge.variant}} float-end">{{item.badge.text |
-                  translate}}</span>
-                }
-              </a>
-              }
             </li>
-            }
           </ng-container>
-          }
         </ul>
       </ngx-simplebar>
     </div>

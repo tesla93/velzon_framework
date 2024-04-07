@@ -1,26 +1,27 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 // Menu Pachage
 // import MetisMenu from 'metismenujs';
 
-import { MENU } from './menu';
-import { MenuItem } from './menu.model';
+
+
+import { MENU } from '../common-menu/menu';
+import { MenuItem } from '../common-menu/menu.model';
 
 @Component({
   selector: 'app-horizontal-topbar',
   templateUrl: './horizontal-topbar.component.html',
   styleUrls: ['./horizontal-topbar.component.scss']
 })
-export class HorizontalTopbarComponent implements OnInit {
+export class HorizontalTopbarComponent implements OnInit, AfterViewInit {
 
   menu: any;
   menuItems: MenuItem[] = [];
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
-  constructor(private router: Router, public translate: TranslateService) {
+  constructor( public translate: TranslateService) {
     translate.setDefaultLang('en');
   }
 
@@ -56,9 +57,8 @@ export class HorizontalTopbarComponent implements OnInit {
 
   // remove active items of two-column-menu
   activateParentDropdown(item: any) { // navbar-nav menu add active
-   
     item.classList.add("active");
-    let parentCollapseDiv = item.closest(".collapse.menu-dropdown");
+    const parentCollapseDiv = item.closest(".collapse.menu-dropdown");
     if (parentCollapseDiv) {      
       // to set aria expand true remaining
       parentCollapseDiv.classList.add("show");
@@ -91,9 +91,9 @@ export class HorizontalTopbarComponent implements OnInit {
     
     if (ul) {
       const items = Array.from(ul.querySelectorAll("a.nav-link"));
-      let activeItems = items.filter((x: any) => x.classList.contains("active")); 
+      const activeItems = items.filter((x: any) => x.classList.contains("active")); 
       this.removeActivation(activeItems);
-      let matchingMenuItem = items.find((x: any) => {
+      const matchingMenuItem = items.find((x: any) => {
         return x.pathname === pathName;
       });
       if (matchingMenuItem) {
@@ -105,13 +105,13 @@ export class HorizontalTopbarComponent implements OnInit {
   toggleSubItem(event: any) {
     if(event.target && event.target.nextElementSibling)
       event.target.nextElementSibling.classList.toggle("show");
-  };
+  }
 
   toggleItem(event: any) {
-    let isCurrentMenuId = event.target.closest('a.nav-link');    
+    const isCurrentMenuId = event.target.closest('a.nav-link');    
     
-    let isMenu = isCurrentMenuId.nextElementSibling as any;
-    let dropDowns = Array.from(document.querySelectorAll('#navbar-nav .show'));
+    const isMenu = isCurrentMenuId.nextElementSibling as any;
+    const dropDowns = Array.from(document.querySelectorAll('#navbar-nav .show'));
     dropDowns.forEach((node: any) => {
       node.classList.remove('show');
     });
@@ -121,7 +121,7 @@ export class HorizontalTopbarComponent implements OnInit {
     const ul = document.getElementById("navbar-nav");
     if(ul){
       const iconItems = Array.from(ul.getElementsByTagName("a"));
-      let activeIconItems = iconItems.filter((x: any) => x.classList.contains("active"));
+      const activeIconItems = iconItems.filter((x: any) => x.classList.contains("active"));
       activeIconItems.forEach((item: any) => {
         item.setAttribute('aria-expanded', "false")
         item.classList.remove("active");

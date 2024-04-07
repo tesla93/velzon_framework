@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { EventService } from '../core/services/event.service';
-
-// Store
-import { RootReducerState } from '../store';
-import { Store } from '@ngrx/store';
+import {
+  LAYOUT_HORIZONTAL, LAYOUT_TWOCOLUMN,
+  LAYOUT_VERTICAL
+} from './layout.model';
 
 @Component({
   selector: 'app-layout',
@@ -19,53 +19,37 @@ export class LayoutComponent implements OnInit {
 
   layoutType!: string;
 
-  constructor(private store: Store<RootReducerState>) { }
+  constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
-    this.store.select('layout').subscribe((data) => {
-      this.layoutType = data.LAYOUT;
-      document.documentElement.setAttribute('data-layout', data.LAYOUT);
-      document.documentElement.setAttribute('data-bs-theme', data.LAYOUT_MODE);
-      document.documentElement.setAttribute('data-layout-width', data.LAYOUT_WIDTH);
-      document.documentElement.setAttribute('data-layout-position', data.LAYOUT_POSITION);
-      document.documentElement.setAttribute('data-topbar', data.TOPBAR);
-      data.LAYOUT == "vertical" || data.LAYOUT == "twocolumn" ? document.documentElement.setAttribute('data-sidebar', data.SIDEBAR_COLOR) : '';
-      data.LAYOUT == "vertical" || data.LAYOUT == "twocolumn" ? document.documentElement.setAttribute('data-sidebar-size', data.SIDEBAR_SIZE) : '';
-      data.LAYOUT == "vertical" || data.LAYOUT == "twocolumn" ? document.documentElement.setAttribute('data-sidebar-image', data.SIDEBAR_IMAGE) : '';
-      data.LAYOUT == "vertical" || data.LAYOUT == "twocolumn" ? document.documentElement.setAttribute('data-layout-style', data.SIDEBAR_VIEW) : '';
-      document.documentElement.setAttribute('data-preloader', data.DATA_PRELOADER)
-      document.documentElement.setAttribute('data-sidebar-visibility', data.SIDEBAR_VISIBILITY);
-    })
+    this.layoutType = LAYOUT_VERTICAL;
 
+     // listen to event and change the layout, theme, etc
+     this.eventService.subscribe('changeLayout', (layout) => {
+      this.layoutType = layout;
+    });
+    
   }
-
 
   /**
   * Check if the vertical layout is requested
   */
-  isVerticalLayoutRequested() {
-    return this.layoutType === 'vertical';
-  }
-
-  /**
-   * Check if the semibox layout is requested
-   */
-  isSemiboxLayoutRequested() {
-    return this.layoutType === 'semibox';
+   isVerticalLayoutRequested() {
+    return this.layoutType === LAYOUT_VERTICAL;
   }
 
   /**
    * Check if the horizontal layout is requested
    */
-  isHorizontalLayoutRequested() {
-    return this.layoutType === 'horizontal';
+   isHorizontalLayoutRequested() {
+    return this.layoutType === LAYOUT_HORIZONTAL;
   }
 
   /**
    * Check if the horizontal layout is requested
    */
-  isTwoColumnLayoutRequested() {
-    return this.layoutType === 'twocolumn';
+   isTwoColumnLayoutRequested() {
+    return this.layoutType === LAYOUT_TWOCOLUMN;
   }
 
 }

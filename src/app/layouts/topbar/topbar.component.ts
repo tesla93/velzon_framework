@@ -1,19 +1,18 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, EventEmitter, Inject, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, TemplateRef } from '@angular/core';
 import { EventService } from '../../core/services/event.service';
 
 //Logout
-import { Router } from '@angular/router';
-import { AuthenticationService } from '../../core/services/auth.service';
-import { TokenStorageService } from '../../core/services/token-storage.service';
 
 // Language
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
-import { allNotification, cartData, messages } from './data';
-import { CartModel } from './topbar.model';
+
+import { Router } from '@angular/router';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { AuthenticationService } from 'src/app/core/services/auth.service';
+import { DATA_PRELOADER, LAYOUT_MODE, LAYOUT_POSITION, LAYOUT_VERTICAL, LAYOUT_WIDTH, SIDEBAR_COLOR, SIDEBAR_IMAGE, SIDEBAR_SIZE, SIDEBAR_VIEW, SIDEBAR_VISIBILITY, TOPBAR } from '../layout.model';
 
 @Component({
   selector: 'app-topbar',
@@ -21,37 +20,54 @@ import { CartModel } from './topbar.model';
   styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent implements OnInit {
-  messages: any
+
   element: any;
-  mode: string | undefined;
   @Output() mobileMenuButtonClicked = new EventEmitter();
-  allnotifications: any
+
+  layout: string | undefined;
+  mode: string | undefined;
+  width: string | undefined;
+  position: string | undefined;
+  topbar: string | undefined;
+  size: string | undefined;
+  sidebarView: string | undefined;
+  sidebar: string | undefined;
+  attribute: any;
+  sidebarImage: any;
+  sidebarVisibility: any;
+  preLoader: any;
+  grd: any;
+
+
   flagvalue: any;
   valueset: any;
   countryName: any;
   cookieValue: any;
   userData: any;
-  cartData!: CartModel[];
-  total = 0;
-  cart_length: any = 0;
-  totalNotify: number = 0;
-  newNotify: number = 0;
-  readNotify: number = 0;
-  isDropdownOpen = false;
-  @ViewChild('removenotification') removenotification !: TemplateRef<any>;
-  notifyId: any;
+  loginInformation!: any;
 
-  constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, public languageService: LanguageService, private modalService: NgbModal,
-    public _cookiesService: CookieService, public translate: TranslateService, private authService: AuthenticationService,
-    private router: Router, private TokenStorageService: TokenStorageService) { }
+  constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, private router: Router, public languageService: LanguageService, private offcanvasService: NgbOffcanvas,
+    public _cookiesService: CookieService, public translate: TranslateService, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.userData = this.TokenStorageService.getUser();
     this.element = document.documentElement;
+    this.attribute = '';
+    this.layout = LAYOUT_VERTICAL;
+    this.mode = LAYOUT_MODE;
+    this.width = LAYOUT_WIDTH;
+    this.position = LAYOUT_POSITION;
+    this.topbar = TOPBAR;
+    this.size = SIDEBAR_SIZE;
+    this.sidebarView = SIDEBAR_VIEW;
+    this.sidebar = SIDEBAR_COLOR;
+    this.sidebarImage = SIDEBAR_IMAGE;
+    this.sidebarVisibility = SIDEBAR_VISIBILITY;
+    this.preLoader = DATA_PRELOADER;
+
 
     // Cookies wise Language set
     this.cookieValue = this._cookiesService.get('lang');
-    const val = this.listLang.filter(x => x.lang === this.cookieValue);
+    const val = this.cookieValue ? this.listLang.filter(x => x.lang === this.cookieValue) : [this.listLang[0]];
     this.countryName = val.map(element => element.text);
     if (val.length === 0) {
       if (this.flagvalue === undefined) { this.valueset = 'assets/images/flags/us.svg'; }
@@ -59,17 +75,13 @@ export class TopbarComponent implements OnInit {
       this.flagvalue = val.map(element => element.flag);
     }
 
-    // Fetch Data
-    this.allnotifications = allNotification;
-
-    this.messages = messages;
-    this.cartData = cartData;
-    this.cart_length = this.cartData.length;
-    this.cartData.forEach((item) => {
-      var item_price = item.quantity * item.price
-      this.total += item_price
-    });
+    // this.eventService.subscribe(AppConsts.authorization.loginInformation, (data: GetCurrentLoginInformationsOutput) => {
+    //   this.loginInformation = data;
+    // });
+   
   }
+
+
 
   /**
    * Toggle the menu bar when having mobile screen
@@ -115,14 +127,6 @@ export class TopbarComponent implements OnInit {
       }
     }
   }
-  /**
-* Open modal
-* @param content modal content
-*/
-  openModal(content: any) {
-    // this.submitted = false;
-    this.modalService.open(content, { centered: true });
-  }
 
   /**
   * Topbar Light-Dark Mode Change
@@ -134,9 +138,11 @@ export class TopbarComponent implements OnInit {
     switch (mode) {
       case 'light':
         document.documentElement.setAttribute('data-bs-theme', "light");
+        document.documentElement.setAttribute('data-sidebar', "light");
         break;
       case 'dark':
         document.documentElement.setAttribute('data-bs-theme', "dark");
+        document.documentElement.setAttribute('data-sidebar', "dark");
         break;
       default:
         document.documentElement.setAttribute('data-bs-theme', "light");
@@ -162,62 +168,46 @@ export class TopbarComponent implements OnInit {
     this.languageService.setLanguage(lang);
   }
 
+
   /**
    * Logout the user
    */
   logout() {
     this.authService.logout();
-    this.router.navigate(['/auth/login']);
   }
 
   windowScroll() {
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-      (document.getElementById("back-to-top") as HTMLElement).style.display = "block";
-      document.getElementById('page-topbar')?.classList.add('topbar-shadow');
+      (document.getElementById('back-to-top') as HTMLElement).style.display = "block";
+      document.getElementById('page-topbar')?.classList.add('topbar-shadow')
     } else {
-      (document.getElementById("back-to-top") as HTMLElement).style.display = "none";
-      document.getElementById('page-topbar')?.classList.remove('topbar-shadow');
+      (document.getElementById('back-to-top') as HTMLElement).style.display = "none";
+      document.getElementById('page-topbar')?.classList.remove('topbar-shadow')
     }
   }
 
-  // Delete Item
-  deleteItem(event: any, id: any) {
-    var price = event.target.closest('.dropdown-item').querySelector('.item_price').innerHTML;
-    var Total_price = this.total - price;
-    this.total = Total_price;
-    this.cart_length = this.cart_length - 1;
-    this.total > 1 ? (document.getElementById("empty-cart") as HTMLElement).style.display = "none" : (document.getElementById("empty-cart") as HTMLElement).style.display = "block";
-    document.getElementById('item_' + id)?.remove();
-  }
 
-  toggleDropdown(event: Event) {
-    event.stopPropagation();
-    if (this.isDropdownOpen) {
-      this.isDropdownOpen = false;
-    } else {
-      this.isDropdownOpen = true;
-    }
-  }
+
   // Search Topbar
   Search() {
-    var searchOptions = document.getElementById("search-close-options") as HTMLAreaElement;
-    var dropdown = document.getElementById("search-dropdown") as HTMLAreaElement;
-    var input: any, filter: any, ul: any, li: any, a: any | undefined, i: any, txtValue: any;
+    const searchOptions = document.getElementById("search-close-options") as HTMLAreaElement;
+    const dropdown = document.getElementById("search-dropdown") as HTMLAreaElement;
+    let input: any, filter: any, ul: any, li: any, a: any | undefined, i: any, txtValue: any;
     input = document.getElementById("search-options") as HTMLAreaElement;
     filter = input.value.toUpperCase();
-    var inputLength = filter.length;
+    const inputLength = filter.length;
 
     if (inputLength > 0) {
       dropdown.classList.add("show");
       searchOptions.classList.remove("d-none");
-      var inputVal = input.value.toUpperCase();
-      var notifyItem = document.getElementsByClassName("notify-item");
+      const inputVal = input.value.toUpperCase();
+      const notifyItem = document.getElementsByClassName("notify-item");
 
       Array.from(notifyItem).forEach(function (element: any) {
-        var notifiTxt = ''
+        let notifiTxt = ''
         if (element.querySelector("h6")) {
-          var spantext = element.getElementsByTagName("span")[0].innerText.toLowerCase()
-          var name = element.querySelector("h6").innerText.toLowerCase()
+          const spantext = element.getElementsByTagName("span")[0].innerText.toLowerCase()
+          const name = element.querySelector("h6").innerText.toLowerCase()
           if (name.includes(inputVal)) {
             notifiTxt = name
           } else {
@@ -240,71 +230,138 @@ export class TopbarComponent implements OnInit {
    * Search Close Btn
    */
   closeBtn() {
-    var searchOptions = document.getElementById("search-close-options") as HTMLAreaElement;
-    var dropdown = document.getElementById("search-dropdown") as HTMLAreaElement;
-    var searchInputReponsive = document.getElementById("search-options") as HTMLInputElement;
+    const searchOptions = document.getElementById("search-close-options") as HTMLAreaElement;
+    const dropdown = document.getElementById("search-dropdown") as HTMLAreaElement;
+    const searchInputReponsive = document.getElementById("search-options") as HTMLInputElement;
     dropdown.classList.remove("show");
     searchOptions.classList.add("d-none");
     searchInputReponsive.value = "";
   }
 
-  // Remove Notification
-  checkedValGet: any[] = [];
-  onCheckboxChange(event: any, id: any) {
-    this.notifyId = id
-    var result;
-    if (id == '1') {
-      var checkedVal: any[] = [];
-      for (var i = 0; i < this.allnotifications.length; i++) {
-        if (this.allnotifications[i].state == true) {
-          result = this.allnotifications[i].id;
-          checkedVal.push(result);
-        }
-      }
-      this.checkedValGet = checkedVal;
+  changeLayout(layout: string) {
+    this.attribute = layout;
+    if (layout == 'semibox') {
+      this.eventService.broadcast('changeLayout', 'vertical');
     } else {
-      var checkedVal: any[] = [];
-      for (var i = 0; i < this.messages.length; i++) {
-        if (this.messages[i].state == true) {
-          result = this.messages[i].id;
-          checkedVal.push(result);
-        }
-      }
-      console.log(checkedVal)
-      this.checkedValGet = checkedVal;
+      this.eventService.broadcast('changeLayout', layout);
     }
-    checkedVal.length > 0 ? (document.getElementById("notification-actions") as HTMLElement).style.display = 'block' : (document.getElementById("notification-actions") as HTMLElement).style.display = 'none';
+    document.documentElement.setAttribute('data-layout', layout);
+    document.body.setAttribute('layout', layout);
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 1000);
   }
 
-  notificationDelete() {
-    if (this.notifyId == '1') {
-      for (var i = 0; i < this.checkedValGet.length; i++) {
-        for (var j = 0; j < this.allnotifications.length; j++) {
-          if (this.allnotifications[j].id == this.checkedValGet[i]) {
-            this.allnotifications.splice(j, 1)
-          }
+  openEnd(content: TemplateRef<any>) {
+    this.offcanvasService.open(content, { position: 'end' });
+
+    setTimeout(() => {
+      this.attribute = document.documentElement.getAttribute('data-layout')
+      if (this.attribute == 'vertical') {
+        const vertical = document.getElementById('customizer-layout01') as HTMLInputElement;
+        if (vertical != null) {
+          vertical.setAttribute('checked', 'true');
         }
       }
-    } else {
-      for (var i = 0; i < this.checkedValGet.length; i++) {
-        for (var j = 0; j < this.messages.length; j++) {
-          if (this.messages[j].id == this.checkedValGet[i]) {
-            this.messages.splice(j, 1)
-          }
+      if (this.attribute == 'horizontal') {
+        const horizontal = document.getElementById('customizer-layout02');
+        if (horizontal != null) {
+          horizontal.setAttribute('checked', 'true');
         }
       }
-    }
-    this.calculatenotification()
-    this.modalService.dismissAll();
+      if (this.attribute == 'twocolumn') {
+        const Twocolumn = document.getElementById('customizer-layout03');
+        if (Twocolumn != null) {
+          Twocolumn.setAttribute('checked', 'true');
+        }
+      }
+      if (this.attribute == 'semibox') {
+        const Twocolumn = document.getElementById('customizer-layout04');
+        if (Twocolumn != null) {
+          Twocolumn.setAttribute('checked', 'true');
+        }
+      }
+    }, 100);
   }
 
-  calculatenotification() {
-    this.totalNotify = 0;
-    this.checkedValGet = []
+  // Visibility Change
+  changeVisibility(visibility: string) {
+    this.sidebarVisibility = visibility;
+    document.documentElement.setAttribute('data-sidebar-visibility', visibility)
+  }
 
-    this.checkedValGet.length > 0 ? (document.getElementById("notification-actions") as HTMLElement).style.display = 'block' : (document.getElementById("notification-actions") as HTMLElement).style.display = 'none';
-    if (this.totalNotify == 0) {
-      document.querySelector('.empty-notification-elem')?.classList.remove('d-none')
+  // Width Change
+  changeWidth(width: string, size: string) {
+    this.width = width;
+    document.documentElement.setAttribute('data-layout-width', width);
+    document.documentElement.setAttribute('data-sidebar-size', size);
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 0);
+  }
+
+  // Position Change
+  changePosition(position: string) {
+    this.position = position;
+    document.documentElement.setAttribute('data-layout-position', position);
+  }
+
+  // Topbar Change
+  changeTopColor(color: string) {
+    this.topbar = color;
+    document.documentElement.setAttribute('data-topbar', color)
+  }
+
+  // Sidebar Size Change
+  changeSidebarSize(size: string) {
+    this.size = size;
+    document.documentElement.setAttribute('data-sidebar-size', size)
+  }
+
+  // Sidebar Size Change
+  changeSidebar(sidebar: string) {
+    this.sidebarView = sidebar;
+    document.documentElement.setAttribute('data-layout-style', sidebar);
+  }
+
+  // Sidebar Color Change
+  changeSidebarColor(color: string) {
+    this.sidebar = color;
+    document.documentElement.setAttribute('data-sidebar', color)
+  }
+
+  // Sidebar Image Change
+  changeSidebarImage(img: string) {
+    this.sidebarImage = img;
+    document.documentElement.setAttribute('data-sidebar-image', img);
+  }
+
+  // PreLoader Image Change
+  changeLoader(loader: string) {
+    this.preLoader = loader;
+    document.documentElement.setAttribute('data-preloader', loader);
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+      setTimeout(function () {
+        (document.getElementById("preloader") as HTMLElement).style.opacity = "0";
+        (document.getElementById("preloader") as HTMLElement).style.visibility = "hidden";
+      }, 1000);
     }
   }
+
+  // Add Active Class
+  addActive(grdSidebar: any) {
+    this.grd = grdSidebar;
+    document.documentElement.setAttribute('data-sidebar', grdSidebar)
+    document.getElementById('collapseBgGradient')?.classList.toggle('show');
+    document.getElementById('collapseBgGradient1')?.classList.add('active');
+  }
+
+  // Remove Active Class
+  removeActive() {
+    this.grd = '';
+    document.getElementById('collapseBgGradient1')?.classList.remove('active');
+    document.getElementById('collapseBgGradient')?.classList.remove('show');
+  }
+
 }

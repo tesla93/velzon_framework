@@ -5,7 +5,9 @@ import { AppStorage } from "../utils/app-storage";
 
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AdminService {
     private _accessible: boolean;
 

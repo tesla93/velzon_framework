@@ -1,0 +1,21 @@
+{
+  "remoteServiceBaseUrl": "https://localhost:44316/",
+  "appBaseUrl": "https://localhost:44316/",
+  "client_id": "F8066BA1-628D-4A56-AF03-4684D6C3E8AA",
+  "client_secret": "031945DD-6206-4C49-B001-92BDE4ACBC3D",
+  "encryptSecretKey": "This_is_the_secret_key",
+  "localeMappings": [
+    {
+      "from": "pt-BR",
+      "to": "pt"
+    },
+    {
+      "from": "zh-CN",
+      "to": "zh"
+    },
+    {
+      "from": "he-IL",
+      "to": "he"
+    }
+  ]
+}

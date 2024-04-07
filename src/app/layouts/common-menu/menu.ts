@@ -9,23 +9,24 @@ export const MENU: MenuItem[] = [
   {
     id: 30,
     label: 'MENUITEMS.AGOL.DASHBOARD.TEXT',
-    icon: 'home',
+    icon: 'ri-home-3-line',
     link: '/agol/dashboard',
   }, 
   {
     id: 31,
     label: 'MENUITEMS.AGOL.REPORTS.TEXT',
     link: '/agol/report',
-    icon: 'layers',
+    icon: ' ri-file-text-line',
   },
   {
     id: 32,
     label: 'MENUITEMS.AGOL.CATALOGS.TEXT',
-    icon: 'package',
+    icon: ' ri-list-check',
     subItems : [
       {
         id: 33,
         label: 'MENUITEMS.AGOL.CATALOGS.STATUS',
+        // icon: 'ri-calendar-check-line',
         link: 'agol/catalogs/order-status',
         parentId: 32
       }

@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../core/services/event.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { getSidebarSize } from 'src/app/store/layouts/layout-selector';
-import { RootReducerState } from 'src/app/store';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-vertical',
@@ -13,70 +9,40 @@ import { Store } from '@ngrx/store';
 export class VerticalComponent implements OnInit {
 
   isCondensed = false;
-  getsize: any;
 
-  constructor(private eventService: EventService, private router: Router, private activatedRoute: ActivatedRoute, private store: Store<RootReducerState>) {
-  }
+  constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
-    this.router.events.subscribe((event: any) => {
-      if (document.documentElement.getAttribute('data-preloader') == 'enable') {
-        if (event instanceof NavigationEnd) {
-          // Update the attribute state based on the current route or any other conditions
-          if (event.url !== '/disabled-route') {
-            (document.getElementById("preloader") as HTMLElement).style.opacity = "1";
-            (document.getElementById("preloader") as HTMLElement).style.visibility = "";
-            setTimeout(() => {
-              (document.getElementById("preloader") as HTMLElement).style.opacity = "0";
-              (document.getElementById("preloader") as HTMLElement).style.visibility = "hidden";
-            }, 1000);
-          } else {
-            (document.getElementById("preloader") as HTMLElement).style.opacity = "0";
-            (document.getElementById("preloader") as HTMLElement).style.visibility = "hidden";
-          }
-        }
-      }
-    });
-
-    this.handlePreloader(this.activatedRoute.snapshot.routeConfig?.path);
-    if (document.documentElement.getAttribute('data-sidebar-size') == 'lg') {
-      this.store.select(getSidebarSize).subscribe((size) => {
-        this.getsize = size
-      })
-      window.addEventListener('resize', () => {
-        var self = this;
-        if (document.documentElement.clientWidth <= 767) {
-          document.documentElement.setAttribute('data-sidebar-size', '');
-          document.querySelector('.hamburger-icon')?.classList.add('open')
-        }
-        else if (document.documentElement.clientWidth <= 1024) {
-          document.documentElement.setAttribute('data-sidebar-size', 'sm');
-          document.querySelector('.hamburger-icon')?.classList.add('open')
-        }
-        else if (document.documentElement.clientWidth >= 1024) {
-          if (document.documentElement.getAttribute('data-layout-width') == 'fluid') {
-            document.documentElement.setAttribute('data-sidebar-size', self.getsize);
-            document.querySelector('.hamburger-icon')?.classList.remove('open')
-          }
-        }
-      })
-    }
-  }
-  private handlePreloader(route: any) {
-    if (route !== '/disabled-route') {
-      (document.getElementById("preloader") as HTMLElement).style.opacity = "1";
-      (document.getElementById("preloader") as HTMLElement).style.visibility = "";
-      setTimeout(() => {
-        (document.getElementById("preloader") as HTMLElement).style.opacity = "0";
-        (document.getElementById("preloader") as HTMLElement).style.visibility = "hidden";
-      }, 1000);
+    if (document.documentElement.getAttribute('data-layout') == 'semibox') {
+      document.documentElement.setAttribute('data-layout', 'semibox');
     } else {
-      (document.getElementById("preloader") as HTMLElement).style.opacity = "0";
-      (document.getElementById("preloader") as HTMLElement).style.visibility = "hidden";
+      document.documentElement.setAttribute('data-layout', 'vertical');
     }
+    document.documentElement.setAttribute('data-topbar', 'light');
+    document.documentElement.setAttribute('data-sidebar', 'light');
+    document.documentElement.setAttribute('data-layout-style', 'default');
+    document.documentElement.setAttribute('data-bs-theme', 'light');
+    document.documentElement.setAttribute('data-layout-width', 'fluid');
+    document.documentElement.setAttribute('data-layout-position', 'fixed');
+    document.documentElement.setAttribute('data-sidebar-image', 'none');
+    document.documentElement.setAttribute('data-preloader', 'disable');
+
+    window.addEventListener('resize', function () {
+      if (document.documentElement.clientWidth <= 767) {
+        document.documentElement.setAttribute('data-sidebar-size', '');
+        document.querySelector('.hamburger-icon')?.classList.add('open')
+      }
+      else if (document.documentElement.clientWidth <= 1024) {
+        document.documentElement.setAttribute('data-sidebar-size', 'sm');
+        document.querySelector('.hamburger-icon')?.classList.add('open')
+      }
+      else if (document.documentElement.clientWidth >= 1024) {
+        document.documentElement.setAttribute('data-sidebar-size', 'lg');
+        document.querySelector('.hamburger-icon')?.classList.remove('open')
+      }
+    })
+
   }
-
-
 
   /**
    * On mobile toggle button clicked
@@ -108,7 +74,6 @@ export class VerticalComponent implements OnInit {
     if (rightBar != null) {
       rightBar.classList.toggle('show');
       rightBar.setAttribute('style', "visibility: visible;");
-
     }
   }
 
