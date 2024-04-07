@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
      * Form Validatyion
      */
     this.loginForm = this.formBuilder.group({
-      email: ['admin@themesbrand.com', [Validators.required, Validators.email]],
-      password: ['123456', [Validators.required]],
+      email: ['german.camilo@gmail.com', [Validators.required, Validators.email]],
+      password: ['Ger*2023', [Validators.required]],
     });
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -60,11 +60,11 @@ export class LoginComponent implements OnInit {
 
     // Login Api
     this.authenticationService.login(this.f['email'].value, this.f['password'].value).subscribe((data: any) => {
-      if (data.status == 'success') {
+      if (!!data.accessToken) {
+        console.log(data.accessToken)
         sessionStorage.setItem('toast', 'true');
-        sessionStorage.setItem('currentUser', JSON.stringify(data.data));
-        sessionStorage.setItem('token', data.token);
-        this.router.navigate(['/']);
+        sessionStorage.setItem('currentUser', JSON.stringify(this.f['email'].value.toString().split('@')[0] )); //change for response with username
+        this.router.navigate(['/agol/dashboard']);
       } else {
         this.toastService.show(data.data, { classname: 'bg-danger text-white', delay: 15000 });
       }

@@ -93,9 +93,9 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
 
   }
   ngOnInit() {
-    this.orderService.get(1).then((order: Order) => {
-      console.log(order)
-    })
+    // this.orderService.get(1).then((order: Order) => {
+    //   console.log(order)
+    // })
     this.getDataItems();
     this.getAnalyticData();
     this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT');

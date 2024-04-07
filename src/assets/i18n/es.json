@@ -98,5 +98,12 @@
       "SUCCESSMSG": "Archivo adjunatdo exitosamente!",
       "PLACEHLDR": "Cargar archivo"
     }
+  },
+  "AUTHSERVICE": {
+    "ERRORAUTH": "Correo o contraseña incorrecta."
+  },
+  "TOPBAR": {
+    "WELCOMETEXT": "Hola {{userName}} !",
+    "LOGOUT": "Cerrar sesión"
   }
 }

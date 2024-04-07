@@ -43,16 +43,21 @@ export class AuthenticationService {
      * @param password password
      */
     register(email: string, first_name: string, password: string) {
-
+        console.log(email);
         // Register Api
-        return this.http.post(AppConsts.remoteServiceBaseUrl + 'signup', {
-            email,
-            first_name,
-            password,
-        }, httpOptions);
+        return this.http.post(AppConsts.remoteServiceBaseUrl + '/register', { email: email, password: password, }, httpOptions)
+            .pipe(
+                tap((data: any) => {
+                    console.log(data)
+                }),
+                catchError(() => {
+                    AuthenticationService.handleError(this.errorMsg)
+                    return of();
+                })
+            );
     }
 
-    get isLogged(){
+    get isLogged() {
         return !!AppStorage.getItem(AppConsts.authorization.currentUser);
     }
 
@@ -62,17 +67,16 @@ export class AuthenticationService {
      * @param password password of user
      */
 
-    login(username: string, password: string) {
+    login(email: string, password: string) {
         this.tokenService.removeToken();
         const body = new URLSearchParams()
-        body.set('username', username);
+        body.set('email', email);
         body.set('password', password);
-        body.set('client_id', AppConsts.client_id);
-        body.set('client_secret', AppConsts.client_secret);
-        body.set('grant_type', 'password');
-        return this.http.post<any>(AppConsts.remoteServiceBaseUrl + 'token', body.toString())
+
+        return this.http.post<any>(AppConsts.remoteServiceBaseUrl + '/login', { email: email, password: password })
             .pipe(
                 tap((res: AuthenticateResultModel) => {
+                    console.log(res)
                     this.tokenService.setToken(res);
                 }),
                 catchError(() => {
@@ -99,8 +103,8 @@ export class AuthenticationService {
             );
     }
 
- 
-    
+
+
 
     /**
      * Logout the user
@@ -108,7 +112,6 @@ export class AuthenticationService {
     logout() {
         this.tokenService.removeToken();
         this.tokenService.removeCurrentUser();
-        AppStorage.removeItem(AppConsts.authorization.loginInformation);
         window.location.reload();
     }
 

@@ -96,6 +96,11 @@ export class UtilsService {
         return idName;
     }
 
+    trimCharacter(input: string, character: string): string {
+        const regex = new RegExp(`^${character}+|${character}+$`, 'g');
+        return input.replace(regex, '');
+    }
+
     stringEnumToIdText(EnumArray: any) {
         const idName: any[] = [];
         const namesAndValues = EnumValues.getNamesAndValues(EnumArray);

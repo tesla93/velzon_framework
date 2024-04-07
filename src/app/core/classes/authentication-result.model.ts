@@ -1,6 +1,6 @@
 export class AuthenticateResultModel  {
-    access_token: string | undefined;
-    token_type: string | undefined;
-    expires_in: string | undefined;
-    refresh_token: string | undefined;
+    accessToken: string | undefined;
+    tokenType: string | undefined;
+    expiresIn: string | undefined;
+    refreshToken: string | undefined;
 }

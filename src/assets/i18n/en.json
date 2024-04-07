@@ -98,5 +98,12 @@
       "SUCCESSMSG": "File attached succesfully!",
       "PLACEHLDR": "Click or drag files to upload"
     }
+  },
+  "AUTHSERVICE": {
+    "ERRORAUTH": "Invalid username or password"
+  },
+  "TOPBAR": {
+    "WELCOMETEXT": "Welcome {{userName}} !",
+    "LOGOUT": "Logout"
   }
 }

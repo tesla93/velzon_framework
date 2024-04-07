@@ -161,8 +161,8 @@ export class ProjectHttpInterceptor implements HttpInterceptor {
 
         if (!this.itemExists(authorizationHeaders, (item: string) => item.indexOf('Bearer ') === 0)) {
             const token = this.tokenStorageService.getToken();
-            if (headers && token.access_token) {
-                headers = headers.set('Authorization', 'Bearer ' + token.access_token);
+            if (headers && token.accessToken) {
+                headers = headers.set('Authorization', 'Bearer ' + token.accessToken);
             }
         }
 

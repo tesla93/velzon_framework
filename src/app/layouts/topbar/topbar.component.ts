@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationService } from 'src/app/core/services/auth.service';
 import { DATA_PRELOADER, LAYOUT_MODE, LAYOUT_POSITION, LAYOUT_VERTICAL, LAYOUT_WIDTH, SIDEBAR_COLOR, SIDEBAR_IMAGE, SIDEBAR_SIZE, SIDEBAR_VIEW, SIDEBAR_VISIBILITY, TOPBAR } from '../layout.model';
+import { AppConsts } from 'src/app/core/AppConsts';
+import { UtilsService } from 'src/app/shared/utils/utils-service';
 
 @Component({
   selector: 'app-topbar',
@@ -47,7 +49,7 @@ export class TopbarComponent implements OnInit {
   loginInformation!: any;
 
   constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, private router: Router, public languageService: LanguageService, private offcanvasService: NgbOffcanvas,
-    public _cookiesService: CookieService, public translate: TranslateService, private authService: AuthenticationService) { }
+    public _cookiesService: CookieService, public translate: TranslateService, private authService: AuthenticationService, private utilService: UtilsService) { }
 
   ngOnInit(): void {
     this.element = document.documentElement;
@@ -78,6 +80,8 @@ export class TopbarComponent implements OnInit {
     // this.eventService.subscribe(AppConsts.authorization.loginInformation, (data: GetCurrentLoginInformationsOutput) => {
     //   this.loginInformation = data;
     // });
+
+    this.loginInformation = this.utilService.trimCharacter(sessionStorage.getItem(AppConsts.authorization.currentUser) ?? '', '"')
    
   }
 

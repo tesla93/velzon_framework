@@ -22,8 +22,8 @@ export class TokenStorageService {
   setToken(token: AuthenticateResultModel): void {
     const encriptedToken = EncriptionUtility.encryptData(token, AppConsts.encryptSecretKey) ?? '';
     AppStorage.setItem(AppConsts.authorization.accessToken, encriptedToken);
-    if(token.expires_in)
-      this.setExpirationDate(+token.expires_in);
+    if(token.expiresIn)
+      this.setExpirationDate(+token.expiresIn);
   }
 
   setExpirationDate(expires_in: number) {
@@ -39,7 +39,7 @@ export class TokenStorageService {
 
 
   removeCurrentUser() {
-    AppStorage.removeItem(AppConsts.authorization.currentUser);
+    sessionStorage.removeItem(AppConsts.authorization.currentUser);
   }
 
   public setUser(user: any): void {

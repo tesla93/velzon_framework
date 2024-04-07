@@ -1,0 +1,15 @@
+.auth-one-bg {
+    background-image: url('.../../../../../assets/images/ship.jpg');
+    // background-image: url('.../../../../../assets/images/containers.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.auth-one-bg .bg-overlay {
+    background: linear-gradient(to right, #1b8fcd, #25a0e2);
+    opacity: 0.7;
+}
+
+.card{
+    box-shadow: 1px 1px 1px  lightcyan;
+}
