@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  appConfig: 'appconfig.json',
+  remoteServiceBaseUrl: 'https://localhost:44316',
   defaultauth: 'fackbackend',
   firebaseConfig: {
     apiKey: '',

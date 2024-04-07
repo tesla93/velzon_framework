@@ -1,38 +1,58 @@
 import { Injectable } from '@angular/core';
+import { EncriptionUtility } from './encription-utility';
+import { AppConsts } from '../AppConsts';
+import { AppStorage } from '../utils/app-storage';
+import { AuthenticateResultModel } from '../classes/authentication-result.model';
 
-const TOKEN_KEY = 'auth-token';
-const USER_KEY = 'currentUser';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenStorageService {
-  constructor() { }
+
+
+
+  getToken(): AuthenticateResultModel {
+    const token = EncriptionUtility.decryptData(AppStorage.getItem(AppConsts.authorization.accessToken) ?? '', AppConsts.encryptSecretKey);
+    return token;
+  }
+
+
+  setToken(token: AuthenticateResultModel): void {
+    const encriptedToken = EncriptionUtility.encryptData(token, AppConsts.encryptSecretKey) ?? '';
+    AppStorage.setItem(AppConsts.authorization.accessToken, encriptedToken);
+    if(token.expires_in)
+      this.setExpirationDate(+token.expires_in);
+  }
+
+  setExpirationDate(expires_in: number) {
+    const result = new Date();
+    result.setTime(result.getTime() + expires_in*1000);
+    AppStorage.setItem(AppConsts.authorization.expiry_token_date, result);
+  }
+
+
+  removeToken(): void {
+    AppStorage.removeItem(AppConsts.authorization.accessToken)
+  }
+
+
+  removeCurrentUser() {
+    AppStorage.removeItem(AppConsts.authorization.currentUser);
+  }
+
+  public setUser(user: any): void {
+    AppStorage.removeItem(AppConsts.authorization.currentUser);
+    AppStorage.setItem(AppConsts.authorization.currentUser, JSON.stringify(user));
+  }
+
+  public getUser(): any {
+    return AppStorage.getItem(AppConsts.authorization.currentUser);
+  }
 
   signOut(): void {
     window.sessionStorage.clear();
   }
 
-  public saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
-  }
-
-  public getToken(): string | null {
-    return sessionStorage.getItem('token');
-  }
-
-  public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-
-  public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return JSON.parse(user);
-    }
-
-    return {};
-  }
 }

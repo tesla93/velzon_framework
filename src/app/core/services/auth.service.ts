@@ -1,14 +1,17 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { getFirebaseBackend } from '../../authUtils';
-import { User } from 'src/app/store/Authentication/auth.models';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { GlobalComponent } from "../../global-component";
-import { Store } from '@ngrx/store';
-import { RegisterSuccess, loginFailure, loginSuccess, logout, logoutSuccess } from 'src/app/store/Authentication/authentication.actions';
-
-const AUTH_API = GlobalComponent.AUTH_API;
+import { TranslateService } from '@ngx-translate/core';
+// import { AppConsts } from '@shared/AppConsts';
+// import { AppStorage } from '@shared/utils/app-storage';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Message } from '../../core/classes/message';
+import { User } from '../../core/models/auth.models';
+// import { AuthenticateResultModel } from '../../core/models/authentication-result.model';
+import { TokenStorageService } from '../../core/services/token-storage.service';
+import { AppStorage } from '../utils/app-storage';
+import { AppConsts } from '../AppConsts';
+import { AuthenticateResultModel } from '../classes/authentication-result.model';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,13 +27,14 @@ export class AuthenticationService {
 
     user!: User;
     currentUserValue: any;
+    errorMsg!: string
 
-    private currentUserSubject: BehaviorSubject<User>;
-    // public currentUser: Observable<User>;
-
-    constructor(private http: HttpClient, private store: Store) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')!));
-        // this.currentUser = this.currentUserSubject.asObservable();
+    constructor(private http: HttpClient,
+        private translate: TranslateService,
+        private tokenService: TokenStorageService) {
+        this.translate.get(`AUTHSERVICE.ERRORAUTH`).subscribe(() => {
+            this.errorMsg = this.translate.instant('AUTHSERVICE.ERRORAUTH')
+        });
     }
 
     /**
@@ -39,27 +43,17 @@ export class AuthenticationService {
      * @param password password
      */
     register(email: string, first_name: string, password: string) {
-        // return getFirebaseBackend()!.registerUser(email, password).then((response: any) => {
-        //     const user = response;
-        //     return user;
-        // });
 
         // Register Api
-        return this.http.post(AUTH_API + 'signup', {
+        return this.http.post(AppConsts.remoteServiceBaseUrl + 'signup', {
             email,
             first_name,
             password,
-        }, httpOptions).pipe(
-            map((response: any) => {
-                const user = response;
-                return user;
-            }),
-            catchError((error: any) => {
-                const errorMessage = 'Login failed'; // Customize the error message as needed
-                this.store.dispatch(loginFailure({ error: errorMessage }));
-                return throwError(errorMessage);
-            })
-        );
+        }, httpOptions);
+    }
+
+    get isLogged(){
+        return !!AppStorage.getItem(AppConsts.authorization.currentUser);
     }
 
     /**
@@ -67,61 +61,69 @@ export class AuthenticationService {
      * @param email email of user
      * @param password password of user
      */
-    login(email: string, password: string) {
-        // return getFirebaseBackend()!.loginUser(email, password).then((response: any) => {
-        //     const user = response;
-        //     return user;
-        // });
 
-        return this.http.post(AUTH_API + 'signin', {
-            email,
-            password
-        }, httpOptions).pipe(
-            map((response: any) => {
-                const user = response;
-                return user;
-            }),
-            catchError((error: any) => {
-                const errorMessage = 'Login failed'; // Customize the error message as needed
-                return throwError(errorMessage);
-            })
-        );
+    login(username: string, password: string) {
+        this.tokenService.removeToken();
+        const body = new URLSearchParams()
+        body.set('username', username);
+        body.set('password', password);
+        body.set('client_id', AppConsts.client_id);
+        body.set('client_secret', AppConsts.client_secret);
+        body.set('grant_type', 'password');
+        return this.http.post<any>(AppConsts.remoteServiceBaseUrl + 'token', body.toString())
+            .pipe(
+                tap((res: AuthenticateResultModel) => {
+                    this.tokenService.setToken(res);
+                }),
+                catchError(() => {
+                    AuthenticationService.handleError(this.errorMsg)
+                    return of();
+                })
+            );
     }
 
-    /**
-     * Returns the current user
-     */
-    public currentUser(): any {
-        return getFirebaseBackend()!.getAuthenticatedUser();
+    refreshToken(refreshData: any): Observable<any> {
+        this.tokenService.removeToken();
+        const body = new HttpParams()
+            .set('refresh_token', refreshData.refresh_token)
+            .set('grant_type', 'refresh_token');
+        return this.http.post<any>(AppConsts.remoteServiceBaseUrl + '/token', body)
+            .pipe(
+                tap((res: AuthenticateResultModel) => {
+                    this.tokenService.setToken(res);
+                }),
+                catchError(() => {
+                    AuthenticationService.handleError(this.errorMsg)
+                    return of();
+                })
+            );
     }
+
+ 
+    
 
     /**
      * Logout the user
      */
     logout() {
-        this.store.dispatch(logout());
-        // logout the user
-        // return getFirebaseBackend()!.logout();
-        sessionStorage.removeItem('currentUser');
-        sessionStorage.removeItem('token');
-        this.currentUserSubject.next(null!);
-
-        return of(undefined).pipe(
-
-        );
-
+        this.tokenService.removeToken();
+        this.tokenService.removeCurrentUser();
+        AppStorage.removeItem(AppConsts.authorization.loginInformation);
+        window.location.reload();
     }
 
-    /**
-     * Reset password
-     * @param email email
-     */
-    resetPassword(email: string) {
-        return getFirebaseBackend()!.forgetPassword(email).then((response: any) => {
-            const message = response.data;
-            return message;
-        });
+    isTokenExpired(): boolean {
+        const date = new Date(AppStorage.getItem(AppConsts.authorization.expiry_token_date));
+        if (date === undefined || date === null) return false;
+        return (date.valueOf() <= new Date().valueOf());
     }
 
+
+
+    private static handleError(error: string): any {
+        Message.Error(error);
+        console.error(error);
+        return throwError(() => new Error(error));
+    }
 }
 

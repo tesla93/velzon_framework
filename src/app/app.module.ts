@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,10 +19,14 @@ import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 // Store
-import { rootReducer } from './store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { ProjectHttpInterceptor } from './core/interceptors/project-httpInterceptor';
+import { ApiInterceptor, HttpResponsesHandlersFactory } from './core/data-service';
+import { AppInitializer } from './app-initializer';
+import { AppConsts } from './core/AppConsts';
+import { rootReducer } from './store';
 import { EcommerceEffects } from './store/Ecommerce/ecommerce_effect';
 import { ProjectEffects } from './store/Project/project_effect';
 import { TaskEffects } from './store/Task/task_effect';
@@ -34,7 +38,7 @@ import { FileManagerEffects } from './store/File Manager/filemanager_effect';
 import { TodoEffects } from './store/Todo/todo_effect';
 import { ApplicationEffects } from './store/Jobs/jobs_effect';
 import { ApikeyEffects } from './store/APIKey/apikey_effect';
-import { AuthenticationEffects } from './store/Authentication/authentication.effects';
+
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -64,7 +68,7 @@ if (environment.defaultauth === 'firebase') {
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     EffectsModule.forRoot([
-      AuthenticationEffects,
+      AnimationEffect,
       EcommerceEffects,
       ProjectEffects,
       TaskEffects,
@@ -84,8 +88,22 @@ if (environment.defaultauth === 'firebase') {
     PagesModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ProjectHttpInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (appInitializer: AppInitializer) => appInitializer.init(),
+      deps: [AppInitializer],
+      multi: true,
+    },
+    // HttpResponsesHandlersFactory,
+    // {
+    //   // provide: ErrorHandler,
+    //   // useClass: ServerErrorHandler
+    // },
+    // { provide: API_BASE_URL, useFactory: () => AppConsts.remoteServiceBaseUrl },
   ],
   bootstrap: [AppComponent]
 })

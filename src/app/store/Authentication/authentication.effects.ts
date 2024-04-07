@@ -15,7 +15,7 @@ export class AuthenticationEffects {
       ofType(Register),
       exhaustMap(({ email, first_name, password }) =>
         this.AuthenticationService.register(email, first_name, password).pipe(
-          map((user) => {
+          map((user: any) => {
             this.router.navigate(['/auth/login']);
             return loginSuccess({ user });
           }),
@@ -32,12 +32,11 @@ export class AuthenticationEffects {
       if (environment.defaultauth === "fakebackend") {
         return this.AuthenticationService.login(email, password).pipe(
           map((user) => {
-            if (user.status === 'success') {
+            
               sessionStorage.setItem('toast', 'true');
-              sessionStorage.setItem('currentUser', JSON.stringify(user.data));
-              sessionStorage.setItem('token', user.token);
+              sessionStorage.setItem('currentUser', JSON.stringify(user));
+              sessionStorage.setItem('token', user.access_token ?? '');
               this.router.navigate(['/']);
-            }
             return loginSuccess({ user });
           }),
           catchError((error) => of(loginFailure({ error })), // Closing parenthesis added here
