@@ -75,7 +75,6 @@ export class OrderStatusCatComponent extends ListBaseComponent<OrderStatus> impl
   }
 
   getDataItems(pagination?: PaginationModel) {
-    // this.dataList = statusData
     this.showSpinner = true;
     const page = pagination?.page ?? 1
     const pageSize = pagination?.pageSize ?? this.itemsPerPage[0]

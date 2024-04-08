@@ -99,8 +99,8 @@
 
 </div>
 
-<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="dataList?.length" [importEnabled]="true" [itemsPerPage]="itemsPerPage" [creationLink]="'/agol/dashboard/create'"
-    (reloadData)="getDataItems($event)" [statusClass]="getBadgeClass">
+<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="dataList?.length" [importEnabled]="true" [itemsPerPage]="itemsPerPage" [creationLink]="'/agol/order/create'"
+    (reloadData)="getDataItems($event)" [statusClass]="getBadgeClass" (deleteDataEvent)="deleteData($event)">
 </grid>
 
 <ng-template #loadingData>

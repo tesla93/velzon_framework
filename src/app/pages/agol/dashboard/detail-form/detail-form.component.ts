@@ -1,17 +1,19 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { finalize } from 'rxjs';
 import { SelectListItem } from 'src/app/shared/classes/select-list-item';
+import { CkEditorField } from 'src/app/shared/dynamic-form/models/ckeditor-field';
 import { Field } from 'src/app/shared/dynamic-form/models/field';
-import { FormBaseComponent } from 'src/app/shared/utils/form.base.component';
-import { cargoModelData } from '../../models/cargo-model.data';
 import { InputField } from 'src/app/shared/dynamic-form/models/input-field';
 import { SelectField } from 'src/app/shared/dynamic-form/models/select-field';
-import { TextAreaField } from 'src/app/shared/dynamic-form/models/textarea-field';
+import { FormBaseComponent } from 'src/app/shared/utils/form.base.component';
+import { Order } from '../../models/order.model';
 import { orderTrackingHistory, statusData } from '../../models/status.data';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CkEditorField } from 'src/app/shared/dynamic-form/models/ckeditor-field';
 import { ReportService } from '../../report/report.service';
-import { finalize } from 'rxjs';
+import { OrderService } from '../order.service';
+import { ButtonItems } from 'src/app/shared/generic-buttons/classes/button-items';
 
 @Component({
   selector: 'detail-form',
@@ -23,40 +25,81 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
 
   public Editor = ClassicEditor;
   fields!: Field<any>[];
+  orderId!: number;
   statusDropdown: SelectListItem[] = statusData;
-  ordersForm!: UntypedFormGroup;
-  selectedData: any
+  orderForm!: UntypedFormGroup;
+  selectedOrderData: Order = {} as Order
   showSpinner = false;
   orderTrackingHistoryDatas = orderTrackingHistory;
   airportItems: any = {};
   showForm = false;
-  airportSelectItems: any = {};
+  airportSelectItems: SelectListItem[] = [];
+  override buttons = [
+    <ButtonItems>{
+      text: "GENERAL.COMMONBUTTONS.SAVE",
+      type: "submit",
+      iconClass: "ri-save-3-line label-icon align-middle fs-16",
+      ngClass: "btn btn-primary btn-label",
+    },
+    <ButtonItems>{
+      text: "GENERAL.COMMONBUTTONS.CANCEL",
+      type: "button",
+      ngClass: "btn btn-secondary btn-label",
+      iconClass: "ri-close-line label-icon align-middle fs-16",
+      clickHandler: (): void => {
+        this.buttonBackClickHandler();
+      }
+    },
+  ];
 
   submitted: boolean = false
 
-  constructor(injector: Injector, private formBuilder: UntypedFormBuilder, private reportService: ReportService) {
+  constructor(
+    injector: Injector,
+    private formBuilder: UntypedFormBuilder,
+    public router: Router,
+    public activatedRoute: ActivatedRoute,
+    public orderService: OrderService,
+    private reportService: ReportService) {
     super(injector);
   }
   ngOnInit(): void {
-    this.selectedData = cargoModelData[0];
+    this.activatedRoute.params
+    .subscribe(params => {
+        if (parseInt(params['id'])) {
+          this.orderId = parseInt(params['id']);
+          this.getDataItems();
+        }
+      });
+    this.initFields()
     this.initForm();
     this.getAirportList();
     this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT', 'Order Detail');
   }
 
+  getDataItems() {
+    this.showSpinner = true;
+    this.orderService.get(this.orderId).then((response: Order) => {
+      this.selectedOrderData = response;
+      this.initFields();
+      this.initForm();
+      this.showSpinner = false;
+    })
+  }
+
   initForm(): void {
-    this.ordersForm = this.formBuilder.group({
-      customerReferenceId: new FormControl(this.selectedData.customerReferenceId),
-      customerName: new FormControl(this.selectedData.customerName),
-      shipper: new FormControl(this.selectedData.shipper),
-      originAirport: new FormControl(this.selectedData.originAirport),
-      consignee: new FormControl(this.selectedData.consignee),
-      destinationAirport: new FormControl(this.selectedData.destinationAirport),
-      originInlandCarrier: new FormControl(this.selectedData.originInlandCarrier),
-      destinationInlandCarrier: new FormControl(this.selectedData.destinationInlandCarrier),
-      currentStatusId: new FormControl(this.selectedData.currentStatusId),
-      agentAssigned: new FormControl(this.selectedData.agentAssigned),
-      comments: new FormControl(this.selectedData.comments),
+    this.orderForm = this.formBuilder.group({
+      referenceId: new FormControl(this.selectedOrderData?.referenceId ?? ''),
+      orderStatusId: new FormControl(this.selectedOrderData?.orderStatusId?.toString()),
+      cargo: new FormControl(this.selectedOrderData?.cargo ?? ''),
+      shipper: new FormControl(this.selectedOrderData?.shipper ?? ''),
+      consignee: new FormControl(this.selectedOrderData?.consignee ?? ''),
+      originInlandAirport: new FormControl(this.selectedOrderData?.originInlandAirport ?? ''),
+      originAirport: new FormControl(this.selectedOrderData?.originAirport),
+      destinationInlandAirport: new FormControl(this.selectedOrderData?.destinationInlandAirport ?? ''),
+      destinationAirport: new FormControl(this.selectedOrderData?.destinationAirport),
+      agentAssigned: new FormControl(this.selectedOrderData?.agentAssigned ?? ''),
+      comments: new FormControl(this.selectedOrderData?.comments ?? ''),
     });
   }
 
@@ -65,29 +108,29 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
       new InputField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.REFERENCEID',
         label: 'MENUITEMS.AGOL.DASHBOARD.REFERENCEID',
-        name: 'customerReferenceId',
+        name: 'referenceId',
         parentClass: 'col-4 my-2',
         disabled: false,
-        readonly: true,
+        readonly: !!this.orderId,
         maxlength: 100,
         order: 0,
       }),
       new SelectField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.STATUS',
         label: 'MENUITEMS.AGOL.DASHBOARD.STATUS',
-        name: 'currentStatusId',
+        name: 'orderStatusId',
         parentClass: 'col-4 my-2',
         selectListItem: this.statusDropdown,
-        order: 0,
+        order: 1,
       }),
       new InputField({
-        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.CUSTOMERNAME',
-        label: 'MENUITEMS.AGOL.DASHBOARD.CUSTOMERNAME',
-        name: 'customerName',
+        placeHolder: 'Cargo',
+        label: 'Cargo',
+        name: 'cargo',
         parentClass: 'col-4 my-2',
         disabled: true,
         maxlength: 100,
-        order: 1,
+        order: 2,
       }),
       new InputField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.SHIPPER',
@@ -96,15 +139,6 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         parentClass: 'col-4 my-2',
         disabled: true,
         maxlength: 100,
-        order: 2,
-      }),
-      new SelectField({
-        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT',
-        label: 'MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT',
-        name: 'originAirport',
-        parentClass: 'col-4 my-2',
-        disabled: true,
-        selectListItem: this.airportSelectItems,
         order: 3,
       }),
       new InputField({
@@ -116,34 +150,42 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         maxlength: 100,
         order: 4,
       }),
-      new SelectField({
-        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.DESTINATIONAIRPORT',
-        label: 'MENUITEMS.AGOL.DASHBOARD.DESTINATIONAIRPORT',
-        name: 'destinationAirport',
-        parentClass: 'col-4 my-2',
-        disabled: true,
-        selectListItem: this.airportSelectItems,
-        order: 5,
-      }),
       new InputField({
-        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.ORIGININLANDCARRIER',
+        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.ORIGINLANDCARRIER',
         label: 'MENUITEMS.AGOL.DASHBOARD.ORIGININLANDCARRIER',
-        name: 'originInlandCarrier',
+        name: 'originInlandAirport',
         parentClass: 'col-4 my-2',
         disabled: true,
         maxlength: 100,
+        order: 5,
+      }),
+      new SelectField({
+        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT',
+        label: 'MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT',
+        name: 'originAirport',
+        parentClass: 'col-4 my-2',
+        // disabled: true,
+        selectListItem: this.airportSelectItems,
         order: 6,
       }),
       new InputField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.DESTINATIONINLANDCARRIER',
         label: 'MENUITEMS.AGOL.DASHBOARD.DESTINATIONINLANDCARRIER',
-        name: 'destinationInlandCarrier',
+        name: 'destinationInlandAirport',
         parentClass: 'col-4 my-2',
         disabled: true,
         maxlength: 100,
         order: 7,
       }),
-
+      new SelectField({
+        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.DESTINATIONAIRPORT',
+        label: 'MENUITEMS.AGOL.DASHBOARD.DESTINATIONAIRPORT',
+        name: 'destinationAirport',
+        parentClass: 'col-4 my-2',
+        // disabled: true,
+        selectListItem: this.airportSelectItems,
+        order: 8,
+      }),
       new InputField({
         placeHolder: 'MENUITEMS.AGOL.DASHBOARD.AGENTASSIGNED',
         label: 'MENUITEMS.AGOL.DASHBOARD.AGENTASSIGNED',
@@ -160,15 +202,6 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         parentClass: 'col-12 my-2',
         order: 10,
       }),
-      // new TextAreaField({
-      //   placeHolder: 'MENUITEMS.AGOL.DASHBOARD.COMMENTS',
-      //   label: 'MENUITEMS.AGOL.DASHBOARD.COMMENTS',
-      //   name: 'comments',
-      //   rows: 5,
-      //   parentClass: 'col-12 my-2',
-      //   order: 10,
-      // }),
-
     ]
   }
 
@@ -177,6 +210,7 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.initFields();
+          this.initForm();
         })
       )
       .subscribe(obj => {
@@ -186,8 +220,38 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
   }
 
   onSubmit() {
-    this.showSpinner = true;
     this.submitted = true;
+    if (this.orderForm.valid) {
+      // this.selectedOrderData = this.selectedOrderData ? { ...this.selectedOrderData } as Order : {} as Order
+      Object.assign(this.selectedOrderData, this.orderForm.getRawValue());
+
+      this.showSpinner = true;
+      this.orderId ? this.update() : this.create()
+    }
+  }
+
+  async update() {
+    await this.orderService.update(this.selectedOrderData.id, this.selectedOrderData).then((response: any) => {
+      this.showSpinner = false;
+      if (response) {
+        this.buttonBackClickHandler();
+      }
+    });
+
+
+  }
+
+  async create() {
+    console.log(this.selectedOrderData)
+    const response = await this.orderService.create(this.selectedOrderData);
+    this.showSpinner = false;
+    console.log(response)
+  }
+
+
+
+  buttonBackClickHandler() {
+    this.router.navigate(['agol/dashboard']);
   }
 
 

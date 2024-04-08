@@ -76,12 +76,13 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
         {
           iconClass: "ri-pencil-fill text-success",
           clickHandler: (id: any): void => {
-            this.router.navigate(['/agol/detail/0']);
+            this.router.navigate([`/agol/order/edit/${id}`]);
           },
         },
         {
           iconClass: 'ri-delete-bin-fill align-bottom me-2 text-danger',
           clickHandler: (id: string) => {
+            console.log(id)
             this.grid.confirmDelete(id);
           }
         }
@@ -106,9 +107,6 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
 
   }
   ngOnInit() {
-    // this.orderService.get(1).then((order: Order) => {
-    //   console.log(order)
-    // })
     this.getDataItems();
     this.getAnalyticData();
     this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT');
@@ -155,6 +153,15 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
     }
   }
 
-
+  async deleteData(key: any) {
+    if (key) {
+      this.orderService.delete(key).then((data: any) => {
+        console.log(data)
+        if(data){
+          this.getDataItems();
+        }
+      })
+    }
+  }
 
 }

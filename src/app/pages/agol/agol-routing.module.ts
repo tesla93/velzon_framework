@@ -18,7 +18,11 @@ const routes: Routes = [
     component: AgolDashboardComponent
   },
   {
-    path: "detail/:id",
+    path: "order/edit/:id",
+    component: DetailFormComponent
+  },
+  {
+    path: "order/create",
     component: DetailFormComponent
   },
   {
