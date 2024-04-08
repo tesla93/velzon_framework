@@ -1,3 +1,5 @@
-<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="dataList?.length" [itemsPerPage]="itemsPerPage" [creationLink]="'/agol/dashboard/create'"
-    (reloadData)="getDataItems($event)">
+<app-breadcrumbs title="{{'MENUITEMS.AGOL.CATALOGS.TEXT' | translate}}" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="totalRecords" [itemsPerPage]="itemsPerPage" [creationLink]="'/agol/dashboard/create'"
+    (reloadData)="getDataItems($event)" (deleteDataEvent)="deleteData($event)">
 </grid>

@@ -36,6 +36,7 @@
       "CATALOGS": {
         "TEXT": "Catalogs",
         "STATUS": "Order Status",
+        "ICON": "Icon",
         "ORDER": "Sequence",
           "STATUSNAME": "Status Name"
       }

@@ -9,23 +9,21 @@ import { Router } from '@angular/router';
 import { AnalyticData } from '../models/analytic-data';
 import { OrderService } from './order.service';
 import { Order } from '../models/order.model';
+import { IFilterCommand } from 'src/app/core/filter';
+import { IPagedData } from 'src/app/core/interfaces/paged-data';
 
 @Component({
   selector: 'agol-dashboard',
   templateUrl: './agol-dashboard.component.html',
   styleUrl: './agol-dashboard.component.scss'
 })
-export class AgolDashboardComponent extends ListBaseComponent<any> implements OnInit {
-  @ViewChild("grid", { static: false }) grid!: GridComponent<any>;
+export class AgolDashboardComponent extends ListBaseComponent<Order> implements OnInit {
+  @ViewChild("grid", { static: false }) grid!: GridComponent<Order>;
 
   override columns = [
     <GridColumn>{
-      field: "customerReferenceId",
+      field: "referenceId",
       header: "MENUITEMS.AGOL.DASHBOARD.REFERENCEID",
-    },
-    <GridColumn>{
-      field: "customerName",
-      header: "MENUITEMS.AGOL.DASHBOARD.CUSTOMERNAME",
     },
     <GridColumn>{
       field: "shipper",
@@ -33,8 +31,18 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
       header: "MENUITEMS.AGOL.DASHBOARD.SHIPPER",
     },
     <GridColumn>{
-      field: "originAirport",
-      header: "MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT",
+      field: "agentAssigned",
+      // displayingMode: DisplayingMode.Avatar,
+      header: "Agent Assigned",
+    },
+    // <GridColumn>{
+    //   field: "customerName",
+    //   header: "MENUITEMS.AGOL.DASHBOARD.CUSTOMERNAME",
+    // },
+    <GridColumn>{
+      field: "cargo",
+      // displayingMode: DisplayingMode.Avatar,
+      header: "Cargo",
     },
     <GridColumn>{
       field: "consignee",
@@ -42,11 +50,16 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
       header: "MENUITEMS.AGOL.DASHBOARD.CONSIGNEE",
     },
     <GridColumn>{
+      field: "originAirport",
+      header: "MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT",
+    },
+    
+    <GridColumn>{
       field: "destinationAirport",
       header: "MENUITEMS.AGOL.DASHBOARD.DESTINATIONAIRPORT",
     },
     <GridColumn>{
-      field: "currentStatusName",
+      field: "orderStatusName",
       header: "MENUITEMS.AGOL.DASHBOARD.STATUS",
       displayingMode: DisplayingMode.Status,
     },
@@ -103,7 +116,24 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
 
 
   getDataItems(pagination?: PaginationModel) {
-    this.dataList = cargoModelData
+    this.showSpinner = true;
+    const page = pagination?.page ?? 1
+    const pageSize = pagination?.pageSize ?? this.itemsPerPage[0]
+    const sortColumn = pagination?.sortColumn ?? 'id'
+    const sortOrder = pagination?.sortOrder == 'desc' ? -1 : 1
+    
+    this.orderService.getPage(
+      <IFilterCommand>{ first: (page - 1) * pageSize, rows: pageSize, sortOrder: sortOrder, sortField: sortColumn })
+      .then((response: IPagedData<Order>) => {
+        console.log(response);
+        this.dataList = response.items ?? [];
+        this.totalRecords = response.total ?? 0;
+        this.showSpinner = false;
+      })
+    
+    
+    // this.dataList = cargoModelData
+
   }
 
   getAnalyticData() {
@@ -112,7 +142,7 @@ export class AgolDashboardComponent extends ListBaseComponent<any> implements On
   }
 
   getBadgeClass(status: string) {
-    switch (status.toUpperCase()) {
+    switch (status?.toUpperCase()) {
       case "DISPATCHED FOR PICKUPS":
       case "EN CURSO":
         return "badge bg-warning-subtle text-warning";

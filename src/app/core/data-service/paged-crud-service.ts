@@ -67,4 +67,14 @@ export abstract class PagedCrudService<TEntity> extends CrudService<TEntity>  { 
     //         }
     //     });
     // }
+
+    public getDefaultFilter() {
+        return {
+            first: 0,
+            rows: 100,
+            sortOrder: 1,
+            filters: [],
+            multiSortMeta: []
+        };
+    }
 }

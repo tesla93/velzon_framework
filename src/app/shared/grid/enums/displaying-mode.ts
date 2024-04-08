@@ -6,6 +6,7 @@ export enum DisplayingMode {
     Date,
     Avatar,
     HTML,
+    Icon,
     Number,
     Status,
     Action,

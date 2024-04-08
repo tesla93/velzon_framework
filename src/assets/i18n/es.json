@@ -36,6 +36,7 @@
       "CATALOGS": {
         "TEXT": "Catalogos",
         "STATUS": "Estados",
+        "ICON": "Icono",
         "ORDER": "Secuencia",
         "STATUSNAME": "Nombre"
       }
