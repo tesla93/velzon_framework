@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   successmsg = false;
   error = '';
+  fieldTextType!: boolean;
   // set the current year
   year: number = new Date().getFullYear();
 
@@ -64,6 +65,10 @@ export class RegisterComponent implements OnInit {
     (error: any) => {
       this.error = error ? error : '';
     });  
+  }
+
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 
 }

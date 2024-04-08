@@ -50,7 +50,7 @@
                                             Please enter email
                                         </div>
                                     </div>
-                                    <div class="mb-3">
+                                    <!-- <div class="mb-3">
                                         <label for="username" class="form-label">Username <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="username"
@@ -59,17 +59,27 @@
                                         <div class="invalid-feedback">
                                             Please enter username
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="mb-2">
                                         <label for="userpassword" class="form-label">Password <span
                                                 class="text-danger">*</span></label>
-                                        <input type="password" class="form-control" id="userpassword"
-                                            placeholder="Enter password" required formControlName="password"
-                                            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
-                                        <div class="invalid-feedback">
-                                            Please enter password
-                                        </div>
+                                                <div class="position-relative auth-pass-inputgroup mb-3">
+                                                    <input [type]="fieldTextType ? 'text' : 'password'"
+                                                        class="form-control pe-5" placeholder="Enter password"
+                                                        id="password-input" formControlName="password"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                                                    <button
+                                                        class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
+                                                        type="button" id="password-addon"><i class="mdi align-middle" [ngClass]="{'mdi-eye-off-outline': !fieldTextType, 'mdi-eye-outline': fieldTextType
+                                                  }" (click)="toggleFieldTextType()"></i></button>
+                                                    @if(submitted && f['password'].errors){
+                                                    <div class="invalid-feedback">
+                                                        @if(f['password'].errors['required']){
+                                                        <span>Password is required</span>
+                                                        }
+                                                    </div>}
+                                                </div>
                                     </div>
 
                                     <div class="mb-4">
