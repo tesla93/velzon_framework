@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnInit } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -10,7 +10,6 @@ import { InputField } from 'src/app/shared/dynamic-form/models/input-field';
 import { SelectField } from 'src/app/shared/dynamic-form/models/select-field';
 import { FormBaseComponent } from 'src/app/shared/utils/form.base.component';
 import { Order } from '../../models/order.model';
-import { orderTrackingHistory, statusData } from '../../models/status.data';
 import { ReportService } from '../../report/report.service';
 import { OrderService } from '../order.service';
 import { ButtonItems } from 'src/app/shared/generic-buttons/classes/button-items';
@@ -27,11 +26,11 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
   public Editor = ClassicEditor;
   fields!: Field<any>[];
   orderId!: number;
-  statusDropdown: SelectListItem[] = statusData;
+  actualStatusId!: number;
+  statusDropdown!: SelectListItem[];
   orderForm!: UntypedFormGroup;
   selectedOrderData: Order = {} as Order
   showSpinner = false;
-  orderTrackingHistoryDatas = orderTrackingHistory;
   airportItems: any = {};
   showForm = false;
   airportSelectItems: SelectListItem[] = [];
@@ -59,6 +58,7 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
     injector: Injector,
     private formBuilder: UntypedFormBuilder,
     public router: Router,
+    private cd: ChangeDetectorRef,
     public activatedRoute: ActivatedRoute,
     public orderService: OrderService,
     public orderStatusService: OrderStatusService,
@@ -67,28 +67,29 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
   }
   ngOnInit(): void {
     this.activatedRoute.params
-    .subscribe(params => {
+      .subscribe(params => {
         if (parseInt(params['id'])) {
           this.orderId = parseInt(params['id']);
-          this.getDataItems();
+          this.getItemDetail();
         }
       });
 
-      this.orderStatusService.getDropdown().then((items) => {
-        console.log(items)
-      }).catch((error) => {
-
-      })
+    this.orderStatusService.getDropdown().then((items: SelectListItem[]) => {
+      this.statusDropdown = items;
+      console.log(items);
+    }).catch((error) => {
+    })
     this.initFields()
     this.initForm();
     this.getAirportList();
     this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT', 'Order Detail');
   }
 
-  getDataItems() {
+  getItemDetail() {
     this.showSpinner = true;
     this.orderService.get(this.orderId).then((response: Order) => {
       this.selectedOrderData = response;
+      this.actualStatusId = +response.orderStatusId
       this.initFields();
       this.initForm();
       this.showSpinner = false;

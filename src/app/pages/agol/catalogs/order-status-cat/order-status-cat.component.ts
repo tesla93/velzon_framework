@@ -1,17 +1,14 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ListBaseComponent } from 'src/app/shared/utils/list.base.component';
-import { PaginationModel } from 'src/app/shared/grid/classes/pagination.model';
-import { statusData } from '../../models/status.data';
-import { GridColumn } from 'src/app/shared/grid/classes/grid-column';
-import { DisplayingMode } from 'src/app/shared/grid/enums/displaying-mode';
 import { Router } from '@angular/router';
-import { GridComponent } from 'src/app/shared/grid/grid.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IFilterCommand } from 'src/app/core/filter';
 import { IPagedData } from 'src/app/core/interfaces/paged-data';
+import { GridColumn } from 'src/app/shared/grid/classes/grid-column';
+import { PaginationModel } from 'src/app/shared/grid/classes/pagination.model';
+import { DisplayingMode } from 'src/app/shared/grid/enums/displaying-mode';
+import { GridComponent } from 'src/app/shared/grid/grid.component';
+import { ListBaseComponent } from 'src/app/shared/utils/list.base.component';
 import { OrderStatus } from '../../models/order-status';
-import Swal from 'sweetalert2';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrderStatusService } from '../order-status.service';
 
 @Component({
