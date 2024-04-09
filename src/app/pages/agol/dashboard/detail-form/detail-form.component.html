@@ -4,7 +4,8 @@
 <div class="position-relative m-4">
   
 
-    <order-tracking-timeline *ngIf="statusDropdown && this.orderForm.get('orderStatusId')?.value" [orderStatuses]="statusDropdown || []" [actualStatusId]="this.orderForm.get('orderStatusId')?.value"
+    <order-tracking-timeline *ngIf="statusDropdown && this.orderForm.get('orderStatusId')?.value" [orderStatuses]="statusDropdown || []" 
+    [actualStatusId]="this.orderForm.get('orderStatusId')?.value" (changeStatus)="changeStatusOnChild($event)"
         [remainingDaysToEta]="15">
     </order-tracking-timeline>
 </div>

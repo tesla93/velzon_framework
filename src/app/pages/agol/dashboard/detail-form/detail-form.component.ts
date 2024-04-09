@@ -246,8 +246,6 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
         this.buttonBackClickHandler();
       }
     });
-
-
   }
 
   async create() {
@@ -255,6 +253,10 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
     const response = await this.orderService.create(this.selectedOrderData);
     this.showSpinner = false;
     console.log(response)
+  }
+
+  changeStatusOnChild(value: string) {
+    this.orderForm.controls['orderStatusId'].setValue(value);
   }
 
 

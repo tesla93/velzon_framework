@@ -11,6 +11,7 @@ import { InputField } from 'src/app/shared/dynamic-form/models/input-field';
 import { SelectField } from 'src/app/shared/dynamic-form/models/select-field';
 import { SelectListItem } from 'src/app/shared/classes/select-list-item';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { remixicons } from '../../models/remixIcon';
 
 @Component({
   selector: 'order-status-edit',
@@ -40,7 +41,7 @@ export class OrderStatusEditComponent extends FormBaseComponent implements OnIni
 
   fields!: Field<any>[];
   @Input() orderStatusId?: number;
-  @Output() refreshDataItems  = new EventEmitter<any>();
+  @Output() refreshDataItems = new EventEmitter<any>();
   orderStatusForm!: UntypedFormGroup;
   selectedOrderStatus: OrderStatus = {} as OrderStatus;
   showSpinner = false;
@@ -66,11 +67,12 @@ export class OrderStatusEditComponent extends FormBaseComponent implements OnIni
 
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     if (!!this.orderStatusId) {
       this.isEdit = true;
       this.getDataItems();
     }
+    this.loadIcons();
 
     this.initFields();
     this.initForm();
@@ -111,6 +113,7 @@ export class OrderStatusEditComponent extends FormBaseComponent implements OnIni
         placeHolder: 'Icon',
         label: 'Icon',
         name: 'icon',
+        searchable: true,
         parentClass: 'col-4 my-2',
         selectListItem: this.iconDropdown,
         order: 1,
@@ -164,5 +167,18 @@ export class OrderStatusEditComponent extends FormBaseComponent implements OnIni
     this.refreshDataItems.emit();
     this.modalService.dismissAll();
   }
+
+  loadIcons() {
+    const icons1 = JSON.parse(remixicons);
+    Object.keys(icons1).forEach((key: any) => {
+      if (key !== "Editor" && icons1[key]) {
+        Object.keys(icons1[key]).forEach((k: any) => {
+          this.iconDropdown.push({value: 'ri-'+ k + '-line', text: k.toString(), icon: 'ri-'+ k + '-line'});
+          this.iconDropdown.push({value: 'ri-'+ k + '-fill', text: k.toString(), icon: 'ri-'+ k + '-fill'});
+        });
+      }
+    });
+
+}
 
 }

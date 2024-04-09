@@ -2,9 +2,9 @@
     <div class="p-col-12">
         <div class="time-line p-mb-3">
             <ng-container *ngFor="let status of orderStatuses; last as isLast">
-                <div class="circle"
+                <div (click)="onClickStatus(status.value)" class="circle"
                     [ngClass]="
-                    {'green-status' : checkIfStatusIsDone(status.sequence ?? 0), 
+                    {'green-status' : checkIfStatusIsDone(status.sequence ?? defaultSequence), 
                     'amber-status': status.sequence == actualStatus.sequence}">
                     <div 
                         class="tick">
@@ -14,7 +14,7 @@
                         {{status.text}}
                     </div>
                 </div>
-                <div *ngIf="!isLast" [ngClass]="checkIfStatusIsDone(status.sequence ?? 0) ? 'line' : 'blank-space'"></div>
+                <div *ngIf="!isLast" [ngClass]="checkIfStatusIsDone(status.sequence ?? defaultSequence) ? 'line' : 'blank-space'"></div>
             </ng-container>
             <!-- <span class="p-ml-5 p-pl-5 p-mb-5 p-pb-5"><strong>ETA: {{ moment(eta).format('DD/MM/YYYY') }} </strong></span> -->
         </div>

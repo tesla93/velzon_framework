@@ -1,7 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from "@angular/core";
 import * as moment from "moment";
-import { IOrderTrackingHistory } from "../../models/order-tracking-history";
-import { OrderTrackingTimelineStatusEnum } from "../../models/order-tracking-timeline-status-enum";
 import { SelectListItem } from "src/app/shared/classes/select-list-item";
 
 @Component({
@@ -14,8 +12,10 @@ export class OrderTrackingTimelineComponent implements OnInit {
     eta!: Date;
     
     @Input() actualStatusId!: number;
+    @Output() changeStatus= new EventEmitter<string>();
     @Input() orderStatuses!: SelectListItem[];
     actualStatus!: SelectListItem
+    defaultSequence!: number;
 
 
     constructor() { }
@@ -32,12 +32,17 @@ export class OrderTrackingTimelineComponent implements OnInit {
 
     ngOnChanges(changes: SimpleChanges){
         if(changes['actualStatusId']){
+            this.defaultSequence=+(this.orderStatuses[0]?.sequence ?? 0)
             this.actualStatus = this.orderStatuses.find(s => s.value == this.actualStatusId.toString()) ?? {} as SelectListItem;
         }
     }
 
     checkIfStatusIsDone(sequence: number): boolean{
         return (this.actualStatus?.sequence ?? 0) > sequence
+    }
+
+    onClickStatus(id?: string){
+        this.changeStatus.emit(id ?? '0');
     }
        
 }
