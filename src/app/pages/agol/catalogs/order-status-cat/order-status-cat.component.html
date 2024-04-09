@@ -1,5 +1,25 @@
 <app-breadcrumbs title="{{'MENUITEMS.AGOL.CATALOGS.TEXT' | translate}}" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
-<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="totalRecords" [itemsPerPage]="itemsPerPage" [creationLink]="'/agol/dashboard/create'"
+<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="totalRecords" [itemsPerPage]="itemsPerPage" (openModalEvent)="openWriteModal()"
     (reloadData)="getDataItems($event)" (deleteDataEvent)="deleteData($event)">
 </grid>
+
+<!-- writeModal -->
+<ng-template #writeModal let-modal>
+    <div class="modal-content">
+        <div class="modal-header p-3 bg-soft-primary">
+            <h5 class="modal-title" style="color: black;" id="exampleModalLabel">
+                {{'Create/Edit Order Status' | translate}}</h5>
+            <span class="ms-1">
+                <i class="bx bx-edit fs-20"></i>
+            </span>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+                (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+            <order-status-edit [orderStatusId]="selectedOrderStatusId" (refreshDataItems)="getDataItems()"></order-status-edit>
+        </div>
+    </div>
+
+    
+</ng-template>

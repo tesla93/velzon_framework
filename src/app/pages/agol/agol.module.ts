@@ -25,6 +25,7 @@ import { CountUpModule } from 'ngx-countup';
 import { TranslateModule } from '@ngx-translate/core';
 import { OrderTrackingTimelineComponent } from './dashboard/order-tracking-timeline/order-tracking-timeline.component';
 import { OrderStatusCatComponent } from './catalogs/order-status-cat/order-status-cat.component';
+import { OrderStatusEditComponent } from './catalogs/order-status-edit/order-status-edit.component';
 
 
 
@@ -34,6 +35,7 @@ import { OrderStatusCatComponent } from './catalogs/order-status-cat/order-statu
     AgolDashboardComponent,
     DetailFormComponent,
     OrderStatusCatComponent,
+    OrderStatusEditComponent,
     OrderTrackingTimelineComponent,
     FlightFormComponent
   ],

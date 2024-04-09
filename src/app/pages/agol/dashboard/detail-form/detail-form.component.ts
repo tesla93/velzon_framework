@@ -14,6 +14,7 @@ import { orderTrackingHistory, statusData } from '../../models/status.data';
 import { ReportService } from '../../report/report.service';
 import { OrderService } from '../order.service';
 import { ButtonItems } from 'src/app/shared/generic-buttons/classes/button-items';
+import { OrderStatusService } from '../../catalogs/order-status.service';
 
 @Component({
   selector: 'detail-form',
@@ -60,6 +61,7 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
     public router: Router,
     public activatedRoute: ActivatedRoute,
     public orderService: OrderService,
+    public orderStatusService: OrderStatusService,
     private reportService: ReportService) {
     super(injector);
   }
@@ -71,6 +73,12 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
           this.getDataItems();
         }
       });
+
+      this.orderStatusService.getDropdown().then((items) => {
+        console.log(items)
+      }).catch((error) => {
+
+      })
     this.initFields()
     this.initForm();
     this.getAirportList();
@@ -233,7 +241,7 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
   async update() {
     await this.orderService.update(this.selectedOrderData.id, this.selectedOrderData).then((response: any) => {
       this.showSpinner = false;
-      if (response) {
+      if (!!response.id) {
         this.buttonBackClickHandler();
       }
     });

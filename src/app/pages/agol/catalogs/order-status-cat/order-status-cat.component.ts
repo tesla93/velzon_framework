@@ -7,11 +7,12 @@ import { GridColumn } from 'src/app/shared/grid/classes/grid-column';
 import { DisplayingMode } from 'src/app/shared/grid/enums/displaying-mode';
 import { Router } from '@angular/router';
 import { GridComponent } from 'src/app/shared/grid/grid.component';
-import { OrderStatusService } from './order-status.service';
 import { IFilterCommand } from 'src/app/core/filter';
 import { IPagedData } from 'src/app/core/interfaces/paged-data';
 import { OrderStatus } from '../../models/order-status';
 import Swal from 'sweetalert2';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { OrderStatusService } from '../order-status.service';
 
 @Component({
   selector: 'order-status-cat',
@@ -21,6 +22,8 @@ import Swal from 'sweetalert2';
 export class OrderStatusCatComponent extends ListBaseComponent<OrderStatus> implements OnInit {
 
   @ViewChild("grid", { static: false }) grid!: GridComponent<OrderStatus>;
+  @ViewChild("writeModal", { static: false }) writeModal!: any;
+  selectedOrderStatusId?: number;
 
 
   override columns = [
@@ -50,7 +53,9 @@ export class OrderStatusCatComponent extends ListBaseComponent<OrderStatus> impl
         {
           iconClass: "ri-pencil-fill text-success",
           clickHandler: (id: any): void => {
-            this.router.navigate(['/catalog/order-status/detail/0']);
+            this.selectedOrderStatusId = id; 
+            this.openWriteModal();
+            // this.router.navigate([`agol/catalogs/order-status/edit/${id}`]);
           },
         },
         {
@@ -64,7 +69,10 @@ export class OrderStatusCatComponent extends ListBaseComponent<OrderStatus> impl
 
     },
   ]
-  constructor(injector: Injector, private router: Router, private orderStatusService: OrderStatusService) {
+  constructor(injector: Injector, 
+    private modalService: NgbModal,
+    private router: Router, 
+    private orderStatusService: OrderStatusService) {
     super(injector);
 
   }
@@ -75,6 +83,7 @@ export class OrderStatusCatComponent extends ListBaseComponent<OrderStatus> impl
   }
 
   getDataItems(pagination?: PaginationModel) {
+    this.selectedOrderStatusId=undefined;
     this.showSpinner = true;
     const page = pagination?.page ?? 1
     const pageSize = pagination?.pageSize ?? this.itemsPerPage[0]
@@ -99,5 +108,14 @@ export class OrderStatusCatComponent extends ListBaseComponent<OrderStatus> impl
         }
       })
     }
+  }
+
+  openWriteModal() {   
+    this.modalService.open(this.writeModal, { size: 'lg', centered: true });
+  }
+
+  closeModal(){
+    this.selectedOrderStatusId=0;
+    this.modalService.dismissAll();
   }
 }
