@@ -68,6 +68,29 @@ export abstract class BaseDataService {
 
         return params;
     }
+
+    createHttpParamsFromObject(obj: any): HttpParams {
+        let params = new HttpParams();
+        Object.keys(obj).forEach(key => {
+          const value = obj[key];
+          if (value !== null && value !== undefined) {
+            if (Array.isArray(value)) {
+              value.forEach((item, index) => {
+                Object.keys(item).forEach(subKey => {
+                  params = params.append(`${key}[${index}].${subKey}`, item[subKey]);
+                });
+              });
+            } else if (typeof value === 'object') {
+              Object.keys(value).forEach(subKey => {
+                params = params.set(`${key}.${subKey}`, value[subKey]);
+              });
+            } else {
+              params = params.set(key, value);
+            }
+          }
+        });
+        return params;
+      }
 }
 
 export const flatten = (object: any) => {

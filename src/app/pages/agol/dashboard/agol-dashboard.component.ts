@@ -185,9 +185,13 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
 
   manageFilters() {
       console.log(this.filterForm.get('statusFilter')?.value)
-      this.filterInfoBase.push(
-        new NumberFilter("orderStatusId", this.filterForm.get('statusFilter')?.value)
-      )
+      this.filterInfoBase=[];
+      if(!!this.filterForm.get('statusFilter')?.value){
+
+        this.filterInfoBase.push(
+          new NumberFilter("orderStatusId", this.filterForm.get('statusFilter')?.value ?? 0)
+        )
+      }
       this.getDataItems();
 
   }

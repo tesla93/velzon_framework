@@ -3,7 +3,7 @@ import { StringFilterMatchMode } from "../enums/string-filter-match-mode";
 
 
 export class StringFilter implements IStringFilter {
-    public $type = "string";
+    public type = "string";
     public matchMode: StringFilterMatchMode;
 
     constructor(public propertyName: string,

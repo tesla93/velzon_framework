@@ -2,7 +2,7 @@ import { IDateFilter } from "../interfaces/date-filter";
 import { CountableFilterMatchMode } from "../enums/countable-filter-match-mode";
 
 export class DateFilter implements IDateFilter {
-    public $type = "date";
+    public type = "date";
     public matchMode: CountableFilterMatchMode;
 
     constructor(public propertyName: string,

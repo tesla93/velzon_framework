@@ -3,7 +3,7 @@ import { CountableFilterMatchMode } from "../enums/countable-filter-match-mode";
 
 
 export class NumberFilter implements INumberFilter {
-    public $type = "number";
+    public type = "number";
     public matchMode: CountableFilterMatchMode;
 
     constructor(public propertyName: string,

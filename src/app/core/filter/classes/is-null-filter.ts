@@ -1,7 +1,7 @@
 import { IFilterInfoBase } from "../interfaces/filter-info-base";
 // Should implement IFilterInfoBase to avoid Lint error "An interface declaring no members is equivalent to its supertype."
 export class IsNullFilter implements IFilterInfoBase {
-    public $type = "isNull";
+    public type = "isNull";
     constructor(public propertyName: string) {
     }
 }
