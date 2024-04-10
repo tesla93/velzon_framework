@@ -3,6 +3,7 @@ import { CrudService } from "./crud.service";
 import { HttpResponsesHandlersFactory, IHttpResponseHandlerSettings } from "./http-responses-handler";
 import { IFilterCommand } from "../filter";
 import { IPagedData } from "../interfaces/paged-data";
+import { filter } from "rxjs";
 
 
 
@@ -28,7 +29,8 @@ export abstract class PagedCrudService<TEntity> extends CrudService<TEntity>  { 
         }
 
         // this.prepareFilterCommandDates(filterCommand);
-
+        console.log(filterCommand)
+        console.log(this.constructHttpParams(filterCommand))
         return this.handleRequest<IPagedData<TEntity>>(
             this.http.get<IPagedData<TEntity>>(`${this.url}/page`, { params: this.constructHttpParams(filterCommand) }),
             this.handlersFactory.getForReadByFilter(responseHandlerSettings)

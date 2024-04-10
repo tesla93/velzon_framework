@@ -48,10 +48,7 @@ export class OrderStatusEditComponent extends FormBaseComponent implements OnIni
   isEdit: boolean = false;
   submitted: boolean = false;
 
-  iconDropdown: SelectListItem[] = [
-    { text: "ri-community-line", value: "ri-community-line", icon: 'ri-community-line' },
-    { text: "ri-road-map-fill", value: "ri-road-map-fill", icon: 'ri-community-line' }
-  ];
+  iconDropdown: SelectListItem[] = [];
 
 
   constructor(

@@ -2,7 +2,7 @@
     <div class="p-col-12">
         <div class="time-line p-mb-3">
             <ng-container *ngFor="let status of orderStatuses; last as isLast">
-                <div (click)="onClickStatus(status.value)" class="circle"
+                <div (click)="onClickStatus(status.value)" class="circle" style="cursor: pointer;"
                     [ngClass]="
                     {'green-status' : checkIfStatusIsDone(status.sequence ?? defaultSequence), 
                     'amber-status': status.sequence == actualStatus.sequence}">

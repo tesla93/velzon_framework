@@ -1,9 +1,9 @@
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgStepperModule } from 'angular-ng-stepper';
@@ -53,6 +53,7 @@ import { OrderStatusEditComponent } from './catalogs/order-status-edit/order-sta
     ColorPickerModule,
     NgxMaskDirective,
     TranslateModule,
+    NgbAccordionModule,
     NgxMaskPipe,
     NgxSliderModule,
     CdkStepperModule,
@@ -63,6 +64,7 @@ import { OrderStatusEditComponent } from './catalogs/order-status-edit/order-sta
     AgolRoutingModule,
     FeatherModule.pick(allIcons),
     SharedModule
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AgolModule { }

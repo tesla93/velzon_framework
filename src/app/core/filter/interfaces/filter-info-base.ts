@@ -1,7 +1,7 @@
 ﻿export interface IFilterInfoBase {
-    propertyName: string;
+    propertyName?: string;
     notNeedToDelete?: boolean;
-    $type: string;
+    $type?: string;
 }
 
 export interface ISimpleFilterInfoBase<T> extends IFilterInfoBase {

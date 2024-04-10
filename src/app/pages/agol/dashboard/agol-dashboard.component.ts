@@ -1,16 +1,21 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { ListBaseComponent } from 'src/app/shared/utils/list.base.component';
-import { cargoModelData } from '../models/cargo-model.data';
-import { PaginationModel } from 'src/app/shared/grid/classes/pagination.model';
+import { FormBuilder, FormControl, FormGroup, UntypedFormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { IFilterCommand, IFilterInfoBase, NumberFilter } from 'src/app/core/filter';
+import { IPagedData } from 'src/app/core/interfaces/paged-data';
+import { SelectListItem } from 'src/app/shared/classes/select-list-item';
+import { Field } from 'src/app/shared/dynamic-form/models/field';
+import { SelectField } from 'src/app/shared/dynamic-form/models/select-field';
+import { ButtonItems } from 'src/app/shared/generic-buttons/classes/button-items';
 import { GridColumn } from 'src/app/shared/grid/classes/grid-column';
+import { PaginationModel } from 'src/app/shared/grid/classes/pagination.model';
 import { DisplayingMode } from 'src/app/shared/grid/enums/displaying-mode';
 import { GridComponent } from 'src/app/shared/grid/grid.component';
-import { Router } from '@angular/router';
+import { ListBaseComponent } from 'src/app/shared/utils/list.base.component';
+import { OrderStatusService } from '../catalogs/order-status.service';
 import { AnalyticData } from '../models/analytic-data';
-import { OrderService } from './order.service';
 import { Order } from '../models/order.model';
-import { IFilterCommand } from 'src/app/core/filter';
-import { IPagedData } from 'src/app/core/interfaces/paged-data';
+import { OrderService } from './order.service';
 
 @Component({
   selector: 'agol-dashboard',
@@ -20,6 +25,10 @@ import { IPagedData } from 'src/app/core/interfaces/paged-data';
 export class AgolDashboardComponent extends ListBaseComponent<Order> implements OnInit {
   @ViewChild("grid", { static: false }) grid!: GridComponent<Order>;
 
+  requestStatus!: number;
+  filterForm!: FormGroup;
+  filterInfoBase: IFilterInfoBase[] = [] as IFilterInfoBase[];
+  fields!: Field<any>[];
   override columns = [
     <GridColumn>{
       field: "referenceId",
@@ -53,7 +62,7 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
       field: "originAirport",
       header: "MENUITEMS.AGOL.DASHBOARD.ORIGINAIRPORT",
     },
-    
+
     <GridColumn>{
       field: "destinationAirport",
       header: "MENUITEMS.AGOL.DASHBOARD.DESTINATIONAIRPORT",
@@ -90,7 +99,21 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
       displayingMode: DisplayingMode.Action,
 
     },
-  ]
+  ];
+
+  public buttons: ButtonItems[] = [
+    <ButtonItems>{
+      text: "GENERAL.FILTER.SEARCH",
+      type: "button",
+      iconClass: "bx bx-search-alt label-icon align-middle fs-16",
+      ngClass: "btn btn-primary btn-label",
+      clickHandler: (): void => {
+        this.getDataItems();
+      }
+    },
+  ];
+
+  statusDropdown: SelectListItem[] = [];
 
   option = {
     startVal: 0,
@@ -102,13 +125,19 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
   analyticData!: AnalyticData;
   loadingAnalytics = true;
 
-  constructor(injector: Injector, private router: Router, public orderService: OrderService) {
+  constructor(
+    injector: Injector,
+    private fb: FormBuilder,
+    private router: Router,
+    public orderStatusService: OrderStatusService,
+    public orderService: OrderService) {
+
     super(injector);
 
   }
   ngOnInit() {
     this.getDataItems();
-    this.getAnalyticData();
+    this.getStatusDropdown();
     this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT');
   }
 
@@ -119,24 +148,58 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
     const pageSize = pagination?.pageSize ?? this.itemsPerPage[0]
     const sortColumn = pagination?.sortColumn ?? 'id'
     const sortOrder = pagination?.sortOrder == 'desc' ? -1 : 1
-    
-    this.orderService.getPage(
-      <IFilterCommand>{ first: (page - 1) * pageSize, rows: pageSize, sortOrder: sortOrder, sortField: sortColumn })
+    this.orderService.getPage(<IFilterCommand>{ first: (page - 1) * pageSize, rows: pageSize, sortOrder: sortOrder, sortField: sortColumn, filters: this.filterInfoBase})
       .then((response: IPagedData<Order>) => {
-        console.log(response);
         this.dataList = response.items ?? [];
         this.totalRecords = response.total ?? 0;
         this.showSpinner = false;
       })
-    
-    
-    // this.dataList = cargoModelData
+  }
+
+  initFilterForms() {
+    this.filterForm = this.fb.group({
+      statusFilter: new FormControl()
+    });
+
+    this.filterForm.valueChanges.subscribe(() => {
+      this.manageFilters();
+    })
+  }
+
+  initFilterFields() {
+    this.fields = [
+      new SelectField({
+        placeHolder: 'MENUITEMS.AGOL.DASHBOARD.STATUS',
+        label: 'MENUITEMS.AGOL.DASHBOARD.STATUS',
+        name: 'statusFilter',
+        multiple: false,
+        clearable: true,
+        searchable: true,
+        parentClass: 'col-md-3 col-sm-6 my-1',
+        selectListItem: this.statusDropdown,
+        order: 0,
+      }),
+    ];
+  }
+
+
+  manageFilters() {
+      console.log(this.filterForm.get('statusFilter')?.value)
+      this.filterInfoBase.push(
+        new NumberFilter("orderStatusId", this.filterForm.get('statusFilter')?.value)
+      )
+      this.getDataItems();
 
   }
 
-  getAnalyticData() {
-    this.analyticData = { pendingOrders: 456, totalOrders: 15685, completedOrders: 988, openOrders: 5 }
-    this.loadingAnalytics=false;
+
+  getStatusDropdown() {
+    this.orderStatusService.getDropdown().then((items: SelectListItem[]) => {
+      this.statusDropdown = items.map(i => ({ value: i.value, text: i.text }));
+    }).finally(() => {
+      this.initFilterFields();
+      this.initFilterForms();
+    })
   }
 
   getBadgeClass(status: string) {
@@ -157,7 +220,7 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
     if (key) {
       this.orderService.delete(key).then((data: any) => {
         console.log(data)
-        if(data){
+        if (data) {
           this.getDataItems();
         }
       })
