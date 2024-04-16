@@ -23,7 +23,7 @@
 
 </div>
 
-<grid #grid [columns]="columns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="dataList?.length"
+<grid #grid [columns]="filteredColumns" [dataItems]="dataList" [showSpinner]="showSpinner" [totalRecords]="dataList?.length"
     [importEnabled]="true" [itemsPerPage]="itemsPerPage" [creationLink]="'/agol/order/create'"
     (reloadData)="getDataItems($event)" [statusClass]="getBadgeClass" (deleteDataEvent)="deleteData($event)">
 </grid>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,13 +8,14 @@ import { GridColumn } from './classes/grid-column';
 import { PaginationModel } from './classes/pagination.model';
 import { DisplayingMode } from './enums/displaying-mode';
 import { NgbdListViewSortableHeaderDirective, SortEvent } from '../directives/list-view-sortable.directive';
+import { SelectListItem } from '../classes/select-list-item';
 
 @Component({
   selector: 'grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss']
 })
-export class GridComponent<TDataItem> implements OnChanges {
+export class GridComponent<TDataItem> implements OnChanges, OnInit {
 
 
   total!: Observable<number>;
@@ -58,7 +59,9 @@ export class GridComponent<TDataItem> implements OnChanges {
     public elementRef: ElementRef
   ) { }
 
-  
+  ngOnInit(): void {
+  }
+
   selectCheckboxes() {
     this.allSelected = !this.allSelected;
     if(this.allSelected)

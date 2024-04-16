@@ -76,7 +76,6 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
 
     this.orderStatusService.getDropdown().then((items: SelectListItem[]) => {
       this.statusDropdown = items;
-      console.log(items);
     }).catch((error) => {
     })
     this.initFields()
@@ -249,10 +248,8 @@ export class DetailFormComponent extends FormBaseComponent implements OnInit {
   }
 
   async create() {
-    console.log(this.selectedOrderData)
     const response = await this.orderService.create(this.selectedOrderData);
     this.showSpinner = false;
-    console.log(response)
   }
 
   changeStatusOnChild(value: string) {

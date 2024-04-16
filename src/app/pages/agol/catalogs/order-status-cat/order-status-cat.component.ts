@@ -99,7 +99,6 @@ export class OrderStatusCatComponent extends ListBaseComponent<OrderStatus> impl
   async deleteData(key: any) {
     if (key) {
       this.orderStatusService.delete(key).then((data: any) => {
-        console.log(data)
         if(data){
           this.getDataItems();
         }

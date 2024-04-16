@@ -51,13 +51,11 @@ export class RegisterComponent implements OnInit {
    */
    onSubmit() {
     this.submitted = true;
-    console.log('submitted');
 
      //Register Api
      this.authenticationService.register(this.f['email'].value, this.f['name'].value, this.f['password'].value).pipe(first()).subscribe(
       (data: any) => {
       this.successmsg = true;
-      console.log(data);
       if (this.successmsg) {
         this.router.navigate(['/auth/login']);
       }

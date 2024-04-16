@@ -4,9 +4,17 @@
             <div *ngIf="!isLite">
                 <div class="card-header border-1" *ngIf="headerNeeded">
                     <div [ngClass]="buttonsNeeded ?'row mb-2 align-items-center' :'row align-items-center' ">
-                        <h4 class="card-title  col-md-6 col-sm-6">{{'GENERAL.COMMONBUTTONS.SEARCHRESULTS' | translate}}
+                        <h4 class="card-title  col-md-3 col-sm-6">{{'GENERAL.COMMONBUTTONS.SEARCHRESULTS' | translate}}
                         </h4>
-                        <div class="d-flex col-md-2 offset-md-4 col-sm-6 justify-content-md-end" *ngIf="buttonsNeeded">
+                        <div class="col-md-4">
+                            <!-- <ng-container *ngIf="true">
+                                <ng-select class="form-control" [searchable]="true" [clearable]="true"
+                                    labelForId="accountFilter" [ngModel]="columnsSelected" [multiple]="true"
+                                    [placeholder]="'All Columns' | translate" [items]="columnList">
+                                </ng-select>
+                            </ng-container> -->
+                        </div>
+                        <div class="d-flex col-md-2 offset-md-3 col-sm-6 justify-content-md-end" *ngIf="buttonsNeeded">
                             <button *ngIf="exportEnabled"
                                 class="btn btn-info btn-label waves-effect waves-light mx-1 col m-w-100"
                                 (click)="onClickExport()">
@@ -34,7 +42,7 @@
                 <div class="dataTables_length mt-2 ms-2 px-2" id="tickets-table_length">
                     <label class="d-inline-flex col-md-3 col-sm-8 align-items-center">
                         {{'GENERAL.LIST.SHOW' | translate }} &nbsp;
-                        <ng-select #selectPageSize appearance="outline" [searchable]="false" [clearable]="false"
+                        <ng-select #selectPageSize appearance="outline" class="size-select-id" [searchable]="false" [clearable]="false"
                             (change)="reloadDataItems()" [(ngModel)]="pagination.pageSize" labelForId="size-select"
                             [multiple]="false">
                             <ng-option *ngFor="let data of itemsPerPage" value="{{data}}">
@@ -134,8 +142,10 @@
                                             </td>
                                             <td *ngSwitchCase="_displayingModeEnum.Array" [ngStyle]="column.style"
                                                 [ngClass]="column.ngClass">
-                                                <ng-container *ngFor="let item of getCellValue(rowData, column.field); index as j">
-                                                    <span class="badge bg-secondary-subtle text-secondary mx-1 fs-11">{{item}}</span>
+                                                <ng-container
+                                                    *ngFor="let item of getCellValue(rowData, column.field); index as j">
+                                                    <span
+                                                        class="badge bg-secondary-subtle text-secondary mx-1 fs-11">{{item}}</span>
                                                 </ng-container>
 
                                             </td>
@@ -145,30 +155,38 @@
                                             </td>
                                             <td *ngSwitchCase="_displayingModeEnum.Icon" [ngStyle]="column.style"
                                                 [ngClass]="column.ngClass">
-                                                <i class="align-bottom me-2 fs-20 text-info" [ngClass]="getCellValue(rowData, column.field)"></i>
+                                                <i class="align-bottom me-2 fs-20 text-info"
+                                                    [ngClass]="getCellValue(rowData, column.field)"></i>
                                             </td>
                                             <td *ngSwitchCase="_displayingModeEnum.HTML" [ngStyle]="column.style"
                                                 [ngClass]="column.ngClass">
-                                                {{(getCellValue(rowData, column.field) | striphtml | slice:0:300) + (getCellValue(rowData, column.field).length > 300 ? '...' : '') }}
+                                                {{(getCellValue(rowData, column.field) | striphtml | slice:0:300) +
+                                                (getCellValue(rowData, column.field).length > 300 ? '...' : '') }}
                                             </td>
-                                            <td *ngSwitchCase="_displayingModeEnum.Avatar" [ngStyle]="column.style" [ngClass]="column.ngClass">
-                                                <div class="d-flex align-items-center" *ngIf="getCellValue(rowData, column.avatarField)">
-                                                    <img [src]="getCellValue(rowData, column.avatarField)" class="avatar-xxs rounded-circle me-2" alt="">
+                                            <td *ngSwitchCase="_displayingModeEnum.Avatar" [ngStyle]="column.style"
+                                                [ngClass]="column.ngClass">
+                                                <div class="d-flex align-items-center"
+                                                    *ngIf="getCellValue(rowData, column.avatarField)">
+                                                    <img [src]="getCellValue(rowData, column.avatarField)"
+                                                        class="avatar-xxs rounded-circle me-2" alt="">
                                                     {{getCellValue(rowData, column.field)}}
                                                 </div>
-                                                <div class="d-flex align-items-center" *ngIf="!getCellValue(rowData, column.avatarField)">
+                                                <div class="d-flex align-items-center"
+                                                    *ngIf="!getCellValue(rowData, column.avatarField)">
                                                     <div class="flex-shrink-0 avatar-xxs me-2">
                                                         <div *ngIf="getCellValue(rowData, column.field)"
                                                             class="avatar-title bg-soft-success text-success rounded-circle fs-13">
                                                             {{ getCellValue(rowData, column.field).charAt(0)}}
                                                         </div>
                                                     </div>
-                                                    {{getCellValue(rowData, column.field) | nullWithDefault : 'Unassigned'}}
+                                                    {{getCellValue(rowData, column.field) | nullWithDefault :
+                                                    'Unassigned'}}
                                                 </div>
                                             </td>
                                             <td *ngSwitchCase="_displayingModeEnum.Status" [ngStyle]="column.style"
                                                 [ngClass]="column.ngClass">
-                                                <span class="text-uppercase badge bg-success-subtle text-success" [ngClass]="statusClass(getCellValue(rowData, column.field))">
+                                                <span class="text-uppercase badge bg-success-subtle text-success"
+                                                    [ngClass]="statusClass(getCellValue(rowData, column.field))">
                                                     {{ getCellValue(rowData, column.field) }}
                                                 </span>
                                             </td>

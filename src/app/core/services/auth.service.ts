@@ -43,7 +43,6 @@ export class AuthenticationService {
      * @param password password
      */
     register(email: string, first_name: string, password: string) {
-        console.log(email);
         // Register Api
         return this.http.post(AppConsts.remoteServiceBaseUrl + '/register', { email: email, password: password, }, httpOptions)
             .pipe(
@@ -76,7 +75,6 @@ export class AuthenticationService {
         return this.http.post<any>(AppConsts.remoteServiceBaseUrl + '/login', { email: email, password: password })
             .pipe(
                 tap((res: AuthenticateResultModel) => {
-                    console.log(res)
                     this.tokenService.setToken(res);
                 }),
                 catchError(() => {

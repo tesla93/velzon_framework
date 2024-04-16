@@ -25,6 +25,7 @@ import { OrderService } from './order.service';
 export class AgolDashboardComponent extends ListBaseComponent<Order> implements OnInit {
   @ViewChild("grid", { static: false }) grid!: GridComponent<Order>;
 
+
   requestStatus!: number;
   filterForm!: FormGroup;
   filterInfoBase: IFilterInfoBase[] = [] as IFilterInfoBase[];
@@ -91,7 +92,6 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
         {
           iconClass: 'ri-delete-bin-fill align-bottom me-2 text-danger',
           clickHandler: (id: string) => {
-            console.log(id)
             this.grid.confirmDelete(id);
           }
         }
@@ -100,6 +100,10 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
 
     },
   ];
+
+  filteredColumns!: GridColumn[];
+
+  columnList: SelectListItem[] = [];
 
   public buttons: ButtonItems[] = [
     <ButtonItems>{
@@ -139,6 +143,18 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
     this.getDataItems();
     this.getStatusDropdown();
     this.setBreadCrumbItems('MENUITEMS.AGOL.DASHBOARD.TEXT');
+    this.filteredColumns = this.columns;
+
+    this._translate.get('init').subscribe(() => {
+      this.columnList = this.columns.filter(x => x.displayingMode != DisplayingMode.Action).map(x => ({ text: this._translate.instant(x.header), value: x.header }));
+    });
+  }
+
+  manageColumns() {
+    if (this.filterForm.get('columnsFiltered')?.value != null) {
+      const columnsFiltered = [...this.filterForm.get('columnsFiltered')?.value]
+      this.filteredColumns = this.columns.filter(x => !columnsFiltered.some(y => y == x.header));
+    }
   }
 
 
@@ -148,7 +164,7 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
     const pageSize = pagination?.pageSize ?? this.itemsPerPage[0]
     const sortColumn = pagination?.sortColumn ?? 'id'
     const sortOrder = pagination?.sortOrder == 'desc' ? -1 : 1
-    this.orderService.getPage(<IFilterCommand>{ first: (page - 1) * pageSize, rows: pageSize, sortOrder: sortOrder, sortField: sortColumn, filters: this.filterInfoBase})
+    this.orderService.getPage(<IFilterCommand>{ first: (page - 1) * pageSize, rows: pageSize, sortOrder: sortOrder, sortField: sortColumn, filters: this.filterInfoBase })
       .then((response: IPagedData<Order>) => {
         this.dataList = response.items ?? [];
         this.totalRecords = response.total ?? 0;
@@ -158,11 +174,13 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
 
   initFilterForms() {
     this.filterForm = this.fb.group({
-      statusFilter: new FormControl()
+      statusFilter: new FormControl(),
+      columnsFiltered: new FormControl()
     });
 
     this.filterForm.valueChanges.subscribe(() => {
       this.manageFilters();
+      this.manageColumns();
     })
   }
 
@@ -179,20 +197,30 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
         selectListItem: this.statusDropdown,
         order: 0,
       }),
+      new SelectField({
+        placeHolder: 'Hide Columns',
+        label: 'Hiden Columns',
+        name: 'columnsFiltered',
+        multiple: true,
+        clearable: true,
+        searchable: true,
+        parentClass: 'col-md-3 col-sm-6 my-1',
+        selectListItem: this.columnList,
+        order: 1,
+      }),
     ];
   }
 
 
   manageFilters() {
-      console.log(this.filterForm.get('statusFilter')?.value)
-      this.filterInfoBase=[];
-      if(!!this.filterForm.get('statusFilter')?.value){
+    this.filterInfoBase = [];
+    if (!!this.filterForm.get('statusFilter')?.value) {
 
-        this.filterInfoBase.push(
-          new NumberFilter("orderStatusId", this.filterForm.get('statusFilter')?.value ?? 0)
-        )
-      }
-      this.getDataItems();
+      this.filterInfoBase.push(
+        new NumberFilter("orderStatusId", this.filterForm.get('statusFilter')?.value ?? 0)
+      )
+    }
+    this.getDataItems();
 
   }
 
@@ -223,7 +251,6 @@ export class AgolDashboardComponent extends ListBaseComponent<Order> implements 
   async deleteData(key: any) {
     if (key) {
       this.orderService.delete(key).then((data: any) => {
-        console.log(data)
         if (data) {
           this.getDataItems();
         }

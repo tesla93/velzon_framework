@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit {
     // Login Api
     this.authenticationService.login(this.f['email'].value, this.f['password'].value).subscribe((data: any) => {
       if (!!data.accessToken) {
-        console.log(data.accessToken)
         sessionStorage.setItem('toast', 'true');
         sessionStorage.setItem('currentUser', JSON.stringify(this.f['email'].value.toString().split('@')[0] )); //change for response with username
         this.router.navigate(['/agol/dashboard']);
